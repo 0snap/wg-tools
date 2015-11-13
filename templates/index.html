@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://fb.me/react-0.14.2.js"></script>
+    <script src="https://fb.me/react-dom-0.14.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    var Input = React.createClass({
+        
+        render: function() {
+            return (
+                <form onSubmit={this.postToServer}>
+                    <span>Name:</span>
+                    <input type="text" ref="name"/>
+                    <span>Amount:</span>
+                    <input type="text" ref="amount"/>
+                    <button type="submit">Foo!</button>
+                </form>
+            );
+        },
+        postToServer: function(event) {
+            event.preventDefault()
+            let name = this.refs.name.value
+            let amount = this.refs.amount.value
+        },
+        
+    });
+
+    setInterval(function() {
+        ReactDOM.render(
+            <Input />,
+            document.getElementById('example')
+        );
+    }, 500);
+    </script>
+</body>
+</html>

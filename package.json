@@ -1,0 +1,24 @@
+{
+  "name": "wg-tools",
+  "version": "0.0.1",
+  "description": "wg-tools-frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0ortmann/wg-tools.git"
+  },
+  "author": "flx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0ortmann/wg-tools/issues"
+  },
+  "homepage": "https://github.com/0ortmann/wg-tools#readme",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "react": "^0.14.2",
+    "webpack": "^1.12.4"
+  }
+}
