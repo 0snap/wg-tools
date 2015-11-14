@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://fb.me/react-0.14.2.js"></script>
+    <script src="https://fb.me/react-dom-0.14.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    var DeptForm = React.createClass({
+        
+        render: function() {
+            return (
+                <form onSubmit={this.postToServer}>
+                    <span>Name:</span>
+                    <input type="text" ref="name"/>
+                    <span>Amount:</span>
+                    <input type="number" ref="amount"/>
+                    <button type="submit">Foo!</button>
+                </form>
+            );
+        },
+        postToServer: function(event) {
+            event.preventDefault()
+            let data = {}
+            data[this.refs.name.value] = this.refs.amount.value
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                url: '/calcDepts',
+                data: JSON.stringify(data)
+            })
+            .done(function(data) {
+                console.log(data)
+            })
+            .fail(function(jqXhr) {
+                console.log('failed to post data');
+            });
+        }
+
+    });
+
+    setInterval(function() {
+        ReactDOM.render(
+            <DeptForm />,
+            document.getElementById('example')
+        );
+    }, 500);
+    </script>
+</body>
+</html>

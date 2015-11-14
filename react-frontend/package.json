@@ -1,0 +1,20 @@
+{
+  "name": "wg-tools-react-frontend",
+  "version": "0.0.1",
+  "description": "wg-tools/frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "sudo node ./index.js",
+    "build": "webpack --colors --progress",
+    "clean": "rm -rf ./public/assets ./build"
+  },
+  "author": "flx",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^6.1.18",
+    "babel-core": "^6.1.21",
+    "express": "^4.13.3",
+    "json-loader": "^0.5.3",
+    "webpack": "^1.12.6"
+  }
+}
