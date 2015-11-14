@@ -1,7 +1,7 @@
 {
   "name": "wg-tools",
   "version": "0.0.1",
-  "description": "wg-tools-frontend",
+  "description": "tools for managing roomate stuff",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +19,6 @@
   "dependencies": {
     "gulp": "^3.9.0",
     "react": "^0.14.2",
-    "webpack": "^1.12.4"
+    "webpack": "^1.12.6"
   }
 }
