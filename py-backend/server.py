@@ -7,11 +7,15 @@ app = Flask(__name__)
 
 @app.route('/calcDepts', methods=['POST'])
 def depts():
-    if request.method == 'POST' and request.headers['Content-Type'] == 'application/json':
+    if request.method == 'POST' and request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
+        print(request.get_json())
         jsonAsDict = json.loads(postedJson)
         deptList = deptCalculator.calcDepts(jsonAsDict)
-        return json.dumps(deptList)
+        print(deptList)
+        return "FOOBAR: " + json.dumps(deptList)
+    else:
+        return render_template('index.html')
 
 @app.route('/')
 def index():

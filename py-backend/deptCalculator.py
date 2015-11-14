@@ -2,6 +2,8 @@
 
 def calcMinusPlus(expensionsMap):
     ''' Expensions map is in the format of {"personName": moneyAmount, ...}'''
+    for key, value in expensionsMap.items():
+        expensionsMap[key] = float(value)
     average = sum(expensionsMap.values())/float(len(expensionsMap))
     minusMap = {}
     plusMap = {}
@@ -35,7 +37,7 @@ def makeEven(minusMap, plusMap):
     return result
 
 def calcDepts(expensionsMap):
-    ''' Expansionsmap should be in the format like {"person1": amountMoneySpent, ...} 
+    ''' Expensionsmap should be in the format like {"person1": amountMoneySpent, ...} 
         Returns a list of tuples in the form ((person1, amount, person2), (...) ), where
         'person1' has to give 'amount' to 'person2' ''' 
     minusMap, plusMap = calcMinusPlus(expensionsMap)
