@@ -4,7 +4,6 @@ from flask import Flask, request, json, make_response
 import deptCalculator
 from mongoengine import *
 import datetime
-from bson import json_util
 
 '''
 Define some mongo stuff, very rudimentary storing of posted data.
@@ -69,5 +68,3 @@ def getDeptList():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
-
-
