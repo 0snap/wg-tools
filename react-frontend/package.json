@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "node ./dev-server.js",
-    "start": "sudo node ./server.js",
     "build": "webpack --colors --progress",
-    "clean": "rm -rf ./public/assets ./build"
+    "clean": "rm -rf ./public ./build"
   },
   "author": "flx",
   "license": "ISC",
