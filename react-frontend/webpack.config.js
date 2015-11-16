@@ -1,17 +1,25 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
-  cache: true,
-  entry: {
-    main:  './index.js'
-  },
+  devtool: 'eval',
+  entry: [
+  'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
+  'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+  './server.js' // Your appʼs entry point
+  ],
   output: {
-    path: 'public',
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
   module: {
     loaders: [
-      {test: /\.json$/ , loader: 'json-loader'}
+      { test: /\.json$/ , loader: 'json-loader'},
+      { test: /\.jsx?$/, loaders: ['react-hot', 'babel'], include: path.join(__dirname, 'server'), include: path.join(__dirname, 'client') }
     ]
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
