@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
-from flask import Flask, request, json, make_response
+from flask import Flask, request, json, Response
 import deptCalculator
 from mongoengine import *
-import datetime
+from datetime import datetime, timedelta
+import copy
 
 '''
 Define some mongo stuff, very rudimentary storing of posted data.
@@ -12,13 +13,12 @@ Define some mongo stuff, very rudimentary storing of posted data.
 connect('localhost:27017')
 
 class Post(Document):
-    date_modified = DateTimeField(default=datetime.datetime.now)
+    date_modified = DateTimeField(default=datetime.now)
     meta = {'allow_inheritance': True}
 
-class DeptPost(Post):
+class ExpensePost(Post):
     name = StringField()
     amount = IntField()
-
 
 
 
@@ -29,42 +29,59 @@ Simple Flask-API for serving post requests. API offers stuff like calculating de
 
 app = Flask(__name__)
 
-def getDeptPostsAsJson():
-    ''' Returns all deptpost-objects in a json deptList '''
+def getJsonDataFromPostIfValid(request):
+    if request.method == 'POST' and request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
+        postedJson = json.dumps(request.json)
+        return json.loads(postedJson)
+
+def getExpensePostsAsJson():
+    ''' Returns all expensepost-objects in a json list '''
     result, data = list(), {}
-    for post in DeptPost.objects:
+    for post in ExpensePost.objects:
         data['name'] = post.name
         data['amount'] = post.amount
-        data['date'] = post.date_modified
-        result.append(data)
+        data['date'] = normalizeDate(post.date_modified)
+        result.append(copy.deepcopy(data))
     return result
 
+def normalizeDate(date):
+    return (date - datetime(1970,1,1)).total_seconds()
+
+def deNormalizeDate(number):
+    return datetime(1970,1,1) + timedelta(seconds=number)
 
 @app.route('/calcDepts', methods=['POST'])
 def depts():
     ''' Calculates the "mean" of all depts '''
-    if request.method == 'POST' and request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
-        postedJson = json.dumps(request.json)
-        jsonAsDict = json.loads(postedJson)
-        deptList = deptCalculator.calcDepts(jsonAsDict)
-        return json.dumps(deptList)
-    else:
-        return "Invalid request", 400
+    jsonAsDict = getJsonDataFromPostIfValid(request)
+    expensesList = deptCalculator.calcDepts(jsonAsDict)
+    return json.dumps(expensesList)
 
-@app.route('/storeDept', methods=['POST'])
+@app.route('/storeExpense', methods=['POST'])
 def store():
     ''' Stores the posted data to the mongo '''
-    if request.method == 'POST' and request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
-        postedJson = json.dumps(request.json)
-        jsonAsDict = json.loads(postedJson)
-        deptPost = DeptPost(name=jsonAsDict.get('name'), amount=jsonAsDict.get('amount'))
-        deptPost.save()
-        return json.dumps(getDeptPostsAsJson())
+    jsonAsDict = getJsonDataFromPostIfValid(request)
+    expensePost = ExpensePost(name=jsonAsDict.get('name'), amount=jsonAsDict.get('amount'))
+    expensePost.save()
+    return json.dumps(getExpensePostsAsJson())
 
-@app.route('/deptList')
-def getDeptList():
+@app.route('/deleteExpense', methods=['POST'])
+def delete():
+    ''' Deletes the posted data by looking up the posted timestamp '''
+    jsonAsDict = getJsonDataFromPostIfValid(request)
+    date = deNormalizeDate(jsonAsDict['date'])
+    for expensePost in ExpensePost.objects:
+        if expensePost.date_modified == date:
+            expensePost.delete()
+            return Response("OK", 200)
+    return Response("Not found", 401)
+
+@app.route('/expensesList')
+def getExpensesList():
     ''' Returns a json list of depts ''' 
-    return json.dumps(getDeptPostsAsJson())
+    resp = Response(json.dumps(getExpensePostsAsJson()))
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
