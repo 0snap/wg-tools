@@ -4,7 +4,10 @@
   "description": "wg-tools frontend",
   "main": "expressServer.js",
   "scripts": {
-    "start": "node expressServer.js"
+    "dev": "NODE_ENV=development node expressServer.js",
+    "start": "NODE_ENV=production node expressServer.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.production.js",
+    "clean": "rm -rf public"
   },
   "author": "flx",
   "license": "ISC",
