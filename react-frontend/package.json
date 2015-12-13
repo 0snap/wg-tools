@@ -4,7 +4,7 @@
   "description": "wg-tools frontend",
   "main": "expressServer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node expressServer.js"
   },
   "author": "flx",
   "license": "ISC",
@@ -16,6 +16,10 @@
   "devDependencies": {
     "babel-core": "^6.3.17",
     "babel-loader": "^6.2.0",
+    "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "react-transform-hmr": "^1.0.1",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0"

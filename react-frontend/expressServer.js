@@ -19,7 +19,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 

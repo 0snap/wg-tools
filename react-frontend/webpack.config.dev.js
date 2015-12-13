@@ -3,7 +3,13 @@ var path = require('path');
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
-    entry: './src/entry.jsx',
+    entry: [
+        'webpack-hot-middleware/client',
+        './src/entry.jsx'
+    ],
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'build'),
