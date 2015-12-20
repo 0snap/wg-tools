@@ -32,24 +32,28 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 def getJsonDataFromPostIfValid(request):
-    print(request.headers)
     if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
-        print(postedJson)
+        #print(postedJson)
         return json.loads(postedJson)
 
 def getExpensePostsAsJson():
     ''' Returns all expensepost-objects in a json list '''
     result, data = list(), {}
     for post in ExpensePost.objects:
-        data['name'] = post.name
-        data['amount'] = post.amount
-        data['date'] = normalizeDate(post.date_modified)
-        result.append(copy.deepcopy(data))
+        result.append(normalizeExpensePost(post))
     return result
 
+def normalizeExpensePost(post):
+    normalized = {}
+    normalized['name'] = post.name
+    normalized['amount'] = post.amount
+    normalized['date'] = normalizeDate(post.date_modified)
+    #print(normalized)
+    return normalized
+
 def normalizeDate(date):
-    return (date - datetime(1970,1,1)).total_seconds()
+    return round((date - datetime(1970,1,1)).total_seconds(), 3)
 
 def deNormalizeDate(number):
     return datetime(1970,1,1) + timedelta(seconds=number)
@@ -67,7 +71,7 @@ def store():
     jsonAsDict = getJsonDataFromPostIfValid(request)
     expensePost = ExpensePost(name=jsonAsDict.get('name'), amount=jsonAsDict.get('amount'))
     expensePost.save()
-    return json.dumps(getExpensePostsAsJson())
+    return json.dumps(normalizeExpensePost(expensePost))
 
 @app.route('/deleteExpense', methods=['DELETE'])
 def delete():
