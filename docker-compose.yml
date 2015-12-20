@@ -1,0 +1,15 @@
+mongo:
+  build: ./mongo
+  ports:
+    - 12345:27017
+  hostname: mongo
+  volumes:
+    - ./mongo/data/db:/data/db
+
+dept:
+  build: ./py-backend
+  ports:
+    - 5000:5000
+  hostname: dept
+  links: 
+    - mongo:mongo

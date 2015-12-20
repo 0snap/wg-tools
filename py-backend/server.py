@@ -10,8 +10,8 @@ import copy
 Define some mongo stuff, very rudimentary storing of posted data.
 '''
 
-connect('localhost:27017')
-
+#connect('localhost:27017')
+connect('depts', host='mongo', port=27017)
 class Post(Document):
     date_modified = DateTimeField(default=datetime.now)
     meta = {'allow_inheritance': True}
@@ -28,6 +28,10 @@ Simple Flask-API for serving post requests. API offers stuff like calculating de
 
 
 app = Flask(__name__)
+
+def addHeaders(resp):
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 def getJsonDataFromPostIfValid(request):
     if request.method == 'POST' and request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
@@ -73,15 +77,13 @@ def delete():
     for expensePost in ExpensePost.objects:
         if expensePost.date_modified == date:
             expensePost.delete()
-            return Response("OK", 200)
-    return Response("Not found", 401)
+            return addHeaders(Response("OK", 200))
+    return addHeaders(Response("Not found", 401))
 
 @app.route('/expensesList')
 def getExpensesList():
     ''' Returns a json list of depts ''' 
-    resp = Response(json.dumps(getExpensePostsAsJson()))
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    return resp
+    return addHeaders(Response(json.dumps(getExpensePostsAsJson())))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
