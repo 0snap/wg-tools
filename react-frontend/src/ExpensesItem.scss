@@ -1,0 +1,16 @@
+.expensesItem {
+    border-radius: 15px;
+    background-color: #deeeed;
+    padding: 7px;
+    margin-top: 25px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.expensesItem__title {
+    font-size: 20px;
+}
+
+.deleteButton {
+    float: right;
+}

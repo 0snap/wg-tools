@@ -1,5 +1,8 @@
+// all components will inherit the global style
+@import './global.scss'; 
+
+
 .app {
     width: 95%;
-    border: 1px solid black;
-    overflow: hidden; /* will contain if #first is longer than #second */
+    overflow: hidden;
 }

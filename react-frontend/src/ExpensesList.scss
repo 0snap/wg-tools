@@ -1,5 +1,9 @@
-.expensesList {
+.expensesDiv {
     width: 55%;
-    float:left; /* add this */
+    float:left;
     border: 1px solid red;
+}
+
+.expensesItemList {
+    list-style-type: none;
 }
