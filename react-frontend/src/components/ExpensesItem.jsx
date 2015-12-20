@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+var expensesActions = require('../actions/ExpensesActions.jsx');
 
 import './ExpensesItem.scss';
 
@@ -9,8 +10,7 @@ export default class ExpensesItem extends Component {
     }
 
     onDelete() {
-        //console.log("delete");
-        this.props.list.deleteExpense(this.props.date);
+        expensesActions.deleteExpense(this.props.date);
     }
 
     render() {
@@ -30,5 +30,4 @@ ExpensesItem.propTypes = {
     name: React.PropTypes.string.isRequired,
     amount: React.PropTypes.number.isRequired,
     date: React.PropTypes.number.isRequired,
-    list: React.PropTypes.object.isRequired
 }

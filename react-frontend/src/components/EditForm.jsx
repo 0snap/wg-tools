@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import request from 'superagent';
+var expensesAction = require('../actions/ExpensesActions.jsx');
 import './EditForm.scss'
 
 export default class EditForm extends Component {
@@ -14,13 +14,7 @@ export default class EditForm extends Component {
     addExpense(event) {
         event.preventDefault();
         //console.log(this.state);
-        request.post('http://localhost:5000/storeExpense')
-            .send({name: this.state.name, amount: this.state.amount})
-            .set('Content-Type', 'application/json; charset=UTF-8')
-            .set('Access-Control-Allow-Origin', '*')
-            .end(function(err, res) {
-                console.log(res);
-            });
+        expensesAction.storeExpense(this.state.name, this.state.amount);
     }
 
     nameChange(event) {
