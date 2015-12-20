@@ -15,10 +15,12 @@ let ExpensesActions = {
                 else {
                     //console.log(res);
                     let stored = JSON.parse(res.text)
-                    console.log(res.text)
+                    //console.log(stored)
                     Dispatcher.dispatch({
-                        actionType: 'overwriteAll',
-                        expenses: stored
+                        actionType: 'add',
+                        name: stored.name,
+                        amount: stored.amount,
+                        date: stored.date
                     });
                 }
 

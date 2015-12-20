@@ -5,13 +5,13 @@ import assign from 'object-assign';
 var _expenses = {};
 
 function addExpense(name, amount, date) {
-    console.log("shall add ", name, amount, date);
+    //console.log("shall add ", name, amount, date);
     _expenses[date] = {
         name: name,
         amount: amount,
         date: date
     }
-    console.log(_expenses);
+    //console.log(_expenses);
 }
 
 
