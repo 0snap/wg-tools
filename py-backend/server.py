@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, request, json, Response
+from flask.ext.cors import CORS
 import deptCalculator
 from mongoengine import *
 from datetime import datetime, timedelta
@@ -10,8 +11,8 @@ import copy
 Define some mongo stuff, very rudimentary storing of posted data.
 '''
 
-#connect('localhost:27017')
-connect('depts', host='mongo', port=27017)
+connect('localhost:27017')
+#connect('depts', host='mongo', port=27017)
 class Post(Document):
     date_modified = DateTimeField(default=datetime.now)
     meta = {'allow_inheritance': True}
@@ -28,14 +29,13 @@ Simple Flask-API for serving post requests. API offers stuff like calculating de
 
 
 app = Flask(__name__)
-
-def addHeaders(resp):
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    return resp
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 def getJsonDataFromPostIfValid(request):
-    if request.method == 'POST' and request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
+    print(request.headers)
+    if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
+        print(postedJson)
         return json.loads(postedJson)
 
 def getExpensePostsAsJson():
@@ -69,7 +69,7 @@ def store():
     expensePost.save()
     return json.dumps(getExpensePostsAsJson())
 
-@app.route('/deleteExpense', methods=['POST'])
+@app.route('/deleteExpense', methods=['DELETE'])
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
     jsonAsDict = getJsonDataFromPostIfValid(request)
@@ -77,13 +77,13 @@ def delete():
     for expensePost in ExpensePost.objects:
         if expensePost.date_modified == date:
             expensePost.delete()
-            return addHeaders(Response("OK", 200))
-    return addHeaders(Response("Not found", 401))
+            return Response("OK", 200)
+    return Response("Not found", 404)
 
 @app.route('/expensesList')
 def getExpensesList():
     ''' Returns a json list of depts ''' 
-    return addHeaders(Response(json.dumps(getExpensePostsAsJson())))
+    return Response(json.dumps(getExpensePostsAsJson()))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
