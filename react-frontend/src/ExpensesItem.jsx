@@ -30,5 +30,5 @@ ExpensesItem.propTypes = {
     name: React.PropTypes.string.isRequired,
     amount: React.PropTypes.number.isRequired,
     date: React.PropTypes.number.isRequired,
-    list: React.PropTypes.func.isRequired
+    list: React.PropTypes.object.isRequired
 }
