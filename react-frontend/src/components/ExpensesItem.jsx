@@ -10,7 +10,8 @@ export default class ExpensesItem extends Component {
     }
 
     onDelete() {
-        expensesActions.deleteExpense(this.props.date);
+        console.log("del ", this.props.id);
+        expensesActions.deleteExpense(this.props.id);
     }
 
     render() {
@@ -30,4 +31,5 @@ ExpensesItem.propTypes = {
     name: React.PropTypes.string.isRequired,
     amount: React.PropTypes.number.isRequired,
     date: React.PropTypes.number.isRequired,
+    id: React.PropTypes.string.isRequired
 }

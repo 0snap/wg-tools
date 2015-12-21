@@ -4,26 +4,27 @@ import assign from 'object-assign';
 
 var _expenses = {};
 
-function addExpense(name, amount, date) {
-    //console.log("shall add ", name, amount, date);
-    _expenses[date] = {
+function addExpense(id, name, amount, date) {
+    console.log("shall add ", id, name, amount, date);
+    _expenses[id] = {
         name: name,
         amount: amount,
-        date: date
+        date: date,
+        id: id
     }
-    //console.log(_expenses);
+    console.log(_expenses);
 }
 
 
-function deleteExpense(date) {
-    delete _expenses[date];
+function deleteExpense(id) {
+    delete _expenses[id];
 }
 
 function overwriteAll(expenses) {
     // backend returns expenses as list. transform into a dict with keys:
     _expenses = {};
     expenses.forEach(exp => {
-        _expenses[exp.date] = exp;
+        _expenses[exp.id] = exp;
     });
     //console.log(_expenses);
 }
@@ -59,15 +60,14 @@ Dispatcher.register(function(action) {
 
     switch(action.actionType) {
         case('add'):
-            //console.log('store add');
-            //console.log('shall add ', action.name, action.amount, action.date);
-            addExpense(action.name, action.amount, action.date);
+            //console.log('shall add ', action.name, action.amount, action.date, action.id);
+            addExpense(action.id, action.name, action.amount, action.date);
             ExpensesStore.emitChange();
             break;
 
         case('delete'):
             //console.log('store delete');
-            deleteExpense(action.date);
+            deleteExpense(action.id);
             ExpensesStore.emitChange();
             break;
 

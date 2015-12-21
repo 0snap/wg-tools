@@ -39,7 +39,7 @@ export default class ExpensesList extends Component {
                 <h2>Ausgaben</h2>
                 <ul className='expensesItemList'>
                 {expenses.map(item => {
-                    return <ExpensesItem name={item.name} amount={item.amount} date={item.date} />
+                    return <ExpensesItem name={item.name} amount={item.amount} date={item.date} id={item.id} />
                 })}
                 </ul>
             </div>);

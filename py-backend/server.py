@@ -41,6 +41,7 @@ def getExpensePostsAsJson():
     ''' Returns all expensepost-objects in a json list '''
     result, data = list(), {}
     for post in ExpensePost.objects:
+        print(post.id)
         result.append(normalizeExpensePost(post))
     return result
 
@@ -49,11 +50,12 @@ def normalizeExpensePost(post):
     normalized['name'] = post.name
     normalized['amount'] = post.amount
     normalized['date'] = normalizeDate(post.date_modified)
+    normalized['id'] = str(post.id)
     #print(normalized)
     return normalized
 
 def normalizeDate(date):
-    return round((date - datetime(1970,1,1)).total_seconds(), 3)
+    return (date - datetime(1970,1,1)).total_seconds()
 
 def deNormalizeDate(number):
     return datetime(1970,1,1) + timedelta(seconds=number)
@@ -77,11 +79,11 @@ def store():
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
     jsonAsDict = getJsonDataFromPostIfValid(request)
-    date = deNormalizeDate(jsonAsDict['date'])
-    for expensePost in ExpensePost.objects:
-        if expensePost.date_modified == date:
-            expensePost.delete()
-            return Response("OK", 200)
+    oid = jsonAsDict['id']
+    post = ExpensePost.objects.get(id=oid)
+    if(post != None):
+        post.delete()
+        return Response("OK", 200)
     return Response("Not found", 404)
 
 @app.route('/expensesList')

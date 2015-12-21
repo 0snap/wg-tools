@@ -20,7 +20,8 @@ let ExpensesActions = {
                         actionType: 'add',
                         name: stored.name,
                         amount: stored.amount,
-                        date: stored.date
+                        date: stored.date,
+                        id: stored.id
                     });
                 }
 
@@ -28,9 +29,9 @@ let ExpensesActions = {
         //console.log(name, amount);
     },
 
-    deleteExpense(timestamp) {
+    deleteExpense(id) {
         request.del('http://localhost:5000/deleteExpense')
-            .send({ date: timestamp })
+            .send({ id: id })
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Access-Control-Allow-Origin', '*')
             .end(function(err, res) {
@@ -40,7 +41,7 @@ let ExpensesActions = {
                 else { 
                     Dispatcher.dispatch({
                         actionType: 'delete',
-                        date: timestamp
+                        id: id
                     });
                 }
             });
