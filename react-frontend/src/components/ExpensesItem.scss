@@ -1,10 +1,15 @@
 .expensesItem {
-    border-radius: 15px;
-    background-color: #deeeed;
+    background-color: #DEDCA6;
     padding: 7px;
-    margin-top: 25px;
+    margin-top: 2px;
     width: 200px;
     overflow: hidden;
+    border: 1px solid #7D7D7D;
+
+}
+.expensesItem:hover {
+    margin-top: -1px;
+    border: 2px solid #4F6AAB;
 }
 
 .expensesItem__title {

@@ -6,15 +6,21 @@ export default class EditForm extends Component {
 
     constructor(props) {
         super(props);
-        super(props);
-        this.state = { amount: 0, name: ''};
+        this.state = { amount: '', name: ''};
     }
 
 
     addExpense(event) {
         event.preventDefault();
-        //console.log(this.state);
-        expensesAction.storeExpense(this.state.name, this.state.amount);
+        var amount = this.state.amount.trim();
+        var name = this.state.name.trim();
+        expensesAction.storeExpense(name, amount);
+        this.clearInputfields();
+    }
+
+    clearInputfields() {
+        this.setState({amount: ''});
+        this.setState({name: ''});
     }
 
     nameChange(event) {
@@ -32,12 +38,12 @@ export default class EditForm extends Component {
                 <form onSubmit={this.addExpense.bind(this)}>
                     <div className="form-group">
                         <label htmlFor="name">Name</label>
-                        <input id="name" className='formInput__text' onChange={this.nameChange.bind(this)} />
+                        <input id="name" className='formInput__text' value={this.state.name} onChange={this.nameChange.bind(this)} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="amount">Betrag</label>
-                        <input id="amount" className='formInput__number' onChange={this.amountChange.bind(this)} />
+                        <input id="amount" type="number" className='formInput__number' value={this.state.amount} onChange={this.amountChange.bind(this)} />
                     </div>
 
                     <div className="form-group">

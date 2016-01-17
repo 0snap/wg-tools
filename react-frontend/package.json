@@ -17,6 +17,9 @@
     "react-dom": "^0.14.3"
   },
   "devDependencies": {
+    "express": "^4.13.3",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
     "babel-core": "^6.3.17",
     "babel-loader": "^6.2.0",
     "babel-plugin-react-transform": "^2.0.0-beta1",

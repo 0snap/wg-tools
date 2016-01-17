@@ -7,6 +7,7 @@ export default class ExpensesItem extends Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props.date);
     }
 
     onDelete() {

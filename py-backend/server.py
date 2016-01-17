@@ -11,7 +11,7 @@ import copy
 Define some mongo stuff, very rudimentary storing of posted data.
 '''
 
-connect('localhost:27017')
+connect(host='mongodb://localhost:27017/depts')
 #connect('depts', host='mongo', port=27017)
 class Post(Document):
     date_modified = DateTimeField(default=datetime.now)
@@ -20,6 +20,7 @@ class Post(Document):
 class ExpensePost(Post):
     name = StringField()
     amount = IntField()
+    tsDeleted = DateTimeField(default=None)
 
 
 
@@ -37,35 +38,42 @@ def getJsonDataFromPostIfValid(request):
         #print(postedJson)
         return json.loads(postedJson)
 
-def getExpensePostsAsJson():
+def getExpensePostsAsJson(includeDeleted = False):
     ''' Returns all expensepost-objects in a json list '''
-    result, data = list(), {}
+    result = list()
     for post in ExpensePost.objects:
-        print(post.id)
-        result.append(normalizeExpensePost(post))
+        #print(post.id)
+        if not includeDeleted and post.tsDeleted == None:
+            result.append(normalizeExpensePost(post))
+        elif includeDeleted:
+            result.append(normalizeExpensePost(post))
     return result
+
+def getUnsettledExpenses():
+    ''' Returns a dict in the form "name: amount" of all unsettled expenses inside the database '''
 
 def normalizeExpensePost(post):
     normalized = {}
     normalized['name'] = post.name
     normalized['amount'] = post.amount
-    normalized['date'] = normalizeDate(post.date_modified)
+    normalized['date'] = post.date_modified
     normalized['id'] = str(post.id)
     #print(normalized)
     return normalized
 
-def normalizeDate(date):
-    return (date - datetime(1970,1,1)).total_seconds()
-
-def deNormalizeDate(number):
-    return datetime(1970,1,1) + timedelta(seconds=number)
-
-@app.route('/calcDepts', methods=['POST'])
-def depts():
-    ''' Calculates the "mean" of all depts '''
+@app.route('/calcDeptsFromPostData', methods=['POST'])
+def calcDepts():
+    ''' Calculates the "mean" of all depts contained in the post-data'''
     jsonAsDict = getJsonDataFromPostIfValid(request)
     expensesList = deptCalculator.calcDepts(jsonAsDict)
     return json.dumps(expensesList)
+
+@app.route('/meanDepts', methods=['GET'])
+def depts():
+    ''' Calculates the "mean" of all depts inside the database'''
+    nameAmountDict = getUnsettledExpenses()
+    meanDepts = deptCalculator.calcDepts(nameAmountDict)
+    return json.dumps(meanDepts)
 
 @app.route('/storeExpense', methods=['POST'])
 def store():
@@ -82,7 +90,8 @@ def delete():
     oid = jsonAsDict['id']
     post = ExpensePost.objects.get(id=oid)
     if(post != None):
-        post.delete()
+        post.tsDeleted = datetime.now
+        post.save()
         return Response("OK", 200)
     return Response("Not found", 404)
 
