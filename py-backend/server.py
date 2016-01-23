@@ -80,8 +80,8 @@ def depts():
 def store():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
-    if jsonAsDict.get('name') != None and jsonAsDict.get('name') != None and float(jsonAsDict.get('amount')) >= 0:
-        expensePost = ExpensePost(name=jsonAsDict.get('name'), amount=jsonAsDict.get('amount'))
+    if jsonAsDict['name'] != None and jsonAsDict['name'] != '' and float(jsonAsDict['amount']) >= 0:
+        expensePost = ExpensePost(name=jsonAsDict['name'], amount=jsonAsDict['amount'])
         expensePost.save()
         return json.dumps(normalizeExpensePost(expensePost))
     return Response('Wrong format, will not store.', 400)
@@ -90,7 +90,7 @@ def store():
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
     jsonAsDict = getDictFromPost(request)
-    oid = jsonAsDict.get('id')
+    oid = jsonAsDict['id']
     if oid != None and oid != '':
         post = ExpensePost.objects.get(id=oid)
         if(post != None):
