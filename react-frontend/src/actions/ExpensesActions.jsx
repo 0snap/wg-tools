@@ -4,6 +4,7 @@ import request from 'superagent';
 let ExpensesActions = {
 
     storeExpense(name, amount) {
+        let _this = this;
         request.post('http://localhost:5000/storeExpense')
             .send({name: name, amount: amount})
             .set('Content-Type', 'application/json; charset=UTF-8')
@@ -23,6 +24,7 @@ let ExpensesActions = {
                         date: stored.date,
                         id: stored.id
                     });
+                    _this.fetchDepts();
                 }
 
         });
@@ -30,6 +32,7 @@ let ExpensesActions = {
     },
 
     deleteExpense(id) {
+        let _this = this;
         request.del('http://localhost:5000/deleteExpense')
             .send({ id: id })
             .set('Content-Type', 'application/json; charset=UTF-8')
@@ -43,6 +46,7 @@ let ExpensesActions = {
                         actionType: 'delete',
                         id: id
                     });
+                    _this.fetchDepts();
                 }
             });
         //console.log(timestamp);
@@ -61,15 +65,15 @@ let ExpensesActions = {
         });
     },
 
-    fetchMeans() {
+    fetchDepts() {
         request.get('http://localhost:5000/meanDepts').end(function(err, res) {
             if(err) {
                 console.log(err);
             }
             else {
                 Dispatcher.dispatch({
-                    actionType: 'means',
-                    means: JSON.parse(res.text)
+                    actionType: 'depts',
+                    depts: JSON.parse(res.text)
                 });
             }
         });

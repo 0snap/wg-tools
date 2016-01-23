@@ -16,7 +16,7 @@ function process() {
     isProcessing = true
     while (actions.length > 0) {
         if (dispatcher.isDispatching()) {
-            return setTimeout(process, 100)
+            return setTimeout(process, 50)
         }
         var payload = actions.shift()
         dispatcher.dispatch(payload)

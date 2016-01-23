@@ -3,7 +3,7 @@ import './App.scss';
 
 import EditForm from './EditForm.jsx';
 import ExpensesList from './ExpensesList.jsx';
-import MeanDepts from './MeanDepts.jsx';
+import DeptList from './DeptList.jsx';
 var expensesActions = require('../actions/ExpensesActions.jsx');
 
 
@@ -13,14 +13,14 @@ export class App extends Component {
         super(props);
         // init store
         expensesActions.fetchExpenses();
-        expensesActions.fetchMeans();
+        expensesActions.fetchDepts();
     }
 
     render() {
         return (
             <div className='app'>
                 <ExpensesList />
-                <MeanDepts />
+                <DeptList />
                 <EditForm />
             </div>);
     }
