@@ -19,7 +19,7 @@ class Post(Document):
 
 class ExpensePost(Post):
     name = StringField()
-    amount = IntField()
+    amount = FloatField(min_value=0)
     tsDeleted = DateTimeField(default=None)
 
 

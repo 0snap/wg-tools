@@ -13,7 +13,7 @@ export default class DeptItem extends Component {
     render() {
         return (
             <li className='deptItem'>
-                <span className='deptItem__title'>{this.props.borrower} an {this.props.sponsor}: {this.props.amount}€</span>
+                <span className='deptItem__name'>{this.props.borrower}</span> an <span className='deptItem__name'>{this.props.sponsor}</span>: <span className='deptItem__amount'>{this.props.amount}€</span>
             </li>
         );
     }

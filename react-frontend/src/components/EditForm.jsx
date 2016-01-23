@@ -43,7 +43,7 @@ export default class EditForm extends Component {
 
                     <div className="form-group">
                         <label htmlFor="amount">Betrag</label>
-                        <input id="amount" type="number" className='formInput__number' value={this.state.amount} onChange={this.amountChange.bind(this)} />
+                        <input id="amount" type="number" step="0.01" min="0" className='formInput__number' value={this.state.amount} onChange={this.amountChange.bind(this)} />
                     </div>
 
                     <div className="form-group">

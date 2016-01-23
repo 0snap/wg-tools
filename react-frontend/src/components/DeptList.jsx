@@ -25,12 +25,14 @@ export default class DeptList extends Component {
 
     render() {
         let depts = this.state.deptList;
-        console.log(depts);
-        
+        // console.log(depts);
+        if(Object.keys(depts).length === 0) {
+            return (<div className='deptList'><h3>Keine Schulden</h3></div>);
+        }
         
         let _this = this;
         return (
-            <div className='deptsDiv'>
+            <div className='deptList'>
                 <h2>Schulden</h2>
                 <ul className='deptItemList'>
                 {depts.map(item => {

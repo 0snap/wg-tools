@@ -1,8 +1,8 @@
 .deptItem {
-    background-color: #DEDCA6;
+    background-color: #BEBEB3;
     padding: 7px;
     margin-top: 2px;
-    width: 400px;
+    width: 80%;
     overflow: hidden;
     border: 1px solid #7D7D7D;
 
@@ -12,6 +12,13 @@
     border: 2px solid #4F6AAB;
 }
 
-.deptItem__title {
+.deptItem__name {
     font-size: 20px;
+    color: #101B6E;
 }
+
+.deptItem__amount {
+    font-size: 20px;
+    color: #C70040;
+}
+
