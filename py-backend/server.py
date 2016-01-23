@@ -32,10 +32,9 @@ Simple Flask-API for serving post requests. API offers stuff like calculating de
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-def getJsonDataFromPostIfValid(request):
+def getDictFromPost(request):
     if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
-        #print(postedJson)
         return json.loads(postedJson)
 
 def getExpensePosts(includeDeleted = False):
@@ -66,7 +65,7 @@ def normalizeExpensePost(post):
 @app.route('/calcDeptsFromPostData', methods=['POST'])
 def calcDepts():
     ''' Calculates the "mean" of all depts contained in the post-data'''
-    jsonAsDict = getJsonDataFromPostIfValid(request)
+    jsonAsDict = getDictFromPost(request)
     expensesList = deptCalculator.calcDepts(jsonAsDict)
     return json.dumps(expensesList)
 
@@ -80,22 +79,25 @@ def depts():
 @app.route('/storeExpense', methods=['POST'])
 def store():
     ''' Stores the posted data to the mongo '''
-    jsonAsDict = getJsonDataFromPostIfValid(request)
-    expensePost = ExpensePost(name=jsonAsDict.get('name'), amount=jsonAsDict.get('amount'))
-    expensePost.save()
-    return json.dumps(normalizeExpensePost(expensePost))
+    jsonAsDict = getDictFromPost(request)
+    if jsonAsDict.get('name') != None and jsonAsDict.get('name') != None and float(jsonAsDict.get('amount')) >= 0:
+        expensePost = ExpensePost(name=jsonAsDict.get('name'), amount=jsonAsDict.get('amount'))
+        expensePost.save()
+        return json.dumps(normalizeExpensePost(expensePost))
+    return Response('Wrong format, will not store.', 400)
 
 @app.route('/deleteExpense', methods=['DELETE'])
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
-    jsonAsDict = getJsonDataFromPostIfValid(request)
-    oid = jsonAsDict['id']
-    post = ExpensePost.objects.get(id=oid)
-    if(post != None):
-        post.tsDeleted = datetime.now
-        post.save()
-        return Response("OK", 200)
-    return Response("Not found", 404)
+    jsonAsDict = getDictFromPost(request)
+    oid = jsonAsDict.get('id')
+    if oid != None and oid != '':
+        post = ExpensePost.objects.get(id=oid)
+        if(post != None):
+            post.tsDeleted = datetime.now
+            post.save()
+            return Response('OK', 200)
+    return Response('Not found', 404)
 
 @app.route('/expensesList')
 def getExpensesList():
