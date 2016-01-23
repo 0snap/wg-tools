@@ -5,7 +5,7 @@ from flask.ext.cors import CORS
 import deptCalculator
 from mongoengine import *
 from datetime import datetime, timedelta
-import copy
+from collections import defaultdict
 
 '''
 Define some mongo stuff, very rudimentary storing of posted data.
@@ -38,7 +38,7 @@ def getJsonDataFromPostIfValid(request):
         #print(postedJson)
         return json.loads(postedJson)
 
-def getExpensePostsAsJson(includeDeleted = False):
+def getExpensePosts(includeDeleted = False):
     ''' Returns all expensepost-objects in a json list '''
     result = list()
     for post in ExpensePost.objects:
@@ -49,8 +49,13 @@ def getExpensePostsAsJson(includeDeleted = False):
             result.append(normalizeExpensePost(post))
     return result
 
-def getUnsettledExpenses():
+def getUnsettledExpensesAsDict():
     ''' Returns a dict in the form "name: amount" of all unsettled expenses inside the database '''
+    expenseList = getExpensePosts(False) # do explicitly no include deleted.
+    expenses = defaultdict(float)
+    for exp in expenseList:
+        expenses[exp['name']] = expenses[exp['name']] + exp['amount']
+    return expenses
 
 def normalizeExpensePost(post):
     normalized = {}
@@ -71,7 +76,7 @@ def calcDepts():
 @app.route('/meanDepts', methods=['GET'])
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
-    nameAmountDict = getUnsettledExpenses()
+    nameAmountDict = getUnsettledExpensesAsDict()
     meanDepts = deptCalculator.calcDepts(nameAmountDict)
     return json.dumps(meanDepts)
 
@@ -98,7 +103,7 @@ def delete():
 @app.route('/expensesList')
 def getExpensesList():
     ''' Returns a json list of depts ''' 
-    return Response(json.dumps(getExpensePostsAsJson()))
+    return Response(json.dumps(getExpensePosts()))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

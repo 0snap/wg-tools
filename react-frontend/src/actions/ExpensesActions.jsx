@@ -59,6 +59,20 @@ let ExpensesActions = {
             });
             //console.log(_this.state.expenses);
         });
+    },
+
+    fetchMeans() {
+        request.get('http://localhost:5000/meanDepts').end(function(err, res) {
+            if(err) {
+                console.log(err);
+            }
+            else {
+                Dispatcher.dispatch({
+                    actionType: 'means',
+                    means: JSON.parse(res.text)
+                });
+            }
+        });
     }
 
 }

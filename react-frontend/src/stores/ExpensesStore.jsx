@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 import assign from 'object-assign';
 
 var _expenses = {};
+var _means = [];
 
 function addExpense(id, name, amount, date) {
     console.log("shall add ", id, name, amount, date);
@@ -12,7 +13,7 @@ function addExpense(id, name, amount, date) {
         date: date,
         id: id
     }
-    console.log(_expenses);
+    //console.log(_expenses);
 }
 
 
@@ -27,6 +28,11 @@ function overwriteAll(expenses) {
         _expenses[exp.id] = exp;
     });
     //console.log(_expenses);
+}
+
+function storeMeans(means) {
+    _means = means;
+
 }
 
 let ExpensesStore = assign({ }, EventEmitter.prototype, {
@@ -53,6 +59,10 @@ let ExpensesStore = assign({ }, EventEmitter.prototype, {
 
     removeChangeListener(callback) {
         this.removeListener('change', callback);
+    },
+
+    getMeans() {
+        return _means;
     }
 })
 
@@ -74,6 +84,11 @@ Dispatcher.register(function(action) {
         case('overwriteAll'):
             //console.log('store all');
             overwriteAll(action.expenses);
+            ExpensesStore.emitChange();
+            break;
+        case('means'):
+            //console.log('means');
+            storeMeans(action.means);
             ExpensesStore.emitChange();
             break;
     }

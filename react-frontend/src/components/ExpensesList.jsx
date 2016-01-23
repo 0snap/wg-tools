@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ExpensesItem from './ExpensesItem.jsx';
 var expensesStore = require('../stores/ExpensesStore.jsx');
-var expensesActions = require('../actions/ExpensesActions.jsx');
 
 import './ExpensesList.scss'
 
@@ -9,7 +8,6 @@ export default class ExpensesList extends Component {
 
     constructor(props) {
         super(props);
-        expensesActions.fetchExpenses();
         this.state = { expenses: expensesStore.getAllExpenses() };
     }
 
