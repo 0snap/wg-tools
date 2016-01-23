@@ -41,13 +41,10 @@ def getJsonDataFromPostIfValid(request):
 def getExpensePosts(includeDeleted = False):
     ''' Returns all expensepost-objects in a json list '''
     result = list()
-    for post in ExpensePost.objects:
-        #print(post.id)
-        if not includeDeleted and post.tsDeleted == None:
-            result.append(normalizeExpensePost(post))
-        elif includeDeleted:
-            result.append(normalizeExpensePost(post))
-    return result
+    if not includeDeleted:
+        posts =  ExpensePost.objects(tsDeleted=None)
+    else: posts = ExpensePost.objects
+    return [normalizeExpensePost(post) for post in posts]
 
 def getUnsettledExpensesAsDict():
     ''' Returns a dict in the form "name: amount" of all unsettled expenses inside the database '''

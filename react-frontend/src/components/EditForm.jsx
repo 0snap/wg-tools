@@ -37,17 +37,18 @@ export default class EditForm extends Component {
                 <h2>Eintrag anlegen</h2>
                 <form onSubmit={this.addExpense.bind(this)}>
                     <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input id="name" className='formInput__text' value={this.state.name} onChange={this.nameChange.bind(this)} />
+                        <label className="editForm__label" htmlFor="name">Name</label>
+                        <input className="editForm__input" id="name" value={this.state.name} onChange={this.nameChange.bind(this)} />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="amount">Betrag</label>
-                        <input id="amount" type="number" step="0.01" min="0" className='formInput__number' value={this.state.amount} onChange={this.amountChange.bind(this)} />
+                        <label className="editForm__label" htmlFor="amount">Betrag</label>
+                        <input className="editForm__input" id="amount" type="number" step="0.01" min="0" value={this.state.amount} onChange={this.amountChange.bind(this)} />
                     </div>
 
                     <div className="form-group">
-                        <button type="submit" className="btn btn-primary">OK</button>
+                        <label className="editForm__label" htmlFor="submit">Speichern</label>
+                        <button className="editForm__button btn btn-primary" id="submit" type="submit">OK</button>
                     </div>
                 </form>
             </div>
