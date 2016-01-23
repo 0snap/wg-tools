@@ -29,7 +29,7 @@ export default class ExpensesList extends Component {
         //console.log(expenses);
         
         if(Object.keys(expenses).length === 0) {
-            return (<div className='expensesList'><h3>Keine Ausgaben</h3></div>);
+            return (<div className='expensesDiv'><h2>Keine Ausgaben</h2></div>);
         }
 
         let _this = this;

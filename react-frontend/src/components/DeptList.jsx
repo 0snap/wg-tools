@@ -27,7 +27,7 @@ export default class DeptList extends Component {
         let depts = this.state.deptList;
         // console.log(depts);
         if(Object.keys(depts).length === 0) {
-            return (<div className='deptList'><h3>Keine Schulden</h3></div>);
+            return (<div className='deptList'><h2>Keine Schulden</h2></div>);
         }
         
         let _this = this;

@@ -6,20 +6,20 @@ export default class EditForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { amount: '', name: ''};
+        this.state = { amount: 0, name: ''};
     }
 
 
     addExpense(event) {
         event.preventDefault();
-        var amount = this.state.amount.trim();
+        var amount = this.state.amount;
         var name = this.state.name.trim();
         expensesAction.storeExpense(name, amount);
         this.clearInputfields();
     }
 
     clearInputfields() {
-        this.setState({amount: ''});
+        this.setState({amount: 0});
         this.setState({name: ''});
     }
 
