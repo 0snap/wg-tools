@@ -42,7 +42,9 @@ export default class ExpensesGraph extends Component {
         })
         let result = [];
         for (var name in datasets) {
-            result.push(datasets[name])
+            let dataEntry = datasets[name]
+            this.fillWholesInTimeline(dataEntry)
+            result.push(dataEntry)
         }
         return result;
 
@@ -50,14 +52,12 @@ export default class ExpensesGraph extends Component {
 
     getNewDataEntry(expense, marks) {
         let data = []
+        for (let i = 0; i < marks.length; i++) {
+            data[i] = 0;
+        }
         let index = marks.findIndex((element, index, array) => (element === expense.date))
         if(index >= 0) {
-            for (let i = 0; i < index; i++) {
-                data[i] = 0;
-            }
-            for (let i = index; i < marks.length; i++) {
-                data[i] = expense.amount;
-            }
+            data[index] = expense.amount;
         }
         return {
             label: expense.name,
@@ -79,6 +79,15 @@ export default class ExpensesGraph extends Component {
         }
         appendTo['data'] = data;
         return appendTo;
+    }
+
+    fillWholesInTimeline(dataEntry) {
+        let data = dataEntry['data'];
+        let amount = 0;
+        for (let i = 0; i < data.length; i++) {
+            amount += data[i];
+            data[i] = amount;
+        }
     }
 
     render() {
