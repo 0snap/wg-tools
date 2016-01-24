@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.scss';
 
-import EditForm from './EditForm.jsx';
-import ExpensesContainer from './ExpensesContainer.jsx';
-import DeptContainer from './DeptContainer.jsx';
+import EditForm from './edit/EditForm.jsx';
+import ExpensesContainer from './expenses/ExpensesContainer.jsx';
+import DeptContainer from './depts/DeptContainer.jsx';
 var expensesActions = require('../actions/ExpensesActions.jsx');
 
 

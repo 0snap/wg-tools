@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DeptItem from './DeptItem.jsx';
-var expensesStore = require('../stores/ExpensesStore.jsx');
 
 import './DeptList.scss'
 

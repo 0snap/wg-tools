@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-var expensesAction = require('../actions/ExpensesActions.jsx');
+var expensesAction = require('../../actions/ExpensesActions.jsx');
 import './EditForm.scss'
 
 export default class EditForm extends Component {

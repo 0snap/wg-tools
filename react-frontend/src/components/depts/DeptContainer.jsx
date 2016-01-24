@@ -3,7 +3,7 @@ import DeptList from './DeptList.jsx'
 import './DeptContainer.scss'
 
 
-var expensesStore = require('../stores/ExpensesStore.jsx');
+var expensesStore = require('../../stores/ExpensesStore.jsx');
 
 
 export default class DeptContainer extends Component {

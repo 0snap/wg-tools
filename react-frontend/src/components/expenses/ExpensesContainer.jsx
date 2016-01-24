@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ExpensesList from './ExpensesList.jsx'
-var expensesStore = require('../stores/ExpensesStore.jsx');
+var expensesStore = require('../../stores/ExpensesStore.jsx');
 
 import './ExpensesContainer.scss'
 
