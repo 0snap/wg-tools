@@ -6,6 +6,7 @@ import deptCalculator
 from mongoengine import *
 from datetime import datetime, timedelta
 from collections import defaultdict
+import random 
 
 '''
 Define some mongo stuff, very rudimentary storing of posted data.
@@ -20,6 +21,7 @@ class Post(Document):
 class ExpensePost(Post):
     name = StringField()
     amount = FloatField(min_value=0)
+    color = StringField()
     tsDeleted = DateTimeField(default=None)
 
 
@@ -41,7 +43,7 @@ def getExpensePosts(includeDeleted = False):
     ''' Returns all expensepost-objects in a json list '''
     result = list()
     if not includeDeleted:
-        posts =  ExpensePost.objects(tsDeleted=None)
+        posts = ExpensePost.objects(tsDeleted=None)
     else: posts = ExpensePost.objects
     return [normalizeExpensePost(post) for post in posts]
 
@@ -59,8 +61,20 @@ def normalizeExpensePost(post):
     normalized['amount'] = post.amount
     normalized['date'] = post.date_modified
     normalized['id'] = str(post.id)
+    normalized['color'] = post.color
     #print(normalized)
     return normalized
+
+def getRandomColor():
+    randomRGB = lambda: random.randint(0,128) # dark colors, 50% grey
+    randomHex = '#%02X%02X%02X' % (randomRGB(),randomRGB(),randomRGB())
+    return randomHex
+
+def getColorForName(name):
+    connectedPosts = ExpensePost.objects(name=name)
+    if (len(connectedPosts) > 0):
+        return connectedPosts[0].color
+    return getRandomColor()
 
 @app.route('/calcDeptsFromPostData', methods=['POST'])
 def calcDepts():
@@ -80,8 +94,11 @@ def depts():
 def store():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
-    if jsonAsDict['name'] != None and jsonAsDict['name'] != '' and float(jsonAsDict['amount']) >= 0:
-        expensePost = ExpensePost(name=jsonAsDict['name'], amount=jsonAsDict['amount'])
+    name = jsonAsDict['name']
+    amount = jsonAsDict['amount']
+    if name != None and name != '' and float(amount) >= 0:
+        color = getColorForName(name)
+        expensePost = ExpensePost(name=name, amount=amount, color=color)
         expensePost.save()
         return json.dumps(normalizeExpensePost(expensePost))
     return Response('Wrong format, will not store.', 400)
@@ -90,7 +107,7 @@ def store():
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
     jsonAsDict = getDictFromPost(request)
-    oid = jsonAsDict['id']
+    oid = jsonAsDict.get('id')
     if oid != None and oid != '':
         post = ExpensePost.objects.get(id=oid)
         if(post != None):
