@@ -5,13 +5,14 @@ import assign from 'object-assign';
 var _expenses = {};
 var _depts = [];
 
-function addExpense(id, name, amount, date) {
+function addExpense(id, name, amount, date, color) {
     //console.log("shall add ", id, name, amount, date);
     _expenses[id] = {
         name: name,
         amount: amount,
         date: date,
-        id: id
+        id: id,
+        color: color
     }
     //console.log(_expenses);
 }
@@ -72,7 +73,7 @@ Dispatcher.register(function(action) {
     switch(action.actionType) {
         case('add'):
             //console.log('shall add ', action.name, action.amount, action.date, action.id);
-            addExpense(action.id, action.name, action.amount, action.date);
+            addExpense(action.id, action.name, action.amount, action.date, action.color);
             ExpensesStore.emitChange();
             break;
 

@@ -11,13 +11,16 @@ export default class ExpensesItem extends Component {
 
     onDelete() {
         //console.log("del ", this.props.id);
-        expensesActions.deleteExpense(this.props.id);
+        expensesActions.deleteExpense(this.props.item.id);
     }
 
     render() {
+        let nameStyle = {
+            color: this.props.item.color
+        }
         return (
             <li className='expensesItem'>
-                <span className='expensesItem__title'>{this.props.name}&nbsp;&nbsp;&nbsp;&nbsp;{this.props.amount}€</span>
+                <span className='expensesItem__title' style={nameStyle}>{this.props.item.name}&nbsp;&nbsp;&nbsp;&nbsp;{this.props.item.amount}€</span>
                 <button className='deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button>
             </li>
         );
@@ -28,8 +31,5 @@ export default class ExpensesItem extends Component {
 }
 
 ExpensesItem.propTypes = {
-    name: React.PropTypes.string.isRequired,
-    amount: React.PropTypes.number.isRequired,
-    date: React.PropTypes.string.isRequired,
-    id: React.PropTypes.string.isRequired
+    item: React.PropTypes.object.isRequired
 }

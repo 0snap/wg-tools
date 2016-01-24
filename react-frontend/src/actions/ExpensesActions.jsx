@@ -22,6 +22,7 @@ let ExpensesActions = {
                         name: stored.name,
                         amount: stored.amount,
                         date: stored.date,
+                        color: stored.color,
                         id: stored.id
                     });
                     _this.fetchDepts();
