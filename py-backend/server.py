@@ -87,8 +87,10 @@ def calcDepts():
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
     nameAmountDict = getUnsettledExpensesAsDict()
-    meanDepts = deptCalculator.calcDepts(nameAmountDict)
-    return json.dumps(meanDepts)
+    if(len(nameAmountDict) > 0):
+        meanDepts = deptCalculator.calcDepts(nameAmountDict)
+        return json.dumps(meanDepts)
+    return Response('Nothing found', 404)
 
 @app.route('/storeExpense', methods=['POST'])
 def store():
