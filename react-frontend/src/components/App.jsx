@@ -3,7 +3,7 @@ import './App.scss';
 
 import EditForm from './EditForm.jsx';
 import ExpensesList from './ExpensesList.jsx';
-import DeptList from './DeptList.jsx';
+import DeptContainer from './DeptContainer.jsx';
 var expensesActions = require('../actions/ExpensesActions.jsx');
 
 
@@ -20,7 +20,7 @@ export class App extends Component {
         return (
             <div className='app'>
                 <ExpensesList />
-                <DeptList />
+                <DeptContainer />
                 <EditForm />
             </div>);
     }
