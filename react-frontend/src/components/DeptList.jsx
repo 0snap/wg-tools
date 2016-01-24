@@ -8,23 +8,10 @@ export default class DeptList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { deptList: expensesStore.getDepts() };
-    }
-
-    componentDidMount() {
-        expensesStore.addChangeListener(this.handleStoreChange.bind(this));
-    }
-
-    componentWillUnmount() {
-        expensesStore.removeChangeListener(this.handleStoreChange.bind(this));
-    }
-
-    handleStoreChange() {
-        this.setState({ deptList: expensesStore.getDepts() });
     }
 
     render() {
-        let depts = this.state.deptList;
+        let depts = this.props.deptList;
         // console.log(depts);
         if(Object.keys(depts).length === 0) {
             return (<div className='deptList'><h2>Keine Schulden</h2></div>);
@@ -41,4 +28,8 @@ export default class DeptList extends Component {
                 </ul>
             </div>);
     }
+}
+
+DeptList.propTypes = {
+    deptList: React.PropTypes.array.isRequired
 }

@@ -31,7 +31,7 @@ function overwriteAll(expenses) {
 }
 
 function storeDepts(depts) {
-    console.log("storing" + depts);
+    //console.log("storing" + depts);
     _depts = depts;
 
 }
