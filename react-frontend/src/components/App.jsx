@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.scss';
 
 import EditForm from './EditForm.jsx';
-import ExpensesList from './ExpensesList.jsx';
+import ExpensesContainer from './ExpensesContainer.jsx';
 import DeptContainer from './DeptContainer.jsx';
 var expensesActions = require('../actions/ExpensesActions.jsx');
 
@@ -19,7 +19,7 @@ export class App extends Component {
     render() {
         return (
             <div className='app'>
-                <ExpensesList />
+                <ExpensesContainer />
                 <DeptContainer />
                 <EditForm />
             </div>);
