@@ -31,11 +31,11 @@ def makeEven(borrowerMap, sponsorMap):
             if minus + plus == 0:
                 result.append({"borrower": borrower, "amount": plus, "sponsor": sponsor})
             if minus + plus > 0:
-                result.append({"borrower": borrower, "amount": minus * 1, "sponsor": sponsor})
+                result.append({"borrower": borrower, "amount": minus * -1, "sponsor": sponsor})
                 sponsor['amount'] = minus + plus 
                 sponsorMap[nameS] = sponsor
         borrowerMap = reducedborrowerMap
-        print(borrowerMap, sponsorMap)
+        # print(borrowerMap, sponsorMap)
     # print("out")
     # print(result)
     return result

@@ -72,7 +72,7 @@ def normalizeExpensePost(post):
     return normalized
 
 def getRandomColor():
-    randomRGB = lambda: random.randint(0,128) # dark colors, 50% grey
+    randomRGB = lambda: random.randint(64,192) # nicely visible
     randomHex = '#%02X%02X%02X' % (randomRGB(),randomRGB(),randomRGB())
     return randomHex
 
