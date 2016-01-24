@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import ExpensesList from './ExpensesList.jsx'
+import React, { Component } from 'react';
+import ExpensesList from './ExpensesList.jsx';
+import ExpensesGraph from './ExpensesGraph.jsx';
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 
 import './ExpensesContainer.scss'
@@ -27,7 +28,9 @@ export default class ExpensesContainer extends Component {
     render() {
         return(
             <div className="expensesContainer">
+                <h2>Ausgaben</h2>
                 <ExpensesList expenses={this.state.expenses} />
+                <ExpensesGraph expenses={this.state.expenses} />
             </div>
         );
     }
