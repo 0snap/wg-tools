@@ -11,9 +11,15 @@ export default class DeptItem extends Component {
 
 
     render() {
+        let sponsorNameStyle = {
+            color: this.props.sponsor.color
+        }
+        let borrowerNameStyle = {
+            color: this.props.borrower.color
+        }
         return (
             <li className='deptItem'>
-                <span className='deptItem__name'>{this.props.borrower}</span> an <span className='deptItem__name'>{this.props.sponsor}</span>: <span className='deptItem__amount'>{this.props.amount}€</span>
+                <span style={borrowerNameStyle}>{this.props.borrower.name}</span> an <span style={sponsorNameStyle}>{this.props.sponsor.name}</span>: <span className='deptItem__amount'>{this.props.amount}€</span>
             </li>
         );
     }
@@ -24,6 +30,6 @@ export default class DeptItem extends Component {
 
 DeptItem.propTypes = {
     borrower: React.PropTypes.string.isRequired,
-    sponsor: React.PropTypes.string.isRequired,
-    amount: React.PropTypes.number.isRequired,
+    sponsor: React.PropTypes.object.isRequired,
+    amount: React.PropTypes.object.isRequired,
 }

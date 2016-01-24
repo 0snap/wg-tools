@@ -1,57 +1,52 @@
 #!/usr/bin/python
 
-def calcMinusPlus(expensionsMap):
-    ''' Expensions map is in the format of {"personName": moneyAmount, ...}'''
-    for key, value in expensionsMap.items():
-        expensionsMap[key] = float(value)
-    average = sum(expensionsMap.values())/float(len(expensionsMap))
-    minusMap = {}
-    plusMap = {}
-    for person, expension in expensionsMap.items():
-        dept = float(expension) - float(average)
-        if dept != 0:
-            if dept > 0:
-                plusMap[person] = dept
-            elif dept < 0:
-                minusMap[person] = dept
-    return minusMap, plusMap
+def calcSponsorsBorrowers(expensePersons):
+    # for key, value in expensePersons.items():
+    #     expensePersons[key] = float(value)
+    average = sum([person['amount'] for person in expensePersons])/float(len(expensePersons))
+    borrowerMap = dict()
+    sponsorMap = dict()
+    for person in expensePersons:
+        person['amount'] = float(person['amount']) - float(average)
+        if person['amount'] > 0:
+            sponsorMap[person['name']] = person
+        elif person['amount'] < 0:
+            borrowerMap[person['name']] = person
+    return borrowerMap, sponsorMap
 
-def makeEven(minusMap, plusMap):
+def makeEven(borrowerMap, sponsorMap):
     ''' Iterates through the given maps and makes them even. Returns list of tuples like (obligor, amount, obligee) '''
     result = list()
-    #print(minusMap, plusMap)
-    while(bool(minusMap) and bool(plusMap)): # avoid floating point errors
-        reducedMinusMap = dict()
-        for minusPerson, minus in minusMap.items():
-            plusPerson, plus = plusMap.popitem()
+    # print("in")
+    # print(borrowerMap, sponsorMap)
+    while(bool(borrowerMap) and bool(sponsorMap)): # avoid floating point errors
+        reducedborrowerMap = dict()
+        for nameB, borrower in borrowerMap.items():
+            nameS, sponsor = sponsorMap.popitem()
+            minus, plus = borrower['amount'], sponsor['amount']
             if minus + plus < 0:
-                result.append((minusPerson, plus, plusPerson))
-                reducedMinusMap[minusPerson] = minus+plus
+                result.append({"borrower": borrower, "amount": plus, "sponsor": sponsor})
+                borrower['amount'] = minus + plus 
+                reducedborrowerMap[nameB] = borrower
             if minus + plus == 0:
-                result.append((minusPerson, plus, plusPerson))
+                result.append({"borrower": borrower, "amount": plus, "sponsor": sponsor})
             if minus + plus > 0:
-                result.append((minusPerson, minus*-1, plusPerson))
-                plusMap[plusPerson] = minus+plus
-        minusMap = reducedMinusMap
-        #print(minusMap, plusMap)
+                result.append({"borrower": borrower, "amount": minus * 1, "sponsor": sponsor})
+                sponsor['amount'] = minus + plus 
+                sponsorMap[nameS] = sponsor
+        borrowerMap = reducedborrowerMap
+        print(borrowerMap, sponsorMap)
+    # print("out")
+    # print(result)
     return result
 
-def calcDepts(expensionsMap):
-    ''' Expensionsmap should be in the format like {"person1": amountMoneySpent, ...} 
-        Returns a list of tuples in the form ((person1, amount, person2), (...) ), where
-        'person1' has to give 'amount' to 'person2' ''' 
-    minusMap, plusMap = calcMinusPlus(expensionsMap)
-    return makeEven(minusMap, plusMap)
+def calcDepts(expensePersons):
+    ''' expensePersons should be at list in the format  
+        [{"name": name, "amount": totalAmount, "other": attributes...}] 
+        Calculates how money has to be traded, returns a list of dicts 
+        with all properties that were passed into this function in the format
+        [{"sponsor": {"name": nameOfSponsor, "other": attributes...}, "amount": exchangeAmount, 
+            "borrower": {"name": nameOfBorrower, "other": attributes...}, ...] '''
 
-if __name__ == '__main__':
-    foo = dict()
-    foo["Felix"] = 135
-    foo["Shorty"] = 430
-    foo["Frieder"] = 340
-    foo["F2"] = 389
-    foo["F3"] = 33
-    foo["F4"] = 1001
-    foo["F5"] = 356
-    foo["F6"] = 3
-    foo["F7"] = 323
-    print(calcDepts(foo))
+    borrowerMap, sponsorMap = calcSponsorsBorrowers(expensePersons)
+    return makeEven(borrowerMap, sponsorMap)

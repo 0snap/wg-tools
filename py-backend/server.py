@@ -47,13 +47,19 @@ def getExpensePosts(includeDeleted = False):
     else: posts = ExpensePost.objects
     return [normalizeExpensePost(post) for post in posts]
 
-def getUnsettledExpensesAsDict():
-    ''' Returns a dict in the form "name: amount" of all unsettled expenses inside the database '''
-    expenseList = getExpensePosts(False) # do explicitly no include deleted.
-    expenses = defaultdict(float)
-    for exp in expenseList:
-        expenses[exp['name']] = expenses[exp['name']] + exp['amount']
-    return expenses
+def getExpensesPerPerson():
+    ''' Returns a list in the form [{name: "foo" amount: "sum-amounts-for-foo", color: "#fff"}] of all unsettled expenses inside the database '''
+    people = list() 
+    names = ExpensePost.objects(tsDeleted=None).distinct('name')
+    for name in names:
+        person = dict()
+        entries = ExpensePost.objects(tsDeleted=None, name=name)
+        person['amount'] = entries.sum('amount')
+        person['name'] = name
+        person['color'] = entries.first().color
+        people.append(person)
+    # print(people)
+    return people
 
 def normalizeExpensePost(post):
     normalized = {}
@@ -86,9 +92,9 @@ def calcDepts():
 @app.route('/meanDepts', methods=['GET'])
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
-    nameAmountDict = getUnsettledExpensesAsDict()
-    if(len(nameAmountDict) > 0):
-        meanDepts = deptCalculator.calcDepts(nameAmountDict)
+    persons = getExpensesPerPerson()
+    if(len(persons) > 0):
+        meanDepts = deptCalculator.calcDepts(persons)
         return json.dumps(meanDepts)
     return Response('Nothing found', 404)
 

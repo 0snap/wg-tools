@@ -22,7 +22,7 @@ export default class DeptList extends Component {
                 <h2>Schulden</h2>
                 <ul className='deptItemList'>
                 {depts.map(item => {
-                    return <DeptItem borrower={item[0]} amount={item[1]} sponsor={item[2]} />
+                    return <DeptItem borrower={item.borrower} amount={item.amount} sponsor={item.sponsor} />
                 })}
                 </ul>
             </div>);
