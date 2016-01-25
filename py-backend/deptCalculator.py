@@ -25,13 +25,13 @@ def makeEven(borrowerMap, sponsorMap):
             nameS, sponsor = sponsorMap.popitem()
             minus, plus = borrower['amount'], sponsor['amount']
             if minus + plus < 0:
-                result.append({"borrower": borrower, "amount": plus, "sponsor": sponsor})
+                result.append({"borrower": borrower, "amount": round(plus, 2), "sponsor": sponsor})
                 borrower['amount'] = minus + plus 
                 reducedborrowerMap[nameB] = borrower
             if minus + plus == 0:
-                result.append({"borrower": borrower, "amount": plus, "sponsor": sponsor})
+                result.append({"borrower": borrower, "amount": round(plus, 2), "sponsor": sponsor})
             if minus + plus > 0:
-                result.append({"borrower": borrower, "amount": minus * -1, "sponsor": sponsor})
+                result.append({"borrower": borrower, "amount": round(minus * -1, 2), "sponsor": sponsor})
                 sponsor['amount'] = minus + plus 
                 sponsorMap[nameS] = sponsor
         borrowerMap = reducedborrowerMap
