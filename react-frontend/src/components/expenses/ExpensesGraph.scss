@@ -1,10 +1,11 @@
 .expensesGraph {
     width: 70%;
     float: right;
+    padding-left: 50px;
     overflow: hidden;
 }
 
 canvas {
     width: 90%;
-    heigth: 500px;
+    height: 75vh;
 }

@@ -14,11 +14,11 @@ export default class ExpensesContainer extends Component {
     }
 
     componentDidMount() {
-        expensesStore.addChangeListener(this.handleStoreChange.bind(this));
+        expensesStore.addEventListener('expense', this.handleStoreChange.bind(this));
     }
 
     componentWillUnmount() {
-        expensesStore.removeChangeListener(this.handleStoreChange.bind(this));
+        expensesStore.removeEventListener('expense', this.handleStoreChange.bind(this));
     }
 
     handleStoreChange() {
@@ -28,7 +28,7 @@ export default class ExpensesContainer extends Component {
     render() {
         return(
             <div className="expensesContainer">
-                <h2>Ausgaben</h2>
+                <h1>Ausgaben</h1>
                 <ExpensesList expenses={this.state.expenses} />
                 <ExpensesGraph expenses={this.state.expenses} />
             </div>

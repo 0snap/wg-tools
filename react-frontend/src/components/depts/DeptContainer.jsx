@@ -14,11 +14,11 @@ export default class DeptContainer extends Component {
     }
 
     componentDidMount() {
-        expensesStore.addChangeListener(this.handleStoreChange.bind(this));
+        expensesStore.addEventListener('dept', this.handleStoreChange.bind(this));
     }
 
     componentWillUnmount() {
-        expensesStore.removeChangeListener(this.handleStoreChange.bind(this));
+        expensesStore.removeEventListener('dept', this.handleStoreChange.bind(this));
     }
 
     handleStoreChange() {
@@ -28,6 +28,7 @@ export default class DeptContainer extends Component {
     render() {
         return(
             <div className="deptContainer">
+                <h1>Schulden</h1>
                 <DeptList deptList={this.state.deptList}/>
             </div>
         );

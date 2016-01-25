@@ -61,12 +61,12 @@ export default class ExpensesGraph extends Component {
         }
         return {
             label: expense.name,
-            fillColor: "rgba(220,220,220,0.2)",
+            fillColor: "rgba(184, 247, 255, 0.1)",
             strokeColor: expense.color,
             pointColor: expense.color,
             pointStrokeColor: expense.color,
             pointHighlightFill: expense.color,
-            pointHighlightStroke: "rgba(220,220,220,1)",
+            pointHighlightStroke: "rgba(184, 247, 255, 1)",
             data: data
         }
     }

@@ -1,13 +1,14 @@
+@import '../variables.scss';
+
 .expensesItem {
     padding: 7px;
     margin-top: 2px;
-    width: 70%;
+    width: 88%;
     overflow: hidden;
     border: 1px solid #7D7D7D;
-    background-color: #BEBEB3;
 }
 .expensesItem:hover {
-    border: 2px solid #4F6AAB;
+    border: 2px solid #fff;
 }
 
 .expensesItem__title {
@@ -16,4 +17,5 @@
 
 .deleteButton {
     float: right;
+    color: $light-font-color
 }

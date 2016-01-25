@@ -1,13 +1,15 @@
+@import '../variables.scss';
+
 .deptItem {
-    background-color: #BEBEB3;
     padding: 7px;
     margin-top: 2px;
     width: 80%;
     overflow: hidden;
     border: 1px solid #7D7D7D;
     font-size: 20px;
+    color: $light-font-color;
 }
 
 .deptItem:hover {
-    border: 2px solid #4F6AAB;
+    border: 2px solid #fffff;
 }

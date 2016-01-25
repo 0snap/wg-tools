@@ -19,7 +19,6 @@ export default class DeptList extends Component {
         let _this = this;
         return (
             <div className='deptList'>
-                <h2>Schulden</h2>
                 <ul className='deptItemList'>
                 {depts.map(item => {
                     return <DeptItem borrower={item.borrower} amount={item.amount} sponsor={item.sponsor} />

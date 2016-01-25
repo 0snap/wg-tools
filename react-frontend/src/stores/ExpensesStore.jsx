@@ -39,8 +39,8 @@ function storeDepts(depts) {
 
 let ExpensesStore = assign({ }, EventEmitter.prototype, {
 
-    emitChange() {
-        this.emit('change');
+    emitChange(event) {
+        this.emit(event);
     },
 
     toList(expenses) {
@@ -55,12 +55,12 @@ let ExpensesStore = assign({ }, EventEmitter.prototype, {
         return this.toList(_expenses);
     },
 
-    addChangeListener(callback) {
-        this.on('change', callback);
+    addEventListener(event, callback) {
+        this.on(event, callback);
     },
 
-    removeChangeListener(callback) {
-        this.removeListener('change', callback);
+    removeEventListener(event, callback) {
+        this.removeListener(event, callback);
     },
 
     getDepts() {
@@ -74,24 +74,24 @@ Dispatcher.register(function(action) {
         case('add'):
             //console.log('shall add ', action.name, action.amount, action.date, action.id);
             addExpense(action.id, action.name, action.amount, action.date, action.color);
-            ExpensesStore.emitChange();
+            ExpensesStore.emitChange('expense');
             break;
 
         case('delete'):
             //console.log('store delete');
             deleteExpense(action.id);
-            ExpensesStore.emitChange();
+            ExpensesStore.emitChange('expense');
             break;
 
         case('overwriteAll'):
             //console.log('store all');
             overwriteAll(action.expenses);
-            ExpensesStore.emitChange();
+            ExpensesStore.emitChange('expense');
             break;
         case('depts'):
             //console.log('depts');
             storeDepts(action.depts);
-            ExpensesStore.emitChange();
+            ExpensesStore.emitChange('dept');
             break;
     }
 

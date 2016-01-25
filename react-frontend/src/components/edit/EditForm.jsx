@@ -34,7 +34,7 @@ export default class EditForm extends Component {
     render() {
         return (
             <div className='editForm'>
-                <h2>Eintrag anlegen</h2>
+                <h1>Eintrag anlegen</h1>
                 <form onSubmit={this.addExpense.bind(this)}>
                     <div className="form-group">
                         <label className="editForm__label" htmlFor="name">Name</label>
