@@ -1,5 +1,6 @@
 // all components will inherit the global style
 @import './global.scss'; 
+@import './variables.scss';
 
 .app {
     width: 100%;
@@ -8,6 +9,8 @@
     //background-color: #DEDCA6;
     //background-color: #CBD6D5;
     font-family: 'Oxygen', sans-serif;
+    background: rgba(25, 76, 82, 0) -moz-linear-gradient(center top, rgba(25, 76, 82, 0.88) 0%, rgba(25, 76, 82, 0.73) 20%, rgba(25, 76, 82, 0.58) 40%, rgba(25, 76, 82, 0.43) 60%) repeat scroll 0 0;
+    color: $light-font-color;
 }
 
 ul {
@@ -15,10 +18,10 @@ ul {
     padding-bottom: 20px;
     border-radius: 5px;
     border: 2px solid rgba(184, 247, 255, 1);
-    background: rgba(25, 76, 82, 0) -moz-linear-gradient(center top , rgba(25, 76, 82, 0.88) 0%, rgba(25, 76, 82, 0.73) 20%, rgba(25, 76, 82, 0.58) 40%, rgba(25, 76, 82, 0.433) 60%, rgba(25, 76, 82, 0.28) 100%) repeat scroll 0 0;
+    background: rgba(25, 76, 82, 0) -moz-linear-gradient(center top, rgba(25, 76, 82, 0.88) 0%, rgba(25, 76, 82, 0.73) 20%, rgba(25, 76, 82, 0.58) 40%, rgba(25, 76, 82, 0.43) 60%, rgba(25, 76, 82, 0.28) 100%) repeat scroll 0 0;
 }
 
 li {
     border-radius: 5px;
-    background: rgba(25, 76, 82, 1) -moz-linear-gradient(center top , rgba(25, 76, 82, 0.02) 0%, rgba(25, 76, 82, 0.07) 20%, rgba(25, 76, 82, 0.12) 40%, rgba(25, 76, 82, 0.17) 60%, rgba(25, 76, 82, 0.22) 100%) repeat scroll 0 0;
+    background: rgba(25, 76, 82, 1) -moz-linear-gradient(center top, rgba(25, 76, 82, 0.02) 0%, rgba(25, 76, 82, 0.07) 20%, rgba(25, 76, 82, 0.12) 40%, rgba(25, 76, 82, 0.17) 60%, rgba(25, 76, 82, 0.22) 100%) repeat scroll 0 0;
 }

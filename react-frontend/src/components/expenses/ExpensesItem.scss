@@ -8,7 +8,7 @@
     border: 1px solid #7D7D7D;
 }
 .expensesItem:hover {
-    border: 2px solid #fff;
+    border: 2px solid $light-font-color;
 }
 
 .expensesItem__title {
@@ -17,5 +17,5 @@
 
 .deleteButton {
     float: right;
-    color: $light-font-color
+    color: $light-font-color;
 }

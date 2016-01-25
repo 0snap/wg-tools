@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-var LineChart = require("react-chartjs").Line;
+let LineChart = require("react-chartjs").Line;
 
 import './ExpensesGraph.scss';
+
+let babyBlue = "rgba(184, 247, 255, 1)";
+let lightBlue = "rgba(184, 247, 255, 0.3)";
 
 export default class ExpensesGraph extends Component {
 
@@ -66,7 +69,7 @@ export default class ExpensesGraph extends Component {
             pointColor: expense.color,
             pointStrokeColor: expense.color,
             pointHighlightFill: expense.color,
-            pointHighlightStroke: "rgba(184, 247, 255, 1)",
+            pointHighlightStroke: babyBlue,
             data: data
         }
     }
@@ -116,7 +119,9 @@ let chartOptions = {
     scaleShowGridLines : true,
 
     //String - Colour of the grid lines
-    scaleGridLineColor : "rgba(0,0,0,.05)",
+    scaleGridLineColor : lightBlue,
+
+    scaleFontColor: babyBlue,
 
     //Number - Width of the grid lines
     scaleGridLineWidth : 1,
