@@ -7,16 +7,35 @@ export default class ExpensesItem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = { alive: true }
     }
 
     onDelete() {
+        this.setState({alive: false});
+    }
+
+    onAbort() {
+        this.setState({alive: true});
+    }
+
+    doDelete() {
         //console.log("del ", this.props.id);
+        this.setState({alive: true});
         expensesActions.deleteExpense(this.props.item.id);
     }
 
     render() {
         let nameStyle = {
             color: this.props.item.color
+        }
+        if(!this.state.alive) {
+            return (
+                <li className='expensesItem'>
+                    <span className='expensesItem__title'>Wirklick löschen?</span>
+                    <button className='actionDeleteButton' onClick={this.doDelete.bind(this)}>Ja</button>
+                    <button className='actionDeleteButton' onClick={this.onAbort.bind(this)}>Nein</button>
+                </li>
+            );
         }
         return (
             <li className='expensesItem'>
