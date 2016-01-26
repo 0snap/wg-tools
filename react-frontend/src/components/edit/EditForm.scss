@@ -11,16 +11,18 @@
 }
 
 .editForm__input {
-    background-color: #BEBEB3;
+    background-color: $dark-green;
 }
 
 .editForm__button {
     width: 80px;
     background: $dark-green;
     color: $light-font-color;
+    border: none;
 }
 
 .editForm__button:hover {
+    border: 1px solid $light-font-color;
     background: $dark-green;
     opacity: 0.9;
 }

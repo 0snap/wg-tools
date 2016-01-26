@@ -31,16 +31,16 @@ export default class ExpensesItem extends Component {
         if(!this.state.alive) {
             return (
                 <li className='expensesItem'>
-                    <span className='expensesItem__title'>Wirklick löschen?</span>
-                    <button className='actionDeleteButton' onClick={this.doDelete.bind(this)}>Ja</button>
-                    <button className='actionDeleteButton' onClick={this.onAbort.bind(this)}>Nein</button>
+                    <span className='expensesItem__title'>Wirklich löschen?</span>
+                    <button className='expensesItem__actionButton' onClick={this.onAbort.bind(this)}>Nein</button>
+                    <button className='expensesItem__actionButton' onClick={this.doDelete.bind(this)}>Ja</button>
                 </li>
             );
         }
         return (
             <li className='expensesItem'>
                 <span className='expensesItem__title' style={nameStyle}>{this.props.item.name}&nbsp;&nbsp;&nbsp;&nbsp;{this.props.item.amount}€</span>
-                <button className='deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button>
+                <button className='expensesItem__deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button>
             </li>
         );
     }

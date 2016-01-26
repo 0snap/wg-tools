@@ -15,12 +15,13 @@
     font-size: 20px;
 }
 
-.deleteButton {
+.expensesItem__deleteButton {
     float: right;
     color: $light-font-color;
 }
 
-.actionDeleteButton {
+.expensesItem__actionButton {
+    float: right;
     margin: 5px;
-    width: 50px;
+    width: 45px;
 }

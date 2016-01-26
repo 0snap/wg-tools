@@ -13,3 +13,7 @@
 .deptItem:hover {
     border: 2px solid $light-font-color;
 }
+
+.deptItem__amount {
+    float: right;
+}
