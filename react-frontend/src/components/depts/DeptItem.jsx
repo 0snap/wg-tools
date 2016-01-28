@@ -29,7 +29,7 @@ export default class DeptItem extends Component {
 }
 
 DeptItem.propTypes = {
-    borrower: React.PropTypes.string.isRequired,
+    borrower: React.PropTypes.object.isRequired,
     sponsor: React.PropTypes.object.isRequired,
-    amount: React.PropTypes.object.isRequired,
+    amount: React.PropTypes.number.isRequired
 }

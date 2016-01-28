@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ExpensesList from './ExpensesList.jsx';
 import ExpensesGraph from './ExpensesGraph.jsx';
+import ExpensesListSelector from './ExpensesListSelector.jsx';
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 
 import './ExpensesContainer.scss'
@@ -10,7 +11,10 @@ export default class ExpensesContainer extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { expenses: expensesStore.getAllExpenses() };
+        this.state = {
+            expenses: expensesStore.getAllExpenses(),
+            expensesLists: []
+        };
     }
 
     componentDidMount() {
@@ -28,7 +32,10 @@ export default class ExpensesContainer extends Component {
     render() {
         return(
             <div className="expensesContainer">
-                <h1>Ausgaben</h1>
+                <div className="expensesContainer__header">
+                    <h1>Ausgaben</h1>
+                    <ExpensesListSelector expensesLists={this.state.expensesLists}/>
+                </div>
                 <ExpensesList expenses={this.state.expenses} />
                 <ExpensesGraph expenses={this.state.expenses} />
             </div>

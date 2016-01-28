@@ -2,9 +2,13 @@
     width: 30%;
     float: left;
     height: 85%;
-    overflow: auto;
 }
 
 .expensesItemList {
     list-style-type: none;
+    overflow: auto;
+    height: 95%;
+}
+.expensesItemList li:last-child {
+    margin-bottom: 15px;
 }

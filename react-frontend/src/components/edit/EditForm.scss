@@ -1,8 +1,12 @@
 @import '../variables.scss';
 
 .editForm {
-    width: 40%;
+    width: 100%;
     float: right;
+}
+
+.editForm h1 {
+    margin-bottom: 30px;
 }
 
 .editForm__label {

@@ -1,5 +1,9 @@
 .expensesContainer {
     width: 100%;
     height: 100vh; // height of viewport
-    overflow: hidden;
+}
+
+.expensesContainer__header {
+    overflow: auto;
+    margin-bottom: 30px;
 }
