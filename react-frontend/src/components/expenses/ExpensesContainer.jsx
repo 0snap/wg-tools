@@ -13,7 +13,7 @@ export default class ExpensesContainer extends Component {
         super(props);
         this.state = {
             expenses: expensesStore.getAllExpenses(),
-            expensesLists: []
+            expensesLists: [{name: 'abc'}, {name: 'def'}]
         };
     }
 

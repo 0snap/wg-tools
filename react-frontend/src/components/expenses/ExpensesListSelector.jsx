@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ExpensesListSelectOption from './ExpensesListSelectOption.jsx';
 
 import './ExpensesListSelector.scss'
 
@@ -19,6 +20,11 @@ export default class ExpensesListSelector extends Component {
         return(
             <div className="expensesListSelector"> 
             <h3>Liste auswählen</h3>
+                <select className="expensesListSelector__select">
+                    {this.props.expensesLists.map((list) => {
+                        return <ExpensesListSelectOption list={list}/>
+                    })};
+                </select> 
             </div>
         );
     }
