@@ -2,29 +2,9 @@
 
 from flask import Flask, request, json, Response
 from flask.ext.cors import CORS
+
 import deptCalculator
-from mongoengine import *
-from datetime import datetime, timedelta
-from collections import defaultdict
-import random 
-
-'''
-Define some mongo stuff, very rudimentary storing of posted data.
-'''
-
-connect(host='mongodb://localhost:27017/depts')
-#connect('depts', host='mongo', port=27017)
-class Post(Document):
-    date_modified = DateTimeField(default=datetime.now)
-    meta = {'allow_inheritance': True}
-
-class ExpensePost(Post):
-    name = StringField()
-    amount = FloatField(min_value=0)
-    color = StringField()
-    tsDeleted = DateTimeField(default=None)
-
-
+import storage
 
 '''
 Simple Flask-API for serving post requests. API offers stuff like calculating depts among people or storing data.
@@ -39,49 +19,6 @@ def getDictFromPost(request):
         postedJson = json.dumps(request.json)
         return json.loads(postedJson)
 
-def getExpensePosts(includeDeleted = False):
-    ''' Returns all expensepost-objects in a json list '''
-    result = list()
-    if not includeDeleted:
-        posts = ExpensePost.objects(tsDeleted=None)
-    else: posts = ExpensePost.objects
-    return [normalizeExpensePost(post) for post in posts]
-
-def getExpensesPerPerson():
-    ''' Returns a list in the form [{name: "foo" amount: "sum-amounts-for-foo", color: "#fff"}] of all unsettled expenses inside the database '''
-    people = list() 
-    names = ExpensePost.objects(tsDeleted=None).distinct('name')
-    for name in names:
-        person = dict()
-        entries = ExpensePost.objects(tsDeleted=None, name=name)
-        person['amount'] = entries.sum('amount')
-        person['name'] = name
-        person['color'] = entries.first().color
-        people.append(person)
-    # print(people)
-    return people
-
-def normalizeExpensePost(post):
-    normalized = {}
-    normalized['name'] = post.name
-    normalized['amount'] = post.amount
-    normalized['date'] = post.date_modified
-    normalized['id'] = str(post.id)
-    normalized['color'] = post.color
-    #print(normalized)
-    return normalized
-
-def getRandomColor():
-    randomRGB = lambda: random.randint(64,192) # nicely visible
-    randomHex = '#%02X%02X%02X' % (randomRGB(),randomRGB(),randomRGB())
-    return randomHex
-
-def getColorForName(name):
-    connectedPosts = ExpensePost.objects(name=name)
-    if (len(connectedPosts) > 0):
-        return connectedPosts[0].color
-    return getRandomColor()
-
 @app.route('/calcDeptsFromPostData', methods=['POST'])
 def calcDepts():
     ''' Calculates the "mean" of all depts contained in the post-data'''
@@ -92,42 +29,63 @@ def calcDepts():
 @app.route('/meanDepts', methods=['GET'])
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
-    persons = getExpensesPerPerson()
-    if(len(persons) > 0):
-        meanDepts = deptCalculator.calcDepts(persons)
-        return json.dumps(meanDepts)
-    return Response('Nothing found', 404)
+    listId = request.args.get('listId')
+    if(listId != None):
+        persons = storage.getExpensesPerPerson(listId)
+        if(len(persons) > 0):
+            meanDepts = deptCalculator.calcDepts(persons)
+            return json.dumps(meanDepts)
+        return Response('Nothing found', 404)
+    return Response('Need a list id', 400)
 
 @app.route('/storeExpense', methods=['POST'])
 def store():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
+    listId = jsonAsDict['listId']
     name = jsonAsDict['name']
     amount = jsonAsDict['amount']
-    if name != None and name != '' and float(amount) >= 0:
-        color = getColorForName(name)
-        expensePost = ExpensePost(name=name, amount=amount, color=color)
-        expensePost.save()
-        return json.dumps(normalizeExpensePost(expensePost))
+    if listId != None and listId != '' and name != None and name != '' and amount != None and float(amount) >= 0:
+        storedObjectDict = storage.store(listId, name, amount)
+        storedObjectDict['listId'] = listId
+        return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
 
 @app.route('/deleteExpense', methods=['DELETE'])
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
     jsonAsDict = getDictFromPost(request)
+    listId = jsonAsDict.get('listId')
     oid = jsonAsDict.get('id')
-    if oid != None and oid != '':
-        post = ExpensePost.objects.get(id=oid)
-        if(post != None):
-            post.tsDeleted = datetime.now
-            post.save()
+    if listId != None and listId != '' and oid != None and oid != '':
+        if(storage.delete(listId, oid)):
             return Response('OK', 200)
     return Response('Not found', 404)
 
 @app.route('/expensesList')
 def getExpensesList():
-    ''' Returns a json list of depts ''' 
-    return Response(json.dumps(getExpensePosts()))
+    ''' Returns a json list of depts '''
+    listId = request.args.get('listId')
+    if(listId != None and listId != ''):
+        return Response(json.dumps(storage.getExpensePosts(listId)))
+    return Response('List not found', 404)
+
+
+@app.route('/expensesLists')
+def getExpensesLists():
+    ''' Returns a json list of all expensesLists '''
+    return Response(json.dumps(storage.getExpensesLists()))
+
+
+@app.route('/wgs')
+def getWGs():
+    ''' Returns a json list of all wgs '''
+    return Response(json.dumps(storage.getWGs()))
 
 if __name__ == '__main__':
+    wgId = storage.createWG('mett')
+    if(wgId != None):
+        storage.createExpensesList('Test', wgId)
+    print(storage.getWGs())
+    print(storage.getExpensesLists())
     app.run(host='0.0.0.0', debug=True)
