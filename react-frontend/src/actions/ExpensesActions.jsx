@@ -1,5 +1,7 @@
 import Dispatcher from '../dispatcher/Dispatcher.jsx';
 import request from 'superagent';
+import Constants from '../constants/ExpenseConstants.jsx';
+
 
 let ExpensesActions = {
 
@@ -18,7 +20,7 @@ let ExpensesActions = {
                     let stored = JSON.parse(res.text)
                     //console.log(stored)
                     Dispatcher.dispatch({
-                        actionType: 'add',
+                        actionType: Constants.ADD_EXPENSE_POST,
                         name: stored.name,
                         amount: stored.amount,
                         date: stored.date,
@@ -45,7 +47,7 @@ let ExpensesActions = {
                 }
                 else { 
                     Dispatcher.dispatch({
-                        actionType: 'delete',
+                        actionType: Constants.DELETE_EXPENSE_POST,
                         id: id, 
                         listId: listId
                     });
@@ -61,7 +63,7 @@ let ExpensesActions = {
                 console.log(err); 
             }
             Dispatcher.dispatch({
-                actionType: 'overwriteAllExpenses',
+                actionType: Constants.FETCH_EXPENSE_POSTS,
                 expenses: JSON.parse(res.text)
             });
             //console.log(_this.state.expenses);
@@ -75,7 +77,7 @@ let ExpensesActions = {
             }
             else {
                 Dispatcher.dispatch({
-                    actionType: 'depts',
+                    actionType: Constants.FETCH_DEPTS,
                     depts: JSON.parse(res.text)
                 });
             }
@@ -89,7 +91,7 @@ let ExpensesActions = {
             }
             else {
                 Dispatcher.dispatch({
-                    actionType: 'expensesLists',
+                    actionType: Constants.FETCH_EXPENSES_LISTS,
                     expensesLists: JSON.parse(res.text)
                 });
             }
@@ -103,7 +105,7 @@ let ExpensesActions = {
             }
             else {
                 Dispatcher.dispatch({
-                    actionType: 'wgs',
+                    actionType: Constants.FETCH_WGS,
                     wgs: JSON.parse(res.text)
                 });
             }
@@ -116,7 +118,7 @@ let ExpensesActions = {
 
     setActiveList(listId) {
         Dispatcher.dispatch({
-            actionType: 'activeList',
+            actionType: Constants.ACTIVE_LIST,
             listId: listId
         });
     }

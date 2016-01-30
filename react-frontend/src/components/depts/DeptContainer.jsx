@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DeptList from './DeptList.jsx'
 import './DeptContainer.scss'
-
+import Constants from '../../constants/ExpenseConstants.jsx';
 
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 var expensesActions = require('../../actions/ExpensesActions.jsx');
@@ -19,14 +19,14 @@ export default class DeptContainer extends Component {
     }
 
     componentDidMount() {
-        expensesStore.addEventListener('depts', this.handleStoreChange.bind(this));
-        expensesStore.addEventListener('activeList', this.handleListSelect.bind(this));
+        expensesStore.addEventListener(Constants.FETCH_DEPTS, this.handleStoreChange.bind(this));
+        expensesStore.addEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
     }
 
 
     componentWillUnmount() {
-        expensesStore.removeEventListener('depts', this.handleStoreChange.bind(this));
-        expensesStore.removeEventListener('activeList', this.handleListSelect.bind(this));
+        expensesStore.removeEventListener(Constants.FETCH_DEPTS, this.handleStoreChange.bind(this));
+        expensesStore.removeEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
     }
 
     handleStoreChange() {

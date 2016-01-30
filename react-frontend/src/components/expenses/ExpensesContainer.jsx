@@ -3,6 +3,7 @@ import ExpensesList from './ExpensesList.jsx';
 import ExpensesGraph from './ExpensesGraph.jsx';
 import ExpensesListSelector from './ExpensesListSelector.jsx';
 import ExpensesListCreateForm from './ExpensesListCreateForm.jsx';
+import Constants from '../../constants/ExpenseConstants.jsx';
 
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 var expensesActions = require('../../actions/ExpensesActions.jsx');
@@ -22,16 +23,15 @@ export default class ExpensesContainer extends Component {
     }
 
     componentDidMount() {
-        expensesStore.addEventListener('expense', this.handleExpensesChange.bind(this));
-        expensesStore.addEventListener('expensesLists', this.handleExpensesListsChange.bind(this));
-        expensesStore.addEventListener('activeList', this.handleListSelect.bind(this));
+        expensesStore.addEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange.bind(this));
+        expensesStore.addEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange.bind(this));
+        expensesStore.addEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
     }
 
     componentWillUnmount() {
-        expensesStore.removeEventListener('expense', this.handleExpensesChange.bind(this));
-        expensesStore.removeEventListener('expensesLists', this.handleExpensesListsChange.bind(this));
-        expensesStore.removeEventListener('activeList', this.handleListSelect.bind(this));
-
+        expensesStore.removeEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange.bind(this));
+        expensesStore.removeEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange.bind(this));
+        expensesStore.removeEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
     }
 
     handleExpensesChange() {

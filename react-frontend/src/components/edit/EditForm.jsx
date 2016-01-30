@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 var expensesAction = require('../../actions/ExpensesActions.jsx');
 var expensesStore = require('../../stores/ExpensesStore.jsx');
+import Constants from '../../constants/ExpenseConstants.jsx';
+
 
 import './EditForm.scss'
 
@@ -16,11 +18,11 @@ export default class EditForm extends Component {
     }
 
     componentDidMount() {
-        expensesStore.addEventListener('activeList', this.handleListSelect.bind(this));
+        expensesStore.addEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
     }
 
     componentWillUnmount() {
-        expensesStore.removeEventListener('activeList', this.handleListSelect.bind(this));
+        expensesStore.removeEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
     }
 
     handleListSelect() {

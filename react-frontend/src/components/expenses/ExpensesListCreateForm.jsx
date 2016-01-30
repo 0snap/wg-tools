@@ -45,8 +45,3 @@ export default class ExpensesListCreateForm extends Component {
     }
 
 }
-
-ExpensesListCreateForm.propTypes = {
-    expensesLists: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.string.isRequired
-}

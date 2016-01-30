@@ -1,6 +1,7 @@
 import Dispatcher from '../dispatcher/Dispatcher.jsx';
 import EventEmitter from 'events';
 import assign from 'object-assign';
+import Constants from '../constants/ExpenseConstants.jsx';
 
 var _expenses = {};
 var _depts = [];
@@ -97,39 +98,41 @@ let ExpensesStore = assign({ }, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
 
     switch(action.actionType) {
-        case('add'):
+        case(Constants.ADD_EXPENSE_POST):
             //console.log('shall add ', action.name, action.amount, action.date, action.id);
             addExpense(action.id, action.name, action.amount, action.date, action.color);
-            ExpensesStore.emitChange('expense');
+            ExpensesStore.emitChange(Constants.EXPENSE_POSTS_CHANGED);
             break;
-
-        case('delete'):
+        case(Constants.DELETE_EXPENSE_POST):
             //console.log('store delete');
             deleteExpense(action.id);
-            ExpensesStore.emitChange('expense');
+            ExpensesStore.emitChange(Constants.EXPENSE_POSTS_CHANGED);
             break;
-
-        case('overwriteAllExpenses'):
+        case(Constants.FETCH_EXPENSE_POSTS):
             //console.log('store all');
             overwriteAllExpenses(action.expenses);
-            ExpensesStore.emitChange('expense');
+            ExpensesStore.emitChange(Constants.EXPENSE_POSTS_CHANGED);
             break;
-        case('depts'):
+        case(Constants.FETCH_DEPTS):
             //console.log('depts');
             setDepts(action.depts);
-            ExpensesStore.emitChange('depts');
+            ExpensesStore.emitChange(Constants.FETCH_DEPTS);
             break;
-        case('wgs'):
+        case(Constants.FETCH_WGS):
             setWg(action.wg);
-            ExpensesStore.emitChange('wgs');
+            ExpensesStore.emitChange(Constants.FETCH_WGS);
             break;
-        case('expensesLists'):
+        case(Constants.FETCH_EXPENSES_LISTS):
+            console.log(action.expensesLists)
             setExpensesLists(action.expensesLists);
-            ExpensesStore.emitChange('expensesLists');
+            ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             break;
-        case('activeList'):
+        case(Constants.ADD_EXPENSES_LIST):
+            // foo
+            break;
+        case(Constants.ACTIVE_LIST):
             setActiveList(action.listId);
-            ExpensesStore.emitChange('activeList');
+            ExpensesStore.emitChange(Constants.ACTIVE_LIST);
             break;
 
     }
