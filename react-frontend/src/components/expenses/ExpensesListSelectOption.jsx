@@ -9,10 +9,11 @@ export default class ExpensesListSelectOption extends Component {
         super(props);
     }
 
-
     render() {
         return (
-            <option>{this.props.list.name}</option>
+            <option value={this.props.list.id}>
+                {this.props.list.name}
+            </option>
         );
     }
 

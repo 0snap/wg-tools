@@ -3,10 +3,10 @@ import request from 'superagent';
 
 let ExpensesActions = {
 
-    storeExpense(name, amount) {
+    storeExpense(name, amount, listId) {
         let _this = this;
         request.post('http://localhost:5000/storeExpense')
-            .send({name: name, amount: amount})
+            .send({name: name, amount: amount, listId: listId})
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Access-Control-Allow-Origin', '*')
             .end(function(err, res) {
@@ -23,19 +23,20 @@ let ExpensesActions = {
                         amount: stored.amount,
                         date: stored.date,
                         color: stored.color,
-                        id: stored.id
+                        id: stored.id, 
+                        listId: listId
                     });
-                    _this.fetchDepts();
+                    _this.fetchDepts(listId);
                 }
 
         });
         //console.log(name, amount);
     },
 
-    deleteExpense(id) {
+    deleteExpense(id, listId) {
         let _this = this;
         request.del('http://localhost:5000/deleteExpense')
-            .send({ id: id })
+            .send({ id: id, listId: listId})
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Access-Control-Allow-Origin', '*')
             .end(function(err, res) {
@@ -45,29 +46,30 @@ let ExpensesActions = {
                 else { 
                     Dispatcher.dispatch({
                         actionType: 'delete',
-                        id: id
+                        id: id, 
+                        listId: listId
                     });
-                    _this.fetchDepts();
+                    _this.fetchDepts(listId);
                 }
             });
         //console.log(timestamp);
     },
 
-    fetchExpenses() {
-        request.get('http://localhost:5000/expensesList').end(function(err, res) {
+    fetchExpenses(listId) {
+        request.get('http://localhost:5000/expensesList?listId=' + listId).end(function(err, res) {
             if(err) {
                 console.log(err); 
             }
             Dispatcher.dispatch({
-                actionType: 'overwriteAll',
+                actionType: 'overwriteAllExpenses',
                 expenses: JSON.parse(res.text)
             });
             //console.log(_this.state.expenses);
         });
     },
 
-    fetchDepts() {
-        request.get('http://localhost:5000/meanDepts').end(function(err, res) {
+    fetchDepts(listId) {
+        request.get('http://localhost:5000/meanDepts?listId=' + listId).end(function(err, res) {
             if(err) {
                 console.log(err);
             }
@@ -77,6 +79,41 @@ let ExpensesActions = {
                     depts: JSON.parse(res.text)
                 });
             }
+        });
+    },
+
+    fetchExpensesLists() {
+        request.get('http://localhost:5000/expensesLists').end(function(err, res) {
+            if(err) {
+                console.log(err);
+            }
+            else {
+                Dispatcher.dispatch({
+                    actionType: 'expensesLists',
+                    expensesLists: JSON.parse(res.text)
+                });
+            }
+        });
+    },
+
+    fetchWGs() {
+        request.get('http://localhost:5000/wgs').end(function(err, res) {
+            if(err) {
+                console.log(err);
+            }
+            else {
+                Dispatcher.dispatch({
+                    actionType: 'wgs',
+                    wgs: JSON.parse(res.text)
+                });
+            }
+        });
+    },
+
+    setActiveList(listId) {
+        Dispatcher.dispatch({
+            actionType: 'activeList',
+            listId: listId
         });
     }
 

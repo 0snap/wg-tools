@@ -21,7 +21,7 @@ export default class ExpensesItem extends Component {
     doDelete() {
         //console.log("del ", this.props.id);
         this.setState({alive: true});
-        expensesActions.deleteExpense(this.props.item.id);
+        expensesActions.deleteExpense(this.props.item.id, this.props.listId);
     }
 
     render() {
@@ -50,5 +50,6 @@ export default class ExpensesItem extends Component {
 }
 
 ExpensesItem.propTypes = {
-    item: React.PropTypes.object.isRequired
+    item: React.PropTypes.object.isRequired,
+    listId: React.PropTypes.string.isRequired
 }

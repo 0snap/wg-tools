@@ -12,8 +12,9 @@ export class App extends Component {
     constructor(props) {
         super(props);
         // init store
-        expensesActions.fetchExpenses();
-        expensesActions.fetchDepts();
+        //expensesActions.fetchExpenses();
+        //expensesActions.fetchDepts();
+        expensesActions.fetchExpensesLists();
     }
 
     render() {

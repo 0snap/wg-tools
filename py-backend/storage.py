@@ -2,6 +2,7 @@ from mongoengine import *
 from datetime import datetime, timedelta
 from collections import defaultdict
 import random 
+import bson
 
 
 
@@ -22,6 +23,7 @@ class Post(EmbeddedDocument):
     meta = {'allow_inheritance': True}
 
 class ExpensePost(Post):
+    id = ObjectIdField(default=lambda: bson.ObjectId(), primary_key=True)
     name = StringField()
     amount = FloatField(min_value=0)
     color = StringField()
@@ -40,26 +42,32 @@ class ExpensesList(Document):
 Plain function definitions for querying and manipulating data
 '''
 
-
 def getExpensePosts(listId, includeDeleted = False):
     ''' Returns all expensepost-objects in a json list '''
+    posts = ExpensesList.objects.get(id=listId).expensePosts
     if not includeDeleted:
-        posts = ExpensesList.objects(id=listId, expensePosts__tsDeleted=None)
-    else: posts = ExpensesList.objects(id=listId)
-    #print(posts)
-    return [normalizeExpensePost(post) for post in posts]
+        posts = list(filter(lambda entry: entry.tsDeleted == None, posts))
+    return posts
+
+def getNormalizedExpensePosts(listId, includeDeleted = False):
+    ''' Returns all expensepost-objects in a json list '''
+    return [normalizeExpensePost(post) for post in getExpensePosts(listId)]
+
 
 def getExpensesPerPerson(listId):
     ''' Returns a list in the form [{name: 'foo' amount: 'sum-amounts-for-foo', color: '#fff'}] 
         of all unsettled expenses inside the ExpensesList with the given listId '''
     people = list() 
-    names = ExpensesList.objects(id=listId, expensePosts__tsDeleted=None).distinct('name')
+    posts = getExpensePosts(listId)
+    names = set([entry.name for entry in posts])
+    #print(names)
     for name in names:
         person = dict()
-        entries = ExpensesList.objects(id=listId, expensePosts__tsDeleted=None, expensePosts__name=name)
-        person['amount'] = entries.sum('amount')
+        entries = list(filter(lambda post: post.name == name, posts))
+        person['amount'] = sum([entry.amount for entry in entries])
         person['name'] = name
-        person['color'] = entries.first().color
+        person['color'] = entries[0].color
+        #print(person)
         people.append(person)
     # print(people)
     return people
@@ -71,6 +79,7 @@ def normalizeExpensePost(post):
     normalized['date'] = post.date_modified
     normalized['id'] = str(post.id)
     normalized['color'] = post.color
+    #normalized['deleted'] = post.tsDeleted
     #print(normalized)
     return normalized
 
@@ -82,31 +91,28 @@ def getRandomColor():
 def getColorForName(listId, name):
     connectedPosts = ExpensesList.objects(id=listId, expensePosts__name=name)
     if (len(connectedPosts) > 0):
-        return connectedPosts[0].color
+        return list(filter(lambda post: post.name == name, connectedPosts[0].expensePosts))[0].color
     return getRandomColor()
 
 def store(listId, name, amount):
-    color = getColorForName(name)
-    expensePost = ExpensePost(listId=listId, name=name, amount=amount, color=color)
+    color = getColorForName(listId, name)
+    expensePost = ExpensePost(name=name, amount=amount, color=color)
     stored = ExpensesList.objects.update_one(push__expensePosts=expensePost)
     if not stored:
         return None
     return normalizeExpensePost(expensePost)
 
 def delete(listId, postId):
-    post = ExpensesList.objects(id=listId, expensePost__id=postId)
-    if(post != None):
-        post.tsDeleted = datetime.now
-        post.update_one(set__expensePosts__S=post)
-        return True
-    return False
+    #print("shall delete ", listId, postId)
+    ExpensesList.objects(id=listId, expensePosts__id=postId).update(set__expensePosts__S__tsDeleted=datetime.now)
+    return True
 
 def createExpensesList(name, wgId):
     ''' Creates and stores new ExpensesList object with the given name. Returns its id '''
     # TODO: check if exists
     if(len(WG.objects(id=wgId)) == 1):
         wg = WG.objects.get(id=wgId)
-        print('create explist ', name, wgId, wg)
+        #print('create explist ', name, wgId, wg)
         if(len(ExpensesList.objects(name=name, wg=wg)) == 0):
             expensesList = ExpensesList(name=name, wg=wg, editable=True)
             expensesList.save()
@@ -120,7 +126,7 @@ def createWG(name):
         return None
     wg = WG(name=name)
     wg.save()
-    print('created wg')
+    #print('created wg')
     return wg.id
 
 def getWGs():

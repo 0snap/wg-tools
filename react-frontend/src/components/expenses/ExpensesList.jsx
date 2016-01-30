@@ -23,7 +23,7 @@ export default class ExpensesList extends Component {
             <div className='expensesList'>
                 <ul className='expensesItemList'>
                 {expenses.map(item => {
-                    return <ExpensesItem item={item}/>
+                    return <ExpensesItem item={item} listId={this.props.listId} />
                 })}
                 </ul>
             </div>);
@@ -31,5 +31,6 @@ export default class ExpensesList extends Component {
 }
 
 ExpensesList.propTypes = {
-    expenses: React.PropTypes.array.isRequired
+    expenses: React.PropTypes.array.isRequired,
+    listId: React.PropTypes.string.isRequired
 }

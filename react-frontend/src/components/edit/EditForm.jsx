@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 var expensesAction = require('../../actions/ExpensesActions.jsx');
+var expensesStore = require('../../stores/ExpensesStore.jsx');
+
 import './EditForm.scss'
 
 export default class EditForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { amount: 0, name: ''};
+        this.state = {
+            amount: 0,
+            name: '',
+            activeList: undefined
+        };
+    }
+
+    componentDidMount() {
+        expensesStore.addEventListener('activeList', this.handleListSelect.bind(this));
+    }
+
+    componentWillUnmount() {
+        expensesStore.removeEventListener('activeList', this.handleListSelect.bind(this));
+    }
+
+    handleListSelect() {
+        this.setState({ activeList: expensesStore.getActiveList() });
     }
 
 
@@ -14,7 +32,7 @@ export default class EditForm extends Component {
         event.preventDefault();
         var amount = this.state.amount;
         var name = this.state.name.trim();
-        expensesAction.storeExpense(name, amount);
+        expensesAction.storeExpense(name, amount, this.state.activeList);
         this.clearInputfields();
     }
 
@@ -32,6 +50,13 @@ export default class EditForm extends Component {
     }
 
     render() {
+        if(this.state.activeList === undefined) {
+            return (
+                <div className='editForm'>
+                    <h3>Keine Liste ausgewählt</h3>
+                </div>
+            );
+        }
         return (
             <div className='editForm'>
                 <h1>Eintrag anlegen</h1>

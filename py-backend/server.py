@@ -17,6 +17,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 def getDictFromPost(request):
     if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
+        #print(postedJson)
         return json.loads(postedJson)
 
 @app.route('/calcDeptsFromPostData', methods=['POST'])
@@ -67,7 +68,7 @@ def getExpensesList():
     ''' Returns a json list of depts '''
     listId = request.args.get('listId')
     if(listId != None and listId != ''):
-        return Response(json.dumps(storage.getExpensePosts(listId)))
+        return Response(json.dumps(storage.getNormalizedExpensePosts(listId)))
     return Response('List not found', 404)
 
 

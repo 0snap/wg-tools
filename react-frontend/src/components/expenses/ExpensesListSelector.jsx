@@ -9,20 +9,25 @@ export default class ExpensesListSelector extends Component {
     constructor(props) {
         super(props);
         this.state = { show: false };
-    }
-
-
-    handleStoreChange() {
-        this.setState({ expensesLists: expensesStore.getAllExpenses() });
+        // console.log(this.props.expensesLists);
+        // console.log(this.props.selected);
     }
 
     render() {
+        let _this = this;
+        if(this.props.expensesLists.length === 0) {
+            return (
+                <select className="expensesListSelector__select">
+                    <option>Bitte neue Liste anlegen</option>
+                </select>
+            );
+        }
         return(
             <div className="expensesListSelector"> 
             <h3>Liste auswählen</h3>
-                <select className="expensesListSelector__select">
+                <select className="expensesListSelector__select" defaultValue={this.props.selected} >
                     {this.props.expensesLists.map((list) => {
-                        return <ExpensesListSelectOption list={list}/>
+                        return <ExpensesListSelectOption list={list} />
                     })};
                 </select> 
             </div>
@@ -32,5 +37,6 @@ export default class ExpensesListSelector extends Component {
 }
 
 ExpensesListSelector.propTypes = {
-    expensesLists: React.PropTypes.array.isRequired
+    expensesLists: React.PropTypes.array.isRequired,
+    selected: React.PropTypes.string.isRequired
 }

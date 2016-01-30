@@ -4,6 +4,9 @@ import assign from 'object-assign';
 
 var _expenses = {};
 var _depts = [];
+var _wg;
+var _expensesLists = [];
+var _activeList;
 
 function addExpense(id, name, amount, date, color) {
     //console.log("shall add ", id, name, amount, date);
@@ -22,19 +25,30 @@ function deleteExpense(id) {
     delete _expenses[id];
 }
 
-function overwriteAll(expenses) {
+function overwriteAllExpenses(expenses) {
     // backend returns expenses as list. transform into a dict with keys:
     _expenses = {};
     expenses.forEach(exp => {
         _expenses[exp.id] = exp;
     });
-    //console.log(_expenses);
 }
 
-function storeDepts(depts) {
+function setDepts(depts) {
     //console.log("storing" + depts);
     _depts = depts;
 
+}
+
+function setWg(wg) {
+    _wg = wg;
+}
+
+function setExpensesLists(expensesLists) {
+    _expensesLists = expensesLists;
+}
+
+function setActiveList(activeList) {
+    _activeList = activeList;
 }
 
 let ExpensesStore = assign({ }, EventEmitter.prototype, {
@@ -65,6 +79,18 @@ let ExpensesStore = assign({ }, EventEmitter.prototype, {
 
     getDepts() {
         return _depts;
+    },
+
+    getWg() {
+        return _wg;
+    },
+
+    getExpensesLists() {
+        return _expensesLists;
+    },
+
+    getActiveList() {
+        return _activeList;
     }
 })
 
@@ -83,16 +109,29 @@ Dispatcher.register(function(action) {
             ExpensesStore.emitChange('expense');
             break;
 
-        case('overwriteAll'):
+        case('overwriteAllExpenses'):
             //console.log('store all');
-            overwriteAll(action.expenses);
+            overwriteAllExpenses(action.expenses);
             ExpensesStore.emitChange('expense');
             break;
         case('depts'):
             //console.log('depts');
-            storeDepts(action.depts);
-            ExpensesStore.emitChange('dept');
+            setDepts(action.depts);
+            ExpensesStore.emitChange('depts');
             break;
+        case('wgs'):
+            setWg(action.wg);
+            ExpensesStore.emitChange('wgs');
+            break;
+        case('expensesLists'):
+            setExpensesLists(action.expensesLists);
+            ExpensesStore.emitChange('expensesLists');
+            break;
+        case('activeList'):
+            setActiveList(action.listId);
+            ExpensesStore.emitChange('activeList');
+            break;
+
     }
 
 })
