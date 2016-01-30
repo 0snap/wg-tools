@@ -110,6 +110,10 @@ let ExpensesActions = {
         });
     },
 
+    storeList(name) {
+        console.log("store list " + name);
+    },
+
     setActiveList(listId) {
         Dispatcher.dispatch({
             actionType: 'activeList',

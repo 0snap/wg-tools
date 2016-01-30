@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ExpensesList from './ExpensesList.jsx';
 import ExpensesGraph from './ExpensesGraph.jsx';
 import ExpensesListSelector from './ExpensesListSelector.jsx';
+import ExpensesListCreateForm from './ExpensesListCreateForm.jsx';
+
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 var expensesActions = require('../../actions/ExpensesActions.jsx');
 
@@ -57,6 +59,7 @@ export default class ExpensesContainer extends Component {
                 <div className="expensesContainer__header">
                     <h1>Ausgaben</h1>
                     <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
+                    <ExpensesListCreateForm />
                 </div>
                 <ExpensesList expenses={this.state.expenses} listId={this.state.activeList} />
                 <ExpensesGraph expenses={this.state.expenses} />
