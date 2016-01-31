@@ -1,0 +1,27 @@
+Listen Header:
+    Ausgaben in Listen ordnen + Dropdown (/)
+    Listen anlegen (/)
+    Listen löschen
+    Liste sperren, nur noch Schulden zeigen
+
+Listen verhalten:
+    Liste automatisch an Monatsende/Wochende? sperren
+    Neuer Monat/Woche?: neue Liste automatisch erzeugen + als active setzen
+    bei nicht mehr änderbarer Liste keine editForm
+    Nach Listen Erzeugung die neue Liste als active setzen
+
+Generelle Panels: 
+    Graph für Ausgaben (/)
+    Graph für Schulden
+
+Direkte Schulden:
+    Auslagen / direkte Schulden Panel 
+    Listentyp?
+    Graph für auslagen / direkte schulden
+
+Generelles Verhalten:
+    löschen bestätigen als li mit dickem Knopf (/)
+    anmelden / Wg anlegen + Header "angemeldet in Wg"
+    leere Forms nicht submitten, auch wenn Backend graceful gebaut ist
+    DB ids nicht ans Frontend leaken? -> geteilte Schlüssel aus wg/liste/name+datum(post)
+
