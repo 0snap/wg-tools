@@ -34,7 +34,9 @@ export default class EditForm extends Component {
         event.preventDefault();
         var amount = this.state.amount;
         var name = this.state.name.trim();
+        // console.log("storing for list ", this.state.activeList);
         expensesAction.storeExpense(name, amount, this.state.activeList);
+
         this.clearInputfields();
     }
 

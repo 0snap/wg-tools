@@ -40,10 +40,6 @@ export default class ExpensesContainer extends Component {
 
     handleExpensesListsChange() {
         this.setState({ expensesLists: expensesStore.getExpensesLists() });
-        if(this.state.activeList == '' && this.state.expensesLists.length) {
-            //initial select, load contents
-            expensesActions.setActiveList(this.state.expensesLists[0].id);
-        }
     }
 
     handleListSelect() {

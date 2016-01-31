@@ -36,7 +36,7 @@ def depts():
         if(len(persons) > 0):
             meanDepts = deptCalculator.calcDepts(persons)
             return json.dumps(meanDepts)
-        return Response('Nothing found', 404)
+        return json.dumps([])
     return Response('Need a list id', 400)
 
 @app.route('/storeExpense', methods=['POST'])
@@ -62,6 +62,17 @@ def delete():
         if(storage.delete(listId, oid)):
             return Response('OK', 200)
     return Response('Not found', 404)
+
+@app.route('/createExpensesList', methods=['POST'])
+def createExpensesList():
+    ''' Stores the posted data to the mongo '''
+    jsonAsDict = getDictFromPost(request)
+    name = jsonAsDict['name']
+    #wgId = jsonAsDict['wgId']
+    if name != None and name != '':
+        storedObjectDict = storage.createExpensesList(name, '56acce795a3c045a12cb98d6')
+        return json.dumps(storedObjectDict)
+    return Response('Wrong format, will not store.', 400)
 
 @app.route('/expensesList')
 def getExpensesList():

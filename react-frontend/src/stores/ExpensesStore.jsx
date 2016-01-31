@@ -26,7 +26,7 @@ function deleteExpense(id) {
     delete _expenses[id];
 }
 
-function overwriteAllExpenses(expenses) {
+function setExpenses(expenses) {
     // backend returns expenses as list. transform into a dict with keys:
     _expenses = {};
     expenses.forEach(exp => {
@@ -34,18 +34,23 @@ function overwriteAllExpenses(expenses) {
     });
 }
 
-function setDepts(depts) {
-    //console.log("storing" + depts);
-    _depts = depts;
-
-}
-
-function setWg(wg) {
-    _wg = wg;
+function addExpensesList(id, name) {
+    //console.log(id, name);
+    _expensesLists.push({id: id, name: name});
 }
 
 function setExpensesLists(expensesLists) {
     _expensesLists = expensesLists;
+}
+
+
+function setDepts(depts) {
+    //console.log("storing" + depts);
+    _depts = depts;
+}
+
+function setWg(wg) {
+    _wg = wg;
 }
 
 function setActiveList(activeList) {
@@ -110,7 +115,7 @@ Dispatcher.register(function(action) {
             break;
         case(Constants.FETCH_EXPENSE_POSTS):
             //console.log('store all');
-            overwriteAllExpenses(action.expenses);
+            setExpenses(action.expenses);
             ExpensesStore.emitChange(Constants.EXPENSE_POSTS_CHANGED);
             break;
         case(Constants.FETCH_DEPTS):
@@ -122,13 +127,16 @@ Dispatcher.register(function(action) {
             setWg(action.wg);
             ExpensesStore.emitChange(Constants.FETCH_WGS);
             break;
-        case(Constants.FETCH_EXPENSES_LISTS):
-            console.log(action.expensesLists)
-            setExpensesLists(action.expensesLists);
+        case(Constants.ADD_EXPENSES_LIST):
+            addExpensesList(action.id, action.name);
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             break;
-        case(Constants.ADD_EXPENSES_LIST):
-            // foo
+        case(Constants.DELETE_EXPENSES_LIST):
+            // console.log("store delete exp list");
+            break;
+        case(Constants.FETCH_EXPENSES_LISTS):
+            setExpensesLists(action.expensesLists);
+            ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             break;
         case(Constants.ACTIVE_LIST):
             setActiveList(action.listId);

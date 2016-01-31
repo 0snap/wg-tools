@@ -95,9 +95,10 @@ def getColorForName(listId, name):
     return getRandomColor()
 
 def store(listId, name, amount):
+    # print("storing ", listId, name, amount)
     color = getColorForName(listId, name)
     expensePost = ExpensePost(name=name, amount=amount, color=color)
-    stored = ExpensesList.objects.update_one(push__expensePosts=expensePost)
+    stored = ExpensesList.objects(id=listId).update(push__expensePosts=expensePost)
     if not stored:
         return None
     return normalizeExpensePost(expensePost)
@@ -116,7 +117,7 @@ def createExpensesList(name, wgId):
         if(len(ExpensesList.objects(name=name, wg=wg)) == 0):
             expensesList = ExpensesList(name=name, wg=wg, editable=True)
             expensesList.save()
-            return expensesList.id
+            return str(expensesList.id)
     return None
 
 def createWG(name):

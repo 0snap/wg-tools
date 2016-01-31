@@ -113,7 +113,29 @@ let ExpensesActions = {
     },
 
     storeList(name) {
-        console.log("store list " + name);
+        //console.log("post list " + name);
+        let _this = this;
+        request.post('http://localhost:5000/createExpensesList')
+            .send({name: name})
+            .set('Content-Type', 'application/json; charset=UTF-8')
+            .set('Access-Control-Allow-Origin', '*')
+            .end(function(err, res) {
+                if(err) {
+                    console.log(err);
+                }
+                let id = JSON.parse(res.text)
+                if(id != undefined ) {
+                    //console.log(stored)
+                    Dispatcher.dispatch({
+                        actionType: Constants.ADD_EXPENSES_LIST,
+                        name: name,
+                        id: id
+                    });
+                    _this.setActiveList(id);
+                }
+
+        });
+
     },
 
     setActiveList(listId) {
