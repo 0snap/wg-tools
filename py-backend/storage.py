@@ -84,8 +84,12 @@ def normalizeExpensePost(post):
     return normalized
 
 def getRandomColor():
-    randomRGB = lambda: random.randint(64,192) # nicely visible
-    randomHex = '#%02X%02X%02X' % (randomRGB(),randomRGB(),randomRGB())
+    ## have two random colors near one end of the spectrum, another random color near the other end
+    RGBLowHigh = [lambda: random.randint(0,63), lambda: random.randint(191,255)]
+    RGBLowHigh.append(random.choice(RGBLowHigh))
+    random.shuffle(RGBLowHigh)
+    #print(RGBLowHigh[0](),RGBLowHigh[1](),RGBLowHigh[2]())
+    randomHex = '#%02X%02X%02X' % (RGBLowHigh[0](),RGBLowHigh[1](),RGBLowHigh[2]())
     return randomHex
 
 def getColorForName(listId, name):
