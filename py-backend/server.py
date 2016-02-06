@@ -7,7 +7,7 @@ import deptCalculator
 import storage
 
 '''
-Simple Flask-API for serving post requests. API offers stuff like calculating depts among people or storing data.
+Simple Flask-API for serving requests. API offers stuff like calculating depts among people or storing data.
 '''
 
 
@@ -31,9 +31,9 @@ def calcDepts():
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
     listId = request.args.get('listId')
-    if(listId != None):
+    if listId != None:
         persons = storage.getExpensesPerPerson(listId)
-        if(len(persons) > 0):
+        if len(persons) > 0:
             meanDepts = deptCalculator.calcDepts(persons)
             return json.dumps(meanDepts)
         return json.dumps([])
@@ -59,7 +59,7 @@ def delete():
     listId = jsonAsDict.get('listId')
     oid = jsonAsDict.get('id')
     if listId != None and listId != '' and oid != None and oid != '':
-        if(storage.delete(listId, oid)):
+        if storage.delete(listId, oid):
             return Response('OK', 200)
     return Response('Not found', 404)
 
@@ -78,7 +78,7 @@ def createExpensesList():
 def getExpensesList():
     ''' Returns a json list of depts '''
     listId = request.args.get('listId')
-    if(listId != None and listId != ''):
+    if listId != None and listId != '':
         return Response(json.dumps(storage.getNormalizedExpensePosts(listId)))
     return Response('List not found', 404)
 
@@ -96,7 +96,7 @@ def getWGs():
 
 if __name__ == '__main__':
     wgId = storage.createWG('mett')
-    if(wgId != None):
+    if wgId != None:
         storage.createExpensesList('Test', wgId)
     print(storage.getWGs())
     print(storage.getExpensesLists())

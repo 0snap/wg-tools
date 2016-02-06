@@ -1,52 +1,52 @@
 #!/usr/bin/python
 
-def calcSponsorsBorrowers(expensePersons):
-    # for key, value in expensePersons.items():
-    #     expensePersons[key] = float(value)
-    average = sum([person['amount'] for person in expensePersons])/float(len(expensePersons))
-    borrowerMap = dict()
-    sponsorMap = dict()
+def sortDictOfDicts(toSort, value, reverse=False):
+    return sorted(toSort.items(), key=lambda entry: entry[1][value], reverse=reverse)
+
+def calcBorrowersSponsors(expensePersons):
+    mean = sum([person['amount'] for person in expensePersons])/float(len(expensePersons))
+    borrowerMap, sponsorMap = dict(), dict()
     for person in expensePersons:
-        person['amount'] = float(person['amount']) - float(average)
+        person['amount'] = float(person['amount']) - float(mean)
         if person['amount'] > 0:
             sponsorMap[person['name']] = person
         elif person['amount'] < 0:
             borrowerMap[person['name']] = person
-    return borrowerMap, sponsorMap
+    return sortDictOfDicts(borrowerMap, 'amount'), sortDictOfDicts(sponsorMap, 'amount', True)
 
-def makeEven(borrowerMap, sponsorMap):
-    ''' Iterates through the given maps and makes them even. Returns list of tuples like (obligor, amount, obligee) '''
+def makeEven(borrowers, sponsors):
+    ''' Iterates through the given maps and makes them even. Returns list of tuples like (borrower, amount, sponsor) '''
     result = list()
-    # print("in")
-    # print(borrowerMap, sponsorMap)
-    while(bool(borrowerMap) and bool(sponsorMap)): # avoid floating point errors
-        reducedborrowerMap = dict()
-        for nameB, borrower in borrowerMap.items():
-            nameS, sponsor = sponsorMap.popitem()
-            minus, plus = borrower['amount'], sponsor['amount']
-            if minus + plus < 0:
-                result.append({"borrower": borrower, "amount": round(plus, 2), "sponsor": sponsor})
-                borrower['amount'] = minus + plus 
-                reducedborrowerMap[nameB] = borrower
-            if minus + plus == 0:
-                result.append({"borrower": borrower, "amount": round(plus, 2), "sponsor": sponsor})
-            if minus + plus > 0:
-                result.append({"borrower": borrower, "amount": round(minus * -1, 2), "sponsor": sponsor})
-                sponsor['amount'] = minus + plus 
-                sponsorMap[nameS] = sponsor
-        borrowerMap = reducedborrowerMap
-        # print(borrowerMap, sponsorMap)
-    # print("out")
+    # print(borrowers, sponsors)
+    while(bool(borrowers) and bool(sponsors)):
+        nameB, borrower = borrowers.pop()
+        nameS, sponsor = sponsors.pop()
+        minus, plus = borrower['amount'], sponsor['amount']
+        if minus + plus < 0:
+            del(sponsor['amount'])
+            result.append({"borrower": borrower, "amount": round(plus, 2), "sponsor": sponsor})
+            borrower['amount'] = minus + plus 
+            borrowers.append((nameB, borrower))
+        elif minus + plus == 0:
+            del(borrower['amount'])
+            del(sponsor['amount'])
+            result.append({"borrower": borrower, "amount": round(plus, 2), "sponsor": sponsor})
+        elif minus + plus > 0:
+            del(borrower['amount'])
+            result.append({"borrower": borrower, "amount": round(minus * -1, 2), "sponsor": sponsor})
+            sponsor['amount'] = minus + plus 
+            sponsors.append((nameS, sponsor))
+        # print(borrowers, sponsors)
     # print(result)
     return result
 
 def calcDepts(expensePersons):
     ''' expensePersons should be at list in the format  
-        [{"name": name, "amount": totalAmount, "other": attributes...}] 
-        Calculates how money has to be traded, returns a list of dicts 
+        [{"name": name, "amount": totalAmount, "other": attributes...}, ...] 
+        Calculates how much money has to be traded, returns a list of dicts 
         with all properties that were passed into this function in the format
         [{"sponsor": {"name": nameOfSponsor, "other": attributes...}, "amount": exchangeAmount, 
-            "borrower": {"name": nameOfBorrower, "other": attributes...}, ...] '''
+            "borrower": {"name": nameOfBorrower, "other": attributes...}}, ...] '''
 
-    borrowerMap, sponsorMap = calcSponsorsBorrowers(expensePersons)
-    return makeEven(borrowerMap, sponsorMap)
+    borrowers, sponsors = calcBorrowersSponsors(expensePersons)
+    return makeEven(borrowers, sponsors)

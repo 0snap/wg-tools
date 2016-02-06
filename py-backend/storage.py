@@ -94,7 +94,7 @@ def getRandomColor():
 
 def getColorForName(listId, name):
     connectedPosts = ExpensesList.objects(id=listId, expensePosts__name=name)
-    if (len(connectedPosts) > 0):
+    if len(connectedPosts) > 0:
         return list(filter(lambda post: post.name == name, connectedPosts[0].expensePosts))[0].color
     return getRandomColor()
 
@@ -115,10 +115,10 @@ def delete(listId, postId):
 def createExpensesList(name, wgId):
     ''' Creates and stores new ExpensesList object with the given name. Returns its id '''
     # TODO: check if exists
-    if(len(WG.objects(id=wgId)) == 1):
+    if len(WG.objects(id=wgId)) == 1:
         wg = WG.objects.get(id=wgId)
         #print('create explist ', name, wgId, wg)
-        if(len(ExpensesList.objects(name=name, wg=wg)) == 0):
+        if len(ExpensesList.objects(name=name, wg=wg)) == 0:
             expensesList = ExpensesList(name=name, wg=wg, editable=True)
             expensesList.save()
             return str(expensesList.id)
@@ -127,7 +127,7 @@ def createExpensesList(name, wgId):
 def createWG(name):
     ''' Creates and stores new wg object with the given name. Returns its id '''
     # TODO: check if exists
-    if(len(WG.objects(name=name)) > 0):
+    if len(WG.objects(name=name)) > 0:
         return None
     wg = WG(name=name)
     wg.save()
