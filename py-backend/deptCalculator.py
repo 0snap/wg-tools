@@ -16,6 +16,9 @@ def calcBorrowersSponsors(expensePersons):
 
 def makeEven(borrowers, sponsors):
     ''' Iterates through the given maps and makes them even. Returns list of tuples like (borrower, amount, sponsor) '''
+    if sum([person['amount'] for (name, person) in borrowers]) + sum([person['amount'] for (name, person) in sponsors]) != 0:
+        print(sum([person['amount'] for (name, person) in borrowers]) + sum([person['amount'] for (name, person) in sponsors]))
+        raise ValueError('Cannot make even given sponsors and borrowers, they do not sum up to zero.')
     result = list()
     # print(borrowers, sponsors)
     while(bool(borrowers) and bool(sponsors)):

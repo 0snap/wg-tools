@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import pytest # for exception testing
+
 import deptCalculator
 
 ###########################################
@@ -27,16 +29,16 @@ def test_calculator_sanity():
     expensePersons = [foo, bar]
 
     returnList = deptCalculator.calcDepts(expensePersons)
-    returnInstruction = returnList[0]
+    paybackInstruction = returnList[0]
 
     expectedFoo = {'name': 'foo', 'some': 'attr', 'another': 'attr'}
     expectedBar = {'name': 'bar', 'some': 'attr', 'another': 'attr', 'yet': 'anotherattr'}
 
 
-    assert returnInstruction
-    assert returnInstruction['borrower'] == expectedBar
-    assert returnInstruction['sponsor'] == expectedFoo
-    assert returnInstruction['amount'] == 2.5
+    assert paybackInstruction
+    assert paybackInstruction['borrower'] == expectedBar
+    assert paybackInstruction['sponsor'] == expectedFoo
+    assert paybackInstruction['amount'] == 2.5
 
 
 def test_sponsors_borrowers_calculation_sanity():
@@ -75,9 +77,17 @@ def test_make_even_sanity():
     orderedSponsors = [s3, s2, s1]
 
     result = deptCalculator.makeEven(orderedBorrowers, orderedSponsors)
-    print(result)
+    #print(result)
     assert result == expectedResult
 
+    b1 = ('b1', {'name':'b1', 'amount':-5})
+    s1 = ('s1', {'name':'s1', 'amount':1.5})
+
+    invalidBorrowers = [b1]
+    invalidSponsors = [s1]
+
+    with pytest.raises(ValueError):
+        deptCalculator.makeEven(invalidBorrowers, invalidSponsors)
 
 def test_sponsors_calculation():
     foo, bar, baz, ping, pong = getExpensePersons()
