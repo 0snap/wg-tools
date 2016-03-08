@@ -12,7 +12,7 @@ each ExpensesList contains a list of expensePosts.
 '''
 
 
-connect(host='mongodb://localhost:27017/depts')
+connect(host='mongodb://localhost:27017/depts2')
 #connect('depts', host='mongo', port=27017)
 
 class WG(Document):
@@ -25,7 +25,7 @@ class Post(EmbeddedDocument):
 class ExpensePost(Post):
     id = ObjectIdField(default=lambda: bson.ObjectId(), primary_key=True)
     name = StringField()
-    amount = FloatField(min_value=0)
+    amount = IntField(min_value=0)
     color = StringField()
     tsDeleted = DateTimeField(default=None)
 
@@ -75,7 +75,7 @@ def getExpensesPerPerson(listId):
 def normalizeExpensePost(post):
     normalized = {}
     normalized['name'] = post.name
-    normalized['amount'] = post.amount
+    normalized['amount'] = round(float(post.amount/100), 2)
     normalized['date'] = post.date_modified
     normalized['id'] = str(post.id)
     normalized['color'] = post.color

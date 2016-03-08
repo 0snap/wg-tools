@@ -45,9 +45,9 @@ def store():
     jsonAsDict = getDictFromPost(request)
     listId = jsonAsDict['listId']
     name = jsonAsDict['name']
-    amount = jsonAsDict['amount']
-    if listId != None and listId != '' and name != None and name != '' and amount != None and float(amount) >= 0:
-        storedObjectDict = storage.store(listId, name, amount)
+    amount = float(jsonAsDict['amount'])
+    if listId != None and listId != '' and name != None and name != '' and amount != None and amount >= 0:
+        storedObjectDict = storage.store(listId, name, int(amount * 100))
         storedObjectDict['listId'] = listId
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)

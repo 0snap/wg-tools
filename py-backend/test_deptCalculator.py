@@ -7,17 +7,17 @@ import deptCalculator
 ###########################################
 
 def getExpensePersons():
-    # the mean of all expenses for this set of test items is 5
+    # the mean of all expenses for this set of test items is 500 cents // 5 euro
 
-    foo = {'name': 'foo', 'amount': 10, 'some': 'attr', 'another': 'attr'}
-    bar = {'name': 'bar', 'amount': 5, 'some': 'attr', 'another': 'attr', 'yet': 'anotherattr'}
-    baz = {'name': 'baz', 'amount': 7.5, 'another': 'attr', 'yet': 'anotherattr'}
+    foo = {'name': 'foo', 'amount': 1000, 'some': 'attr', 'another': 'attr'}
+    bar = {'name': 'bar', 'amount': 500, 'some': 'attr', 'another': 'attr', 'yet': 'anotherattr'}
+    baz = {'name': 'baz', 'amount': 750, 'another': 'attr', 'yet': 'anotherattr'}
     ping = {'name': 'ping', 'amount': 0, 'some': 'attr', 'another': 'attr', 'yet': 'anotherattr'}
-    pong = {'name': 'pong', 'amount': 2.5, 'some': 'attr', 'another': 'attr', 'yet': 'anotherattr'}
+    pong = {'name': 'pong', 'amount': 250, 'some': 'attr', 'another': 'attr', 'yet': 'anotherattr'}
 
     return foo, bar, baz, ping, pong
 
-expectedMean = 5
+expectedMeanCents = 500
 
 ###########################################
 
@@ -98,13 +98,13 @@ def test_sponsors_calculation():
 
     fooSponsor = sponsors[0] # has to be ordered this way
     assert fooSponsor[1]['name'] == 'foo'
-    assert fooSponsor[1]['amount'] == 10 - expectedMean
+    assert fooSponsor[1]['amount'] == 1000 - expectedMeanCents
     assert fooSponsor[1]['some'] == 'attr'
     assert fooSponsor[1]['another'] == 'attr'
 
     bazSponsor = sponsors[1]
     assert bazSponsor[1]['name'] == 'baz'
-    assert bazSponsor[1]['amount'] == 7.5 - expectedMean
+    assert bazSponsor[1]['amount'] == 750 - expectedMeanCents
     assert bazSponsor[1]['another'] == 'attr'
     assert bazSponsor[1]['yet'] == 'anotherattr'
 
@@ -118,7 +118,7 @@ def test_borrowers_calculation():
     
     pingBorrower = borrowers[0] # has to be ordered this way
     assert pingBorrower[1]['name'] == 'ping'
-    assert pingBorrower[1]['amount'] == 0 - expectedMean
+    assert pingBorrower[1]['amount'] == 0 - expectedMeanCents
     assert pingBorrower[1]['some'] == 'attr'
     assert pingBorrower[1]['another'] == 'attr'
     assert pingBorrower[1]['yet'] == 'anotherattr'
@@ -126,7 +126,7 @@ def test_borrowers_calculation():
 
     pongBorrower = borrowers[1]
     assert pongBorrower[1]['name'] == 'pong'
-    assert pongBorrower[1]['amount'] == 2.5 - expectedMean
+    assert pongBorrower[1]['amount'] == 250 - expectedMeanCents
     assert pongBorrower[1]['some'] == 'attr'
     assert pongBorrower[1]['another'] == 'attr'
     assert pongBorrower[1]['yet'] == 'anotherattr'
