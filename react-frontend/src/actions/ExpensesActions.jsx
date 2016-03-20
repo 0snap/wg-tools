@@ -84,8 +84,8 @@ let ExpensesActions = {
         });
     },
 
-    fetchExpensesLists() {
-        request.get('http://localhost:5000/expensesLists').end(function(err, res) {
+    fetchExpensesLists(wg) {
+        request.get('http://localhost:5000/expensesLists?wgName=' + wg).end(function(err, res) {
             if(err) {
                 console.log(err);
             }

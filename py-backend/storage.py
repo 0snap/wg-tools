@@ -12,7 +12,7 @@ each ExpensesList contains a list of expensePosts.
 '''
 
 
-connect(host='mongodb://localhost:27017/depts2')
+connect(host='mongodb://localhost:27017/depts')
 #connect('depts', host='mongo', port=27017)
 
 class WG(Document):
@@ -112,11 +112,11 @@ def delete(listId, postId):
     ExpensesList.objects(id=listId, expensePosts__id=postId).update(set__expensePosts__S__tsDeleted=datetime.now)
     return True
 
-def createExpensesList(name, wgId):
+def createExpensesList(name, wgName):
     ''' Creates and stores new ExpensesList object with the given name. Returns its id '''
     # TODO: check if exists
-    if len(WG.objects(id=wgId)) == 1:
-        wg = WG.objects.get(id=wgId)
+    if len(WG.objects(name=wgName)) == 1:
+        wg = WG.objects.get(name=wgName)
         #print('create explist ', name, wgId, wg)
         if len(ExpensesList.objects(name=name, wg=wg)) == 0:
             expensesList = ExpensesList(name=name, wg=wg, editable=True)
@@ -137,5 +137,8 @@ def createWG(name):
 def getWGs():
     return [{'id': str(wg.id), 'name': wg.name} for wg in WG.objects]
 
-def getExpensesLists():
-    return [{'id': str(expensesList.id), 'name': expensesList.name} for expensesList in ExpensesList.objects]
+def getExpensesLists(wgName):
+    if len(WG.objects(name=wgName)) == 1:
+        wg = WG.objects.get(name=wgName)
+        return [{'id': str(expensesList.id), 'name': expensesList.name} for expensesList in ExpensesList.objects(wg=wg)]
+    return None

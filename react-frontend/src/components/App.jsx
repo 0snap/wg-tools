@@ -14,7 +14,7 @@ export class App extends Component {
         // init store
         //expensesActions.fetchExpenses();
         //expensesActions.fetchDepts();
-        expensesActions.fetchExpensesLists();
+        expensesActions.fetchExpensesLists(this.props.wg);
     }
 
     render() {
@@ -25,4 +25,8 @@ export class App extends Component {
                 <EditForm />
             </div>);
     }
+}
+
+App.propTypes = {
+    wg: React.PropTypes.string.isRequired
 }
