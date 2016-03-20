@@ -55,7 +55,7 @@ export default class ExpensesContainer extends Component {
                 <div className="expensesContainer__header">
                     <h1>Ausgaben</h1>
                     <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
-                    <ExpensesListCreateForm />
+                    <ExpensesListCreateForm wgName={this.props.wgName}/>
                 </div>
                 <ExpensesList expenses={this.state.expenses} listId={this.state.activeList} />
                 <ExpensesGraph expenses={this.state.expenses} />
@@ -63,4 +63,8 @@ export default class ExpensesContainer extends Component {
         );
     }
 
+}
+
+ExpensesContainer.propTypes = {
+    wgName: React.PropTypes.string.isRequired
 }

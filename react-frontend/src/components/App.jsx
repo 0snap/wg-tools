@@ -20,7 +20,7 @@ export class App extends Component {
     render() {
         return (
             <div className='app'>
-                <ExpensesContainer />
+                <ExpensesContainer wgName={this.props.wg}/>
                 <DeptContainer />
                 <EditForm />
             </div>);

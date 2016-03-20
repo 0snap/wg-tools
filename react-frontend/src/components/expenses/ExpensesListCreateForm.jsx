@@ -15,7 +15,7 @@ export default class ExpensesListCreateForm extends Component {
 
     addList(event) {
         event.preventDefault();
-        expensesActions.storeList(this.state.name.trim()); // gracefully
+        expensesActions.storeList(this.state.name.trim(), this.props.wgName); // gracefully
         this.setState({name: ''});
     }
 
@@ -44,4 +44,8 @@ export default class ExpensesListCreateForm extends Component {
         );
     }
 
+}
+
+ExpensesListCreateForm.propTypes = {
+    wgName: React.PropTypes.string.isRequired
 }

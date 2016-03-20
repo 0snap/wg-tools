@@ -112,11 +112,11 @@ let ExpensesActions = {
         });
     },
 
-    storeList(name) {
+    storeList(name, wgName) {
         //console.log("post list " + name);
         let _this = this;
         request.post('http://localhost:5000/createExpensesList')
-            .send({name: name})
+            .send({name: name, wgName: wgName})
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Access-Control-Allow-Origin', '*')
             .end(function(err, res) {
