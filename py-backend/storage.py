@@ -12,11 +12,21 @@ each ExpensesList contains a list of expensePosts.
 '''
 
 
-connect(host='mongodb://localhost:27017/depts')
+connect(host='mongodb://localhost:27017/depts3')
 #connect('depts', host='mongo', port=27017)
+
+class WGWrapper(object):
+    def __init__(self, id, name, hash):
+        self.id = id
+        self.name = name
+        self.hash = hash
+
+    def __str__(self):
+        return "WG(name='%s')" % self.id
 
 class WG(Document):
     name = StringField()
+    pwHash = StringField()
 
 class Post(EmbeddedDocument):
     date_modified = DateTimeField(default=datetime.now)
@@ -124,18 +134,24 @@ def createExpensesList(name, wgName):
             return str(expensesList.id)
     return None
 
-def createWG(name):
+def createWG(name, pwHash):
     ''' Creates and stores new wg object with the given name. Returns its id '''
     # TODO: check if exists
     if len(WG.objects(name=name)) > 0:
         return None
-    wg = WG(name=name)
+    wg = WG(name=name, pwHash = pwHash)
     wg.save()
     #print('created wg')
     return wg.id
 
 def getWGs():
-    return [{'id': str(wg.id), 'name': wg.name} for wg in WG.objects]
+    return [{'id': str(wg.id), 'name': wg.name } for wg in WG.objects]
+
+def getWG(name, pwHash):
+    if len(WG.objects(name=name, pwHash=pwHash)) == 1:
+        wg = WG.objects.get(name=name, pwHash=pwHash)
+        return WGWrapper(str(wg.id), name, pwHash)
+    return None
 
 def getExpensesLists(wgName):
     if len(WG.objects(name=wgName)) == 1:

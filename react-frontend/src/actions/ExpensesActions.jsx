@@ -1,7 +1,7 @@
 import Dispatcher from '../dispatcher/Dispatcher.jsx';
 import request from 'superagent';
 import Constants from '../constants/ExpenseConstants.jsx';
-
+var loginStore = require('../stores/LoginStore.jsx');
 
 let ExpensesActions = {
 
@@ -10,6 +10,7 @@ let ExpensesActions = {
         request.post('http://localhost:5000/storeExpense')
             .send({name: name, amount: amount, listId: listId})
             .set('Content-Type', 'application/json; charset=UTF-8')
+            .set('Authorization', 'JWT ' + loginStore.getToken())
             .set('Access-Control-Allow-Origin', '*')
             .end(function(err, res) {
                 if(err) {
@@ -40,6 +41,7 @@ let ExpensesActions = {
         request.del('http://localhost:5000/deleteExpense')
             .send({ id: id, listId: listId})
             .set('Content-Type', 'application/json; charset=UTF-8')
+            .set('Authorization', 'JWT ' + loginStore.getToken())
             .set('Access-Control-Allow-Origin', '*')
             .end(function(err, res) {
                 if(err) {
@@ -58,7 +60,9 @@ let ExpensesActions = {
     },
 
     fetchExpenses(listId) {
-        request.get('http://localhost:5000/expensesList?listId=' + listId).end(function(err, res) {
+        request.get('http://localhost:5000/expensesList?listId=' + listId)
+            .set('Authorization', 'JWT ' + loginStore.getToken())
+            .end(function(err, res) {
             if(err) {
                 console.log(err); 
             }
@@ -71,7 +75,9 @@ let ExpensesActions = {
     },
 
     fetchDepts(listId) {
-        request.get('http://localhost:5000/meanDepts?listId=' + listId).end(function(err, res) {
+        request.get('http://localhost:5000/meanDepts?listId=' + listId)
+            .set('Authorization', 'JWT ' + loginStore.getToken())
+            .end(function(err, res) {
             if(err) {
                 console.log(err);
             }
@@ -85,7 +91,9 @@ let ExpensesActions = {
     },
 
     fetchExpensesLists(wg) {
-        request.get('http://localhost:5000/expensesLists?wgName=' + wg).end(function(err, res) {
+        request.get('http://localhost:5000/expensesLists?wgName=' + wg)
+            .set('Authorization', 'JWT ' + loginStore.getToken())
+            .end(function(err, res) {
             if(err) {
                 console.log(err);
             }
@@ -99,7 +107,9 @@ let ExpensesActions = {
     },
 
     fetchWGs() {
-        request.get('http://localhost:5000/wgs').end(function(err, res) {
+        request.get('http://localhost:5000/wgs')
+            .set('Authorization', 'JWT ' + loginStore.getToken())
+            .end(function(err, res) {
             if(err) {
                 console.log(err);
             }
@@ -118,6 +128,7 @@ let ExpensesActions = {
         request.post('http://localhost:5000/createExpensesList')
             .send({name: name, wgName: wgName})
             .set('Content-Type', 'application/json; charset=UTF-8')
+            .set('Authorization', 'JWT ' + loginStore.getToken())
             .set('Access-Control-Allow-Origin', '*')
             .end(function(err, res) {
                 if(err) {

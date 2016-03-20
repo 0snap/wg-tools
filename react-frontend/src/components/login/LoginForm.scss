@@ -1,0 +1,32 @@
+@import '../variables.scss';
+
+.loginForm {
+    width: 100%;
+    float: right;
+}
+
+.loginForm h1 {
+    margin-bottom: 30px;
+}
+
+.loginForm__label {
+    width: 80px;
+    padding-right: 10px;
+}
+
+.loginForm__input {
+    background-color: $dark-green;
+}
+
+.loginForm__button {
+    width: 80px;
+    background: $dark-green;
+    color: $light-font-color;
+    border: none;
+}
+
+.loginForm__button:hover {
+    border: 1px solid $light-font-color;
+    background: $dark-green;
+    opacity: 0.9;
+}

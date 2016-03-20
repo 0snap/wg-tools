@@ -1,0 +1,1 @@
+curl -H "Content-type: application/json; charset=UTF-8" -XPOST localhost:5000/calcDeptsFromPostData -d '[{"name":"Felix","amount":"135"},{"name":"Shorty","amount":"430"},{"name":"Frieder","amount":"340"}]'

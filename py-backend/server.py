@@ -3,16 +3,41 @@
 from flask import Flask, request, json, Response
 from flask.ext.cors import CORS
 
+from flask_jwt import JWT, jwt_required, current_identity
+import hashlib
+
 import deptCalculator
 import storage
+
 
 '''
 Simple Flask-API for serving requests. API offers stuff like calculating depts among people or storing data.
 '''
 
+########## JWT authentication, custom hashing ##########
+
+
+def hashPw(password):
+    salt = open('./salt', 'r', encoding='utf-8').read()
+    return hashlib.sha512(str(password + salt).encode('utf-8')).hexdigest()
+
+
+def authenticate(wgName, password):
+    return storage.getWG(wgName, hashPw(password))
+
+    
+def identity(payload):
+    wgId = payload['identity']
+    return wgId
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'super-secret'
+
+jwt = JWT(app, authenticate, identity)
+
+
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 ########## helper methods ###########
 
@@ -20,7 +45,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 def getDictFromPost(request):
     if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
-        #print(postedJson)
+        print(postedJson)
         return json.loads(postedJson)
 
 
@@ -28,6 +53,7 @@ def getDictFromPost(request):
 
 
 @app.route('/calcDeptsFromPostData', methods=['POST'])
+@jwt_required()
 def calcDepts():
     ''' Calculates the "mean" of all depts contained in the post-data'''
     jsonAsDict = getDictFromPost(request)
@@ -35,6 +61,7 @@ def calcDepts():
     return json.dumps(expensesList)
 
 @app.route('/meanDepts', methods=['GET'])
+@jwt_required()
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
     listId = request.args.get('listId')
@@ -51,6 +78,7 @@ def depts():
 
 
 @app.route('/storeExpense', methods=['POST'])
+@jwt_required()
 def store():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
@@ -64,6 +92,7 @@ def store():
     return Response('Wrong format, will not store.', 400)
 
 @app.route('/deleteExpense', methods=['DELETE'])
+@jwt_required()
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
     jsonAsDict = getDictFromPost(request)
@@ -79,6 +108,7 @@ def delete():
 
 
 @app.route('/createExpensesList', methods=['POST'])
+@jwt_required()
 def createExpensesList():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
@@ -90,6 +120,7 @@ def createExpensesList():
     return Response('Wrong format, will not store.', 400)
 
 @app.route('/expensesList')
+@jwt_required()
 def getExpensesList():
     ''' Returns a json list of depts for a given listId'''
     listId = request.args.get('listId')
@@ -102,6 +133,7 @@ def getExpensesList():
 
 
 @app.route('/expensesLists')
+@jwt_required()
 def getExpensesLists():
     ''' Returns a json list of all expensesLists for a given wg'''
     wgName = request.args.get('wgName')
@@ -111,17 +143,16 @@ def getExpensesLists():
 
 
 @app.route('/wgs')
+@jwt_required()
 def getWGs():
     ''' Returns a json list of all wgs '''
     return Response(json.dumps(storage.getWGs()))
 
 
-
-
 ########## server start ##########
 
 if __name__ == '__main__':
-    wgId = storage.createWG('mett')
+    wgId = storage.createWG('mett', hashPw('vollesMett'))
     if wgId != None:
         storage.createExpensesList('Test', wgId)
     print(storage.getWGs())
