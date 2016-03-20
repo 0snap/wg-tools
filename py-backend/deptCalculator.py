@@ -5,6 +5,16 @@ from decimal import *
 def sortDictOfDicts(toSort, value, reverse=False):
     return sorted(toSort.items(), key=lambda entry: entry[1][value], reverse=reverse)
 
+def cleanResult(result):
+    ''' takes in a list of dicts, cleans the following:
+        remove dict, iff amount is zero
+        remove remaining amount entries from borrower and sponsor '''
+    result = [pbI for pbI in result if pbI.get('amount')] # everything greater 0
+    for paybackInstruction in result:
+        if paybackInstruction['sponsor'].get('amount'): del(paybackInstruction['sponsor']['amount'])
+        if paybackInstruction['borrower'].get('amount'): del(paybackInstruction['borrower']['amount'])
+    return result
+
 def calcBorrowersSponsors(expensePersons):
     mean = Decimal(sum([person['amount'] for person in expensePersons])/Decimal(len(expensePersons)))
     borrowerMap, sponsorMap = dict(), dict()
@@ -45,7 +55,7 @@ def makeEven(borrowers, sponsors):
             sponsor['amount'] = minus + plus 
             sponsors.append((nameS, sponsor))
         # print(borrowers, sponsors)
-    print(result)
+    #print(result)
     return result
 
 def calcDepts(expensePersons):
@@ -58,4 +68,6 @@ def calcDepts(expensePersons):
     for person in expensePersons:
         person['amount'] = Decimal(person['amount'])/Decimal('100')
     borrowers, sponsors = calcBorrowersSponsors(expensePersons)
-    return makeEven(borrowers, sponsors)
+    clean = cleanResult(makeEven(borrowers, sponsors))
+    print(clean)
+    return clean
