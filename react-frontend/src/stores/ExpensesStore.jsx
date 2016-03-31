@@ -37,10 +37,16 @@ function setExpenses(expenses) {
 function addExpensesList(id, name) {
     //console.log(id, name);
     _expensesLists.push({id: id, name: name});
+    setActiveList(id);
 }
 
 function setExpensesLists(expensesLists) {
     _expensesLists = expensesLists;
+    //console.log(expensesLists)
+    if (_expensesLists[0]) {
+        setActiveList(_expensesLists[0].id);
+    }
+
 }
 
 
@@ -54,6 +60,7 @@ function setWg(wg) {
 }
 
 function setActiveList(activeList) {
+    //console.log('set active ' + activeList)
     _activeList = activeList;
 }
 

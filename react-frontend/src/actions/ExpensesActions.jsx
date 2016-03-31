@@ -90,8 +90,8 @@ let ExpensesActions = {
         });
     },
 
-    fetchExpensesLists(wg) {
-        request.get('http://localhost:5000/expensesLists?wgName=' + wg)
+    fetchExpensesLists() {
+        request.get('http://localhost:5000/expensesLists')
             .set('Authorization', 'JWT ' + loginStore.getToken())
             .end(function(err, res) {
             if(err) {
@@ -106,27 +106,11 @@ let ExpensesActions = {
         });
     },
 
-    fetchWGs() {
-        request.get('http://localhost:5000/wgs')
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .end(function(err, res) {
-            if(err) {
-                console.log(err);
-            }
-            else {
-                Dispatcher.dispatch({
-                    actionType: Constants.FETCH_WGS,
-                    wgs: JSON.parse(res.text)
-                });
-            }
-        });
-    },
-
-    storeList(name, wgName) {
+    storeList(name) {
         //console.log("post list " + name);
         let _this = this;
         request.post('http://localhost:5000/createExpensesList')
-            .send({name: name, wgName: wgName})
+            .send({name: name})
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Authorization', 'JWT ' + loginStore.getToken())
             .set('Access-Control-Allow-Origin', '*')

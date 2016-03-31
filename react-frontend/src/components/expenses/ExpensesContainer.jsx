@@ -40,6 +40,7 @@ export default class ExpensesContainer extends Component {
 
     handleExpensesListsChange() {
         this.setState({ expensesLists: expensesStore.getExpensesLists() });
+        this.handleListSelect();
     }
 
     handleListSelect() {
@@ -49,13 +50,13 @@ export default class ExpensesContainer extends Component {
     }
 
     render() {
-        //console.log("rednering container " + this.state.activeList);
+        console.log("rendering container " + this.state.activeList);
         return(
             <div className="expensesContainer">
                 <div className="expensesContainer__header">
                     <h1>Ausgaben</h1>
                     <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
-                    <ExpensesListCreateForm wgName={this.props.wgName}/>
+                    <ExpensesListCreateForm />
                 </div>
                 <ExpensesList expenses={this.state.expenses} listId={this.state.activeList} />
                 <ExpensesGraph expenses={this.state.expenses} />
@@ -63,8 +64,4 @@ export default class ExpensesContainer extends Component {
         );
     }
 
-}
-
-ExpensesContainer.propTypes = {
-    wgName: React.PropTypes.string.isRequired
 }

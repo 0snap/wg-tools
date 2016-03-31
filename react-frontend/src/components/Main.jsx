@@ -13,19 +13,15 @@ export default class Main extends Component {
         // init store
         //expensesActions.fetchExpenses();
         //expensesActions.fetchDepts();
-        expensesActions.fetchExpensesLists(this.props.wg);
+        expensesActions.fetchExpensesLists();
     }
 
     render() {
         return (
             <div className='main'>
-                <ExpensesContainer wgName={this.props.wg}/>
+                <ExpensesContainer />
                 <DeptContainer />
                 <EditForm />
             </div>);
     }
-}
-
-Main.propTypes = {
-    wg: React.PropTypes.string.isRequired
 }

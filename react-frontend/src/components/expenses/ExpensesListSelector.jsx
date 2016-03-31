@@ -9,13 +9,9 @@ export default class ExpensesListSelector extends Component {
     constructor(props) {
         super(props);
         this.state = { show: false };
-        // console.log(this.props.expensesLists);
-        console.log(this.props.selected);
+        console.log('selected list ', this.props.selected);
     }
- handleKeyDown(event) {
-        console.log("keydown");
-        console.log(event);
-    }
+
     render() {
         let _this = this;
         if(this.props.expensesLists.length === 0) {
@@ -28,10 +24,10 @@ export default class ExpensesListSelector extends Component {
         return(
             <div className="expensesListSelector"> 
             <h3>Liste auswählen</h3>
-                <select className="expensesListSelector__select" defaultValue={this.props.selected} onKeyDown={this.handleKeyDown}>
+                <select className="expensesListSelector__select" value={this.props.selected} >
                     {this.props.expensesLists.map((list) => {
-                        return <ExpensesListSelectOption list={list} />
-                    })};
+                        return <ExpensesListSelectOption key={list.id} list={list} />
+                    })}
                 </select> 
             </div>
         );

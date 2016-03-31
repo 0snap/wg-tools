@@ -30,7 +30,7 @@ export default class ExpensesGraph extends Component {
             dates.push(exp.date);
         });
         dates = dates.sort((a, b) => new Date(b) < new Date(a))
-        console.log(dates);
+        //console.log(dates);
         return dates;
     }
 

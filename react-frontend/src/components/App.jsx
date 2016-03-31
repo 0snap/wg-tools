@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import Main from './Main.jsx';
 import Login from './Login.jsx';
 import Constants from '../constants/LoginConstants.jsx';
+import cookie from 'react-cookie';
+
 import './App.scss';
+
+const AUTH_COOKIE = 'wgtoolsAuthenticationToken';
+const WG_NAME_COOKIE = 'wgtoolsName'
 
 
 var loginStore = require('../stores/LoginStore.jsx');
@@ -12,7 +17,8 @@ export default class App extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {loggedIn: this.getLoginStatus()};
+        //this.checkAuthCookie();
+        this.state = { loggedIn: this.getLoginStatus() };
     }
 
     componentDidMount() {
@@ -20,8 +26,11 @@ export default class App extends Component {
     }
 
     loginStatusChange() {
-        console.log(this.getLoginStatus());
+        //console.log(this.getLoginStatus());
         this.setState( {'loggedIn': this.getLoginStatus()} );
+    }
+
+    checkAuthCookie() {
     }
     
     getLoginStatus() {
@@ -35,15 +44,15 @@ export default class App extends Component {
 
     render() {
         if (this.state.loggedIn) {
-            console.log('logged in');
+            //console.log('logged in');
             return (
                 <div className='app'>
-                    <Main wg={loginStore.getWgName()}/>
+                    <Main />
                 </div>
             );
         }
         else {
-            console.log('not logged in');
+            //console.log('not logged in');
             return (
                 <div className='app'>
                     <Login />

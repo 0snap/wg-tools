@@ -23,7 +23,7 @@ export default class ExpensesList extends Component {
             <div className='expensesList'>
                 <ul className='expensesItemList'>
                 {expenses.map(item => {
-                    return <ExpensesItem item={item} listId={this.props.listId} />
+                    return <ExpensesItem key={item.id} item={item} listId={this.props.listId} />
                 })}
                 </ul>
             </div>);

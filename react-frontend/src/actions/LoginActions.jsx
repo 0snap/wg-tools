@@ -18,7 +18,6 @@ let LoginActions = {
                     //console.log(res, jwtResponse);
                     Dispatcher.dispatch({
                         actionType: Constants.LOGIN_SUCCESS,
-                        wgName: wgName,
                         jwt: jwtResponse.access_token
                     });
                 }
