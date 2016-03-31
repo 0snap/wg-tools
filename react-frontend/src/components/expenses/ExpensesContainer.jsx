@@ -50,7 +50,7 @@ export default class ExpensesContainer extends Component {
     }
 
     render() {
-        console.log("rendering container " + this.state.activeList);
+        //console.log("rendering container " + this.state.activeList);
         return(
             <div className="expensesContainer">
                 <div className="expensesContainer__header">

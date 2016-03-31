@@ -7,17 +7,18 @@ import cookie from 'react-cookie';
 import './App.scss';
 
 const AUTH_COOKIE = 'wgtoolsAuthenticationToken';
-const WG_NAME_COOKIE = 'wgtoolsName'
 
 
 var loginStore = require('../stores/LoginStore.jsx');
+var loginActions = require('../actions/LoginActions.jsx');
+
 
 
 export default class App extends Component {
     
     constructor(props) {
         super(props);
-        //this.checkAuthCookie();
+        this.checkAuthCookie();
         this.state = { loggedIn: this.getLoginStatus() };
     }
 
@@ -27,14 +28,31 @@ export default class App extends Component {
 
     loginStatusChange() {
         //console.log(this.getLoginStatus());
-        this.setState( {'loggedIn': this.getLoginStatus()} );
+        let loggedIn = this.getLoginStatus();
+        if (loggedIn) {
+            cookie.save(AUTH_COOKIE, this.getLoginToken(), {'path': '/', 'maxAge': 30*24*3600});
+        }
+        else {
+            cookie.remove(AUTH_COOKIE, {'path': '/'});
+        }
+        this.setState( {'loggedIn': loggedIn } );
     }
 
     checkAuthCookie() {
+        let token = cookie.load(AUTH_COOKIE);
+        if (token && !this.getLoginStatus()) {
+            //console.log('token found, logging in');
+            loginActions.storeToken(token);
+        }
+
     }
     
     getLoginStatus() {
         return loginStore.isLoggedIn();
+    }
+
+    getLoginToken() {
+        return loginStore.getToken();
     }
 
     componentWillUnmount() {

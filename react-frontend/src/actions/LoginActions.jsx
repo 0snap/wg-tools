@@ -23,8 +23,15 @@ let LoginActions = {
                 }
             })
         ;
+    },
+
+    storeToken(token) {
+        Dispatcher.dispatch({
+            actionType: Constants.LOGIN_SUCCESS,
+            jwt: token
+        });
     }
-    
+
 }
 
 module.exports = LoginActions;

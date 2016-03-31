@@ -9,7 +9,7 @@ export default class ExpensesListSelector extends Component {
     constructor(props) {
         super(props);
         this.state = { show: false };
-        console.log('selected list ', this.props.selected);
+        //console.log('selected list ', this.props.selected);
     }
 
     render() {
