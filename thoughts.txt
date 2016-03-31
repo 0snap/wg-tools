@@ -10,7 +10,7 @@ Listen verhalten:
     bei nicht mehr änderbarer Liste keine editForm
     Nach Listen Erzeugung die neue Liste als active setzen
 
-Generelle Panels: 
+Generelle Panels:
     Graph für Ausgaben (/)
     Graph für Schulden
 
@@ -19,9 +19,21 @@ Direkte Schulden:
     Listentyp?
     Graph für auslagen / direkte schulden
 
+
+Gruppen Notizen:
+    Counter speichern (bsp Serien), easy use
+
+
+=============================================================================================
+
+
 Generelles Verhalten:
     löschen bestätigen als li mit dickem Knopf (/)
-    anmelden / Wg anlegen + Header "angemeldet in Wg"
+    Kommentare an Items zulassen
+    Login (/)
+    Token in Cookie
+    URL Schema für Page State
+    Wg anlegen + Header "angemeldet in Wg"
     leere Forms nicht submitten, auch wenn Backend graceful gebaut ist
     DB ids nicht ans Frontend leaken? -> geteilte Schlüssel aus wg/liste/name+datum(post)
-
+    

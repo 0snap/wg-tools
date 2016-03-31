@@ -5,6 +5,7 @@ from flask.ext.cors import CORS
 
 from flask_jwt import JWT, jwt_required, current_identity
 import hashlib
+from datetime import timedelta
 
 import deptCalculator
 import storage
@@ -31,7 +32,9 @@ def identity(payload):
     return wgId
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'super-secret'
+
+app.config['SECRET_KEY'] = open('./secret', 'r', encoding='utf-8').read()
+app.config.setdefault('JWT_EXPIRATION_DELTA', timedelta(days=30))
 
 jwt = JWT(app, authenticate, identity)
 
