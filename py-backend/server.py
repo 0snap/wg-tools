@@ -48,7 +48,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 def getDictFromPost(request):
     if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
-        print(postedJson)
+        #print(postedJson)
         return json.loads(postedJson)
 
 

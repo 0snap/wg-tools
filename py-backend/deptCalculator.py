@@ -30,8 +30,8 @@ def makeEven(borrowers, sponsors):
     ''' Iterates through the given maps and makes them even. Returns list of tuples like (borrower, amount, sponsor) '''
     sums = sum([person['amount'] for (name, person) in borrowers]) + sum([person['amount'] for (name, person) in sponsors])
     if sums > 0.01 or sums < -0.01:
-        print(sum([person['amount'] for (name, person) in sponsors]))
-        print(sum([person['amount'] for (name, person) in borrowers]))
+        #print(sum([person['amount'] for (name, person) in sponsors]))
+        #print(sum([person['amount'] for (name, person) in borrowers]))
         raise ValueError('Cannot make even given sponsors and borrowers, they do not sum up to zero.')
     result = list()
     # print(borrowers, sponsors)
@@ -69,5 +69,5 @@ def calcDepts(expensePersons):
         person['amount'] = Decimal(person['amount'])/Decimal('100')
     borrowers, sponsors = calcBorrowersSponsors(expensePersons)
     clean = cleanResult(makeEven(borrowers, sponsors))
-    print(clean)
+    #print(clean)
     return clean
