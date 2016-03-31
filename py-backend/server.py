@@ -24,7 +24,7 @@ def hashPw(password):
 
 
 def authenticate(wgName, password):
-    return storage.getWG(wgName, hashPw(password))
+    return storage.getWGWrapper(wgName, hashPw(password))
 
     
 def identity(payload):
@@ -69,7 +69,7 @@ def depts():
     ''' Calculates the "mean" of all depts inside the database'''
     listId = request.args.get('listId')
     if listId != None:
-        persons = storage.getExpensesPerPerson(listId)
+        persons = storage.getExpensesPerPerson(listId, current_identity)
         if len(persons) > 0:
             meanDepts = deptCalculator.calcDepts(persons)
             return json.dumps(meanDepts)
@@ -89,7 +89,7 @@ def store():
     name = jsonAsDict['name']
     amount = float(jsonAsDict['amount'])
     if listId != None and listId != '' and name != None and name != '' and amount != None and amount >= 0:
-        storedObjectDict = storage.store(listId, name, int(amount * 100))
+        storedObjectDict = storage.store(listId, current_identity, name, int(amount * 100))
         storedObjectDict['listId'] = listId
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
@@ -102,7 +102,7 @@ def delete():
     listId = jsonAsDict.get('listId')
     oid = jsonAsDict.get('id')
     if listId != None and listId != '' and oid != None and oid != '':
-        if storage.delete(listId, oid):
+        if storage.delete(listId, current_identity, oid):
             return Response('OK', 200)
     return Response('Not found', 404)
 
@@ -116,9 +116,8 @@ def createExpensesList():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
     name = jsonAsDict['name']
-    wgName = jsonAsDict['wgName']
-    if name != None and name != '' and wgName != None and wgName != '':
-        storedObjectDict = storage.createExpensesList(name, wgName)
+    if name != None and name != '':
+        storedObjectDict = storage.createExpensesList(name, current_identity)
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
 
@@ -128,7 +127,7 @@ def getExpensesList():
     ''' Returns a json list of depts for a given listId'''
     listId = request.args.get('listId')
     if listId != None and listId != '':
-        return Response(json.dumps(storage.getNormalizedExpensePosts(listId)))
+        return Response(json.dumps(storage.getNormalizedExpensePosts(listId, current_identity)))
     return Response('List not found', 404)
 
 
@@ -139,10 +138,7 @@ def getExpensesList():
 @jwt_required()
 def getExpensesLists():
     ''' Returns a json list of all expensesLists for a given wg'''
-    wgName = request.args.get('wgName')
-    if wgName != None and wgName != '':
-        return Response(json.dumps(storage.getExpensesLists(wgName)))
-    return Response('WG not found', 404)
+    return Response(json.dumps(storage.getExpensesLists(current_identity)))
 
 
 @app.route('/wgs')
@@ -158,6 +154,6 @@ if __name__ == '__main__':
     wgId = storage.createWG('mett', hashPw('vollesMett'))
     if wgId != None:
         storage.createExpensesList('Test', wgId)
-    print(storage.getWGs())
-    print(storage.getExpensesLists('mett'))
+        print(storage.getWGs())
+        print(storage.getExpensesLists(wgId))
     app.run(host='0.0.0.0', debug=True)

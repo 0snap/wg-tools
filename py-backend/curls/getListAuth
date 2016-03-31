@@ -1,0 +1,1 @@
+curl -H "Authorization: JWT $2" -XGET http://localhost:5000/expensesList?listId=$1
