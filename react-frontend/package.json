@@ -14,6 +14,7 @@
   "dependencies": {
     "chart.js": "^1.0.2",
     "express": "^4.13.3",
+    "keymirror": "^0.1.1",
     "react": "^0.14.3",
     "react-chartjs": "^0.6.0",
     "react-cookie": "^0.4.5",
