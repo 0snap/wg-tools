@@ -6,7 +6,7 @@ import Constants from '../constants/LoginConstants.jsx';
 let LoginActions = {
 
     login(wgName, password) {
-        request.post('http://localhost:5000/auth')
+        request.post('http://depts:5000/auth')
             .send({username: wgName, password: password})
             .set('Accept', 'application/jwt')
             .end(function (err, res) {

@@ -6,11 +6,11 @@ mongo:
   volumes:
     - ./mongo/data/db:/data/db
 
-deptstore:
+depts:
   build: ./py-backend
   ports:
     - 5000:5000
-  hostname: dept
+  hostname: depts
   links: 
     - mongo:mongo
 
@@ -20,4 +20,4 @@ frontend:
     - 3000:3000
   hostname: frontend
   links:
-    - deptstore:deptstore
+    - depts:depts
