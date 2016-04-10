@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import Main from './Main.jsx';
 import Login from './Login.jsx';
 import Register from './Register.jsx';
-import Constants from '../constants/LoginConstants.jsx';
 import cookie from 'react-cookie';
+import Constants from '../constants/LoginConstants.jsx';
 
 import './App.scss';
-
-const AUTH_COOKIE = 'wgtoolsAuthenticationToken';
 
 
 var loginStore = require('../stores/LoginStore.jsx');
@@ -31,16 +29,16 @@ export default class App extends Component {
         //console.log(this.getLoginStatus());
         let loggedIn = this.getLoginStatus();
         if (loggedIn) {
-            cookie.save(AUTH_COOKIE, this.getLoginToken(), {'path': '/', 'maxAge': 30*24*3600});
+            cookie.save(Constants.WG_TOOLS_AUTH, this.getLoginToken(), {'path': '/', 'maxAge': 30*24*3600});
         }
         else {
-            cookie.remove(AUTH_COOKIE, {'path': '/'});
+            cookie.remove(Constants.WG_TOOLS_AUTH, {'path': '/'});
         }
         this.setState( {'loggedIn': loggedIn } );
     }
 
     checkAuthCookie() {
-        let token = cookie.load(AUTH_COOKIE);
+        let token = cookie.load(Constants.WG_TOOLS_AUTH);
         if (token && !this.getLoginStatus()) {
             //console.log('token found, logging in');
             loginRegisterActions.storeToken(token);

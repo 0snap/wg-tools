@@ -1,0 +1,22 @@
+@import '../variables.scss';
+
+
+.loginHeader {
+    background: $darkGrey;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px;
+    text-align: right;
+}
+
+.loginHeader__logout {
+    color: $lightBlue;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.loginHeader__logout:hover {
+    color: $bgGrey;
+}
