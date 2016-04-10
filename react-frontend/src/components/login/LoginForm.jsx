@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './LoginRegisterForm.scss';
+import { Link } from 'react-router'
 
 var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
 
@@ -52,7 +53,7 @@ export default class LoginForm extends Component {
                     </div>
                 </form>
                 <div className="loginRegisterForm__register">
-                    <a href='#'>neu registrieren</a>
+                    <a><Link to="/register">neu registrieren</Link></a>
                 </div>
             </div>
 

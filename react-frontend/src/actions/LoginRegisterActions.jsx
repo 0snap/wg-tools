@@ -25,6 +25,12 @@ let LoginRegisterActions = {
         ;
     },
 
+    logout() {
+        Dispatcher.dispatch({
+            actionType: Constants.LOGOUT_SUCCESS
+        });
+    },
+
     storeToken(token) {
         Dispatcher.dispatch({
             actionType: Constants.LOGIN_SUCCESS,

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Constants from '../../constants/LoginConstants.jsx';
 import cookie from 'react-cookie';
+import { Link } from 'react-router'
 
 import './LoginHeader.scss';
 
-var loginStore = require('../../stores/LoginStore.jsx');
+var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
+
 
 
 export default class LoginHeader extends Component {
@@ -15,14 +17,17 @@ export default class LoginHeader extends Component {
     }
 
     logout() {
-        cookie.remove(Constants.WG_TOOLS_AUTH, {'path': '/'});
-        location.reload();
+        loginRegisterActions.logout();
     }
 
     render() {
         return (
             <div className='loginHeader'>
-                <a className='loginHeader__logout' onClick={this.logout.bind(this)}>abmelden</a>
+                <a onClick={this.logout.bind(this)}>
+                    <Link to="/login">
+                    abmelden
+                    </Link>
+                </a>
             </div>
         );
     }

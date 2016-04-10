@@ -2,12 +2,12 @@
   "name": "wg-tools",
   "version": "0.0.1",
   "description": "wg-tools frontend",
-  "main": "expressServer.js",
+  "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development node expressServer.js",
     "start": "NODE_ENV=production node expressServer.js",
     "build": "NODE_ENV=production webpack --config webpack.config.production.js",
-    "clean": "rm -rf public"
+    "clean": "rm -rf public/assets"
   },
   "author": "flx",
   "license": "ISC",
@@ -15,11 +15,11 @@
     "chart.js": "^1.0.2",
     "express": "^4.13.3",
     "keymirror": "^0.1.1",
-    "react": "^0.14.3",
+    "react": "^0.14.7",
     "react-chartjs": "^0.7.3",
     "react-cookie": "^0.4.5",
-    "react-dom": "^0.14.3",
-    "react-router": "^2.0.1"
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.17",

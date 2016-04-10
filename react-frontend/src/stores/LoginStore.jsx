@@ -10,6 +10,10 @@ function storeLogin(jwt) {
     _jwt = jwt;
 }
 
+function logout() {
+    _jwt = null;
+}
+
 let LoginStore = assign({ }, EventEmitter.prototype, {
 
     emitChange(event) {
@@ -38,6 +42,10 @@ Dispatcher.register(function(action) {
     switch(action.actionType) {
         case(Constants.LOGIN_SUCCESS):
             storeLogin(action.jwt);
+            LoginStore.emitChange(Constants.LOGIN_STATUS_CHANGED);
+            break;
+        case(Constants.LOGOUT_SUCCESS):
+            logout();
             LoginStore.emitChange(Constants.LOGIN_STATUS_CHANGED);
             break;
     }

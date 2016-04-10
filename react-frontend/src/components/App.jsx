@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Main from './Main.jsx';
 import Login from './Login.jsx';
-import Register from './Register.jsx';
 import cookie from 'react-cookie';
 import Constants from '../constants/LoginConstants.jsx';
+import { browserHistory } from 'react-router';
 
 import './App.scss';
 
@@ -18,11 +18,16 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.checkAuthCookie();
-        this.state = { loggedIn: this.getLoginStatus(), register: false};
+        this.state = { loggedIn: this.getLoginStatus() };
     }
 
     componentDidMount() {
         loginStore.addEventListener(Constants.LOGIN_STATUS_CHANGED, this.loginStatusChange.bind(this));
+        
+        // use URL queryparam, if existent
+        if(this.state.loggedIn && this.props.params.activeList) {
+            // TODO: set active list to lsits
+        }
     }
 
     loginStatusChange() {
@@ -30,6 +35,7 @@ export default class App extends Component {
         let loggedIn = this.getLoginStatus();
         if (loggedIn) {
             cookie.save(Constants.WG_TOOLS_AUTH, this.getLoginToken(), {'path': '/', 'maxAge': 30*24*3600});
+            browserHistory.push('/')
         }
         else {
             cookie.remove(Constants.WG_TOOLS_AUTH, {'path': '/'});
@@ -69,13 +75,6 @@ export default class App extends Component {
             );
         }
         else {
-            if (this.state.register) {
-                return (
-                    <div className='app'>
-                        <Register />
-                    </div>
-                );
-            }
             //console.log('not logged in');
             return (
                 <div className='app'>

@@ -104,7 +104,7 @@ export default class ExpensesGraph extends Component {
         // console.log(chartData);
         return (
             <div className='expensesGraph'>
-                <LineChart data={chartData} options={chartOptions} update />
+                <LineChart data={chartData} options={chartOptions} redraw />
             </div>
         );
     }
