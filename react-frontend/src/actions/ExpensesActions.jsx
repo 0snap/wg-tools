@@ -7,7 +7,7 @@ let ExpensesActions = {
 
     storeExpense(name, amount, listId) {
         let _this = this;
-        request.post('http://depts:5000/storeExpense')
+        request.post('http://localhost:5000/storeExpense')
             .send({name: name, amount: amount, listId: listId})
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Authorization', 'JWT ' + loginStore.getToken())
@@ -38,7 +38,7 @@ let ExpensesActions = {
 
     deleteExpense(id, listId) {
         let _this = this;
-        request.del('http://depts:5000/deleteExpense')
+        request.del('http://localhost:5000/deleteExpense')
             .send({ id: id, listId: listId})
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Authorization', 'JWT ' + loginStore.getToken())
@@ -60,7 +60,7 @@ let ExpensesActions = {
     },
 
     fetchExpenses(listId) {
-        request.get('http://depts:5000/expensesList?listId=' + listId)
+        request.get('http://localhost:5000/expensesList?listId=' + listId)
             .set('Authorization', 'JWT ' + loginStore.getToken())
             .end(function(err, res) {
             if(err) {
@@ -75,7 +75,7 @@ let ExpensesActions = {
     },
 
     fetchDepts(listId) {
-        request.get('http://depts:5000/meanDepts?listId=' + listId)
+        request.get('http://localhost:5000/meanDepts?listId=' + listId)
             .set('Authorization', 'JWT ' + loginStore.getToken())
             .end(function(err, res) {
             if(err) {
@@ -91,7 +91,7 @@ let ExpensesActions = {
     },
 
     fetchExpensesLists() {
-        request.get('http://depts:5000/expensesLists')
+        request.get('http://localhost:5000/expensesLists')
             .set('Authorization', 'JWT ' + loginStore.getToken())
             .end(function(err, res) {
             if(err) {
@@ -109,7 +109,7 @@ let ExpensesActions = {
     storeList(name) {
         //console.log("post list " + name);
         let _this = this;
-        request.post('http://depts:5000/createExpensesList')
+        request.post('http://localhost:5000/createExpensesList')
             .send({name: name})
             .set('Content-Type', 'application/json; charset=UTF-8')
             .set('Authorization', 'JWT ' + loginStore.getToken())

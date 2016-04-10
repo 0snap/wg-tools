@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from flask import Flask, request, json, Response
-#from flask.ext.cors import CORS
+from flask.ext.cors import CORS
 
 from flask_jwt import JWT, jwt_required, current_identity
 import hashlib
@@ -39,7 +39,7 @@ app.config.setdefault('JWT_EXPIRATION_DELTA', timedelta(days=30))
 jwt = JWT(app, authenticate, identity)
 
 
-#cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 ########## helper methods ###########
@@ -156,4 +156,4 @@ if __name__ == '__main__':
         storage.createExpensesList('Test', wgId)
         print(storage.getWGs())
         print(storage.getExpensesLists(wgId))
-    app.run(host='0.0.0.0', debug=False)
+    app.run(host='0.0.0.0', debug=True)

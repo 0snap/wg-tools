@@ -32,6 +32,7 @@ Generelles Verhalten:
     Kommentare an Items zulassen
     Login (/)
     Token in Cookie
+    Logout
     URL Schema für Page State
     Wg anlegen + Header "angemeldet in Wg"
     leere Forms nicht submitten, auch wenn Backend graceful gebaut ist
