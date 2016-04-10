@@ -16,9 +16,12 @@ export default class ExpensesListSelector extends Component {
         let _this = this;
         if(this.props.expensesLists.length === 0) {
             return (
-                <select className="expensesListSelector__select">
-                    <option>Bitte neue Liste anlegen</option>
-                </select>
+                <div className="expensesListSelector"> 
+                <h3>Liste auswählen</h3>
+                    <select className="expensesListSelector__select">
+                        <option>Bitte neue Liste anlegen</option>
+                    </select>
+                </div>
             );
         }
         return(

@@ -9,3 +9,10 @@ canvas {
     width: 90%;
     height: 75vh;
 }
+
+@media (max-width: 480px) {
+    .expensesGraph {
+        width: 0%;
+        heigth: 0%;
+    }
+}

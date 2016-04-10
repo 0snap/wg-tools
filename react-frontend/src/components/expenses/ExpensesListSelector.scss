@@ -1,14 +1,4 @@
-@import '../variables.scss';
-
 .expensesListSelector {
-    float: right;
-}
-
-.expensesListSelector__select {
-    background-color: $dark-green;
-    width: 100%;
-    height: 28px;
-    font-size: 16px;
-    border-radius: 5px;
-    border-color: $light-font-color;
+    float: left;
+    padding-left: 20%;
 }

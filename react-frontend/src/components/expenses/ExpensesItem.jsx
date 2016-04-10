@@ -31,7 +31,7 @@ export default class ExpensesItem extends Component {
         if(!this.state.alive) {
             return (
                 <li className='expensesItem'>
-                    <span className='expensesItem__title'>Wirklich löschen?</span>
+                    <span className='expensesItem__title'>Löschen?</span>
                     <button className='expensesItem__actionButton' onClick={this.onAbort.bind(this)}>Nein</button>
                     <button className='expensesItem__actionButton' onClick={this.doDelete.bind(this)}>Ja</button>
                 </li>

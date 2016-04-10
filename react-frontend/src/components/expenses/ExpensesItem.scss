@@ -1,14 +1,13 @@
 @import '../variables.scss';
 
 .expensesItem {
-    padding: 7px;
-    margin-top: 2px;
+    padding: 7px 10px;
+    margin-top: 5px;
     width: 88%;
-    overflow: hidden;
-    border: 1px solid #7D7D7D;
 }
-.expensesItem:hover {
-    border: 2px solid $light-font-color;
+
+.expensesItem button {
+    border: 1px solid $lightGrey;
 }
 
 .expensesItem__title {
@@ -16,12 +15,24 @@
 }
 
 .expensesItem__deleteButton {
+    border: 1px solid $lightGrey;
     float: right;
-    color: $light-font-color;
+    opacity: 1;
+    width: 30px;
+    height: 25px;
+}
+
+.expensesItem__deleteButton:hover {
+    opacity: 1;
+    color: $lightBlue;
+    transform: scale(1.1);
+    border-color: $lightBlue;
+    background: $darkGrey;
 }
 
 .expensesItem__actionButton {
     float: right;
     margin: 5px;
     width: 45px;
+    border: 1px solid $lightGrey;
 }

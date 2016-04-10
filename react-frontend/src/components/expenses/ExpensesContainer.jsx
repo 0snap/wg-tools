@@ -55,8 +55,8 @@ export default class ExpensesContainer extends Component {
             <div className="expensesContainer">
                 <div className="expensesContainer__header">
                     <h1>Ausgaben</h1>
-                    <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
                     <ExpensesListCreateForm />
+                    <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
                 </div>
                 <ExpensesList expenses={this.state.expenses} listId={this.state.activeList} />
                 <ExpensesGraph expenses={this.state.expenses} />

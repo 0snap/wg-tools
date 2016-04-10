@@ -1,28 +1,18 @@
 @import '../variables.scss';
 
 .expensesListCreateForm {
-    width: 25%;
-    float: right;
+    width: 50%;
+    float: left;
+    display: inline-block;
 }
 
 .expensesListCreateForm__label {
     width: 80px;
-    padding-right: 10px;
+    margin-right: 40px;
 }
 
 .expensesListCreateForm__input {
-    background-color: $dark-green;
-}
-
-.expensesListCreateForm__button {
-    width: 80px;
-    background: $dark-green;
-    color: $light-font-color;
-    border: none;
-}
-
-.expensesListCreateForm__button:hover {
-    border: 1px solid $light-font-color;
-    background: $dark-green;
-    opacity: 0.9;
+    width: 20px;
+    min-width: 180px;
+    margin-right: 40px;
 }

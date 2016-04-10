@@ -49,9 +49,12 @@ export default class LoginForm extends Component {
 
                     <div className="form-group">
                         <label className="loginForm__label" htmlFor="submit">Einloggen</label>
-                        <button className="loginForm__button btn btn-primary" id="submit" type="submit">OK</button>
+                        <button className="loginForm__button" id="submit" type="submit">Go!</button>
                     </div>
                 </form>
+                <div className="loginForm__register">
+                    <a href='#'>neu registrieren</a>
+                </div>
             </div>
 
         );

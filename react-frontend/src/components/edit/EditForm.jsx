@@ -77,7 +77,7 @@ export default class EditForm extends Component {
 
                     <div className="form-group">
                         <label className="editForm__label" htmlFor="submit">Speichern</label>
-                        <button className="editForm__button btn btn-primary" id="submit" type="submit">OK</button>
+                        <button className="editForm__button" id="submit" type="submit">OK</button>
                     </div>
                 </form>
             </div>

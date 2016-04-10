@@ -3,8 +3,8 @@ let LineChart = require("react-chartjs").Line;
 
 import './ExpensesGraph.scss';
 
-let babyBlue = "rgba(184, 247, 255, 1)";
-let lightBlue = "rgba(184, 247, 255, 0.3)";
+const bgGrey = 'rgba(98, 98, 98, 1)'; 
+const bgGreyOpaque = 'rgba(222, 222, 222, 0.3)';
 
 export default class ExpensesGraph extends Component {
 
@@ -65,12 +65,12 @@ export default class ExpensesGraph extends Component {
         }
         return {
             label: expense.name,
-            fillColor: "rgba(184, 247, 255, 0.1)",
+            fillColor: bgGreyOpaque,
             strokeColor: expense.color,
             pointColor: expense.color,
             pointStrokeColor: expense.color,
             pointHighlightFill: expense.color,
-            pointHighlightStroke: babyBlue,
+            pointHighlightStroke: bgGrey,
             data: data
         }
     }
@@ -120,9 +120,9 @@ let chartOptions = {
     scaleShowGridLines : true,
 
     //String - Colour of the grid lines
-    scaleGridLineColor : lightBlue,
+    scaleGridLineColor : bgGreyOpaque,
 
-    scaleFontColor: babyBlue,
+    scaleFontColor: bgGrey,
 
     //Number - Width of the grid lines
     scaleGridLineWidth : 1,
@@ -137,7 +137,7 @@ let chartOptions = {
     bezierCurve : true,
 
     //Number - Tension of the bezier curve between points
-    bezierCurveTension : 0.4,
+    bezierCurveTension : 0.1,
 
     //Boolean - Whether to show a dot for each point
     pointDot : true,
@@ -146,13 +146,13 @@ let chartOptions = {
     pointDotRadius : 4,
 
     //Number - Pixel width of point dot stroke
-    pointDotStrokeWidth : 1,
+    pointDotStrokeWidth : 2,
 
     //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
     pointHitDetectionRadius : 20,
 
     //Boolean - Whether to show a stroke for datasets
-    datasetStroke : true,
+    datasetStroke : false,
 
     //Number - Pixel width of dataset stroke
     datasetStrokeWidth : 2,

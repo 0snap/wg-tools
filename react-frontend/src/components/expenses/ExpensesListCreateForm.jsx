@@ -36,7 +36,7 @@ export default class ExpensesListCreateForm extends Component {
 
                     <div className="form-group">
                         <label className="expensesListCreateForm__label" htmlFor="submit">Speichern</label>
-                        <button className="expensesListCreateForm__button btn btn-primary" id="submit" type="submit">OK</button>
+                        <button id="submit" type="submit">OK</button>
                     </div>
                 </form>
             </div>

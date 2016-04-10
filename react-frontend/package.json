@@ -16,7 +16,7 @@
     "express": "^4.13.3",
     "keymirror": "^0.1.1",
     "react": "^0.14.3",
-    "react-chartjs": "^0.6.0",
+    "react-chartjs": "^0.7.3",
     "react-cookie": "^0.4.5",
     "react-dom": "^0.14.3",
     "react-router": "^2.0.1"
