@@ -18,11 +18,11 @@ export default class EditForm extends Component {
     }
 
     componentDidMount() {
-        expensesStore.addEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
+        expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleListSelect.bind(this));
     }
 
     componentWillUnmount() {
-        expensesStore.removeEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
+        expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleListSelect.bind(this));
     }
 
     handleListSelect() {

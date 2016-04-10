@@ -1,8 +1,6 @@
 @import '../variables.scss';
 
 .expensesItem {
-    padding: 7px 10px;
-    margin-top: 5px;
     width: 88%;
 }
 
@@ -17,22 +15,28 @@
 .expensesItem__deleteButton {
     border: 1px solid $lightGrey;
     float: right;
-    opacity: 1;
+    height: 30px;
+    line-height: 0px;
+    position: relative;
+    top: 6px;
     width: 30px;
-    height: 25px;
 }
 
-.expensesItem__deleteButton:hover {
+.expensesItem__deleteButton:hover, .expensesItem__actionButton:hover {
     opacity: 1;
     color: $lightBlue;
     transform: scale(1.1);
+    transition: 150ms ease-in-out;
     border-color: $lightBlue;
     background: $darkGrey;
 }
 
 .expensesItem__actionButton {
+    border: 1px solid $lightGrey;
     float: right;
     margin: 5px;
+    height: 30px;
+    line-height: 0px;
+    position: relative;
     width: 45px;
-    border: 1px solid $lightGrey;
 }

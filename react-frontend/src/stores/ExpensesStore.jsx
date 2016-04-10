@@ -139,15 +139,16 @@ Dispatcher.register(function(action) {
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             break;
         case(Constants.DELETE_EXPENSES_LIST):
-            // console.log("store delete exp list");
+            console.log("store delete exp list");
             break;
         case(Constants.FETCH_EXPENSES_LISTS):
             setExpensesLists(action.expensesLists);
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
+            ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
         case(Constants.ACTIVE_LIST):
             setActiveList(action.listId);
-            ExpensesStore.emitChange(Constants.ACTIVE_LIST);
+            ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
 
     }

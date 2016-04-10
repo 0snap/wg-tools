@@ -3,7 +3,6 @@
 .expensesListCreateForm {
     width: 50%;
     float: left;
-    display: inline-block;
 }
 
 .expensesListCreateForm__label {
@@ -12,7 +11,6 @@
 }
 
 .expensesListCreateForm__input {
-    width: 20px;
-    min-width: 180px;
-    margin-right: 40px;
+    width: 50%;
+    min-width: 260px;
 }

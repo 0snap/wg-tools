@@ -25,13 +25,13 @@ export default class ExpensesContainer extends Component {
     componentDidMount() {
         expensesStore.addEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange.bind(this));
         expensesStore.addEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange.bind(this));
-        expensesStore.addEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
+        expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleListSelect.bind(this));
     }
 
     componentWillUnmount() {
         expensesStore.removeEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange.bind(this));
         expensesStore.removeEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange.bind(this));
-        expensesStore.removeEventListener(Constants.ACTIVE_LIST, this.handleListSelect.bind(this));
+        expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleListSelect.bind(this));
     }
 
     handleExpensesChange() {
@@ -40,7 +40,6 @@ export default class ExpensesContainer extends Component {
 
     handleExpensesListsChange() {
         this.setState({ expensesLists: expensesStore.getExpensesLists() });
-        this.handleListSelect();
     }
 
     handleListSelect() {

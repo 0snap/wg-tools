@@ -27,14 +27,17 @@ li {
     border-radius: 5px;
     background: $darkGrey;
     color: $bgGrey;
+    line-height: 40px;
     left: 0px;
+    margin-top: 5px;
     overflow: hidden;
     position: relative;
+    padding: 7px 10px;
 }
 
 li:hover {
     left: $itemHoverWidth;
-    transition: 100ms ease-in-out;
+    transition: 150ms ease-in-out;
 }
 
 button {
