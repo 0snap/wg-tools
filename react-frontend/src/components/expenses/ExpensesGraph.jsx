@@ -104,7 +104,7 @@ export default class ExpensesGraph extends Component {
         // console.log(chartData);
         return (
             <div className='expensesGraph'>
-                <LineChart data={chartData} options={chartOptions} redraw/>
+                <LineChart data={chartData} options={chartOptions} update />
             </div>
         );
     }
@@ -152,7 +152,7 @@ let chartOptions = {
     pointHitDetectionRadius : 20,
 
     //Boolean - Whether to show a stroke for datasets
-    datasetStroke : false,
+    datasetStroke : true,
 
     //Number - Pixel width of dataset stroke
     datasetStrokeWidth : 2,
@@ -160,7 +160,9 @@ let chartOptions = {
     //Boolean - Whether to fill the dataset with a colour
     datasetFill : true,
 
-    //String - A legend template
-    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+    responsive: true,
+
+    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+    maintainAspectRatio: false,
 
 };
