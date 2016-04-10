@@ -3,7 +3,7 @@ import request from 'superagent';
 import Constants from '../constants/LoginConstants.jsx';
 
 
-let LoginActions = {
+let LoginRegisterActions = {
 
     login(wgName, password) {
         request.post('http://depts:5000/auth')
@@ -34,4 +34,4 @@ let LoginActions = {
 
 }
 
-module.exports = LoginActions;
+module.exports = LoginRegisterActions;

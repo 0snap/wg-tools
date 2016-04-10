@@ -5,21 +5,25 @@ var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
 
 
 
-export default class LoginForm extends Component {
+export default class RegisterForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             wgName: '',
-            password: ''
+            password: '',
+            passwordConfirm: ''
         };
     }
 
-    login(event) {
+    register(event) {
         event.preventDefault();
-        loginRegisterActions.login(this.state.wgName, this.state.password);
-        this.setState({wgName: ''});
-        this.setState({password: ''});
+        if (this.state.password && this.state.password == this.state.passwordConfirm) {
+            loginRegisterActions.register(this.state.wgName, this.state.password);
+            this.setState({wgName: ''});
+            this.setState({password: ''});
+            this.setState({passwordConfirm: ''});
+        }
     }
 
     nameChange(event) {
@@ -30,12 +34,19 @@ export default class LoginForm extends Component {
         this.setState({password: event.target.value});
     }
 
-    render() {
+    passwordConfirmChange(event) {
+        this.setState({passwordConfirm: event.target.value});
+    }
 
+    render() {
         return (
             <div className='loginRegisterForm'>
-                <h1>Einloggen</h1>
-                <form onSubmit={this.login.bind(this)}>
+                <h1>Registrieren</h1>
+                <p>
+                    Bei wg-tools kannst du dich einfach registrieren, wenn der Name noch nicht vergeben ist. Merk dir das Passwort und teile es mit deinen Mitbewohnern (klebt es z.B. an den Kühlschrank).
+                    Alle WG-Bewohner dürfen alle Funktionen nutzen. 
+                </p>
+                <form onSubmit={this.register.bind(this)}>
                     <div className="form-group">
                         <label className="loginRegisterForm__label" htmlFor="name">WG-Name</label>
                         <input className="loginRegisterForm__input" id="name" value={this.state.wgName} onChange={this.nameChange.bind(this)} />
@@ -47,13 +58,15 @@ export default class LoginForm extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label className="loginRegisterForm__label" htmlFor="submit">Einloggen</label>
+                        <label className="loginRegisterForm__label" htmlFor="passwordConfirm">Passwort wdh.</label>
+                        <input className="loginRegisterForm__input" id="passwordConfirm" type="password" value={this.state.passwordConfirm} onChange={this.passwordConfirmChange.bind(this)} />
+                    </div>
+
+                    <div className="form-group">
+                        <label className="loginRegisterForm__label" htmlFor="submit">Registrieren</label>
                         <button className="loginRegisterForm__button" id="submit" type="submit">Go!</button>
                     </div>
                 </form>
-                <div className="loginRegisterForm__register">
-                    <a href='#'>neu registrieren</a>
-                </div>
             </div>
 
         );

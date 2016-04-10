@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Main from './Main.jsx';
 import Login from './Login.jsx';
+import Register from './Register.jsx';
 import Constants from '../constants/LoginConstants.jsx';
 import cookie from 'react-cookie';
 
@@ -10,7 +11,7 @@ const AUTH_COOKIE = 'wgtoolsAuthenticationToken';
 
 
 var loginStore = require('../stores/LoginStore.jsx');
-var loginActions = require('../actions/LoginActions.jsx');
+var loginRegisterActions = require('../actions/LoginRegisterActions.jsx');
 
 
 
@@ -19,7 +20,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.checkAuthCookie();
-        this.state = { loggedIn: this.getLoginStatus() };
+        this.state = { loggedIn: this.getLoginStatus(), register: false};
     }
 
     componentDidMount() {
@@ -42,7 +43,7 @@ export default class App extends Component {
         let token = cookie.load(AUTH_COOKIE);
         if (token && !this.getLoginStatus()) {
             //console.log('token found, logging in');
-            loginActions.storeToken(token);
+            loginRegisterActions.storeToken(token);
         }
 
     }
@@ -61,7 +62,7 @@ export default class App extends Component {
 
 
     render() {
-        if (this.state.loggedIn) {
+        if (this.state.loggedIn) { 
             //console.log('logged in');
             return (
                 <div className='app'>
@@ -70,6 +71,13 @@ export default class App extends Component {
             );
         }
         else {
+            if (this.state.register) {
+                return (
+                    <div className='app'>
+                        <Register />
+                    </div>
+                );
+            }
             //console.log('not logged in');
             return (
                 <div className='app'>

@@ -1,6 +1,6 @@
 @import '../variables.scss';
 
-.loginForm {
+.loginRegisterForm {
     border: 1px solid $lightBlue;
     border-radius: 5px;
     background: $darkGrey;
@@ -10,37 +10,37 @@
     padding: 40px 80px; 
     
     position: absolute;
-    top: 25%;
+    top: 10%;
     left: 25%;
 }
 
-.loginForm h1 {
+.loginRegisterForm h1 {
     margin-bottom: 30px;
 }
 
-.loginForm__label {
-    width: 100px;
+.loginRegisterForm__label {
+    width: 130px;
     margin-right: 40px;
 }
 
-.loginForm__input {
+.loginRegisterForm__input {
     width: 300px;
     min-width: 180px;
 }
 
-.loginForm__button {
+.loginRegisterForm__button {
     background-color: $lightBlue;
     opacity: 0.7;
 }
 
-.loginForm__button:hover {
+.loginRegisterForm__button:hover {
     opacity: 1;
 }
 
-.loginForm__register a {
+.loginRegisterForm__register a {
     color: $lightBlue;
 }
 
-.loginForm__register a:hover {
+.loginRegisterForm__register a:hover {
     color: $bgGrey;
 }
