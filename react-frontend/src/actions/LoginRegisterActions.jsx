@@ -19,12 +19,30 @@ let LoginRegisterActions = {
                     let jwtResponse = JSON.parse(res.text)
                     cookie.save(Constants.WG_TOOLS_AUTH, jwtResponse.access_token, {'path': '/', 'maxAge': 30*24*3600});
                     browserHistory.push('/app');
+                    location.reload();
                     // console.log(res, jwtResponse);
                     Dispatcher.dispatch({
                         actionType: Constants.LOGIN_SUCCESS,
                         jwt: jwtResponse.access_token
                     });
 
+                }
+            })
+        ;
+    },
+
+    register(wgName, password) {
+        request.post('http://localhost:5000/register')
+            .send({wgName: wgName, password: password})
+            .set('Content-Type', 'application/json; charset=UTF-8')
+            .set('Access-Control-Allow-Origin', '*')
+            .end(function (err, res) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    // console.log(res);
+                    browserHistory.push('/login');
                 }
             })
         ;

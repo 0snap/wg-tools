@@ -48,7 +48,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 def getDictFromPost(request):
     if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
-        #print(postedJson)
+        print(postedJson)
         return json.loads(postedJson)
 
 
@@ -68,7 +68,7 @@ def calcDepts():
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
     listId = request.args.get('listId')
-    if listId != None:
+    if listId != None and listId != 'undefined':
         persons = storage.getExpensesPerPerson(listId, current_identity)
         if len(persons) > 0:
             meanDepts = deptCalculator.calcDepts(persons)
@@ -88,7 +88,7 @@ def store():
     listId = jsonAsDict['listId']
     name = jsonAsDict['name']
     amount = float(jsonAsDict['amount'])
-    if listId != None and listId != '' and name != None and name != '' and amount != None and amount >= 0:
+    if listId != None and listId != '' and listId != 'undefined' and name != None and name != '' and name != 'undefined' and amount != None and amount >= 0:
         storedObjectDict = storage.store(listId, current_identity, name, int(amount * 100))
         storedObjectDict['listId'] = listId
         return json.dumps(storedObjectDict)
@@ -101,7 +101,7 @@ def delete():
     jsonAsDict = getDictFromPost(request)
     listId = jsonAsDict.get('listId')
     oid = jsonAsDict.get('id')
-    if listId != None and listId != '' and oid != None and oid != '':
+    if listId != None and listId != '' and listId != 'undefined' and oid != None and oid != '' and oid != 'undefined':
         if storage.delete(listId, current_identity, oid):
             return Response('OK', 200)
     return Response('Not found', 404)
@@ -116,7 +116,7 @@ def createExpensesList():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
     name = jsonAsDict['name']
-    if name != None and name != '':
+    if name != None and name != '' and name != 'undefined':
         storedObjectDict = storage.createExpensesList(name, current_identity)
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
@@ -126,7 +126,7 @@ def createExpensesList():
 def getExpensesList():
     ''' Returns a json list of depts for a given listId'''
     listId = request.args.get('listId')
-    if listId != None and listId != '':
+    if listId != None and listId != '' and listId != 'undefined':
         return Response(json.dumps(storage.getNormalizedExpensePosts(listId, current_identity)))
     return Response('List not found', 404)
 
@@ -139,6 +139,19 @@ def getExpensesList():
 def getExpensesLists():
     ''' Returns a json list of all expensesLists for a given wg'''
     return Response(json.dumps(storage.getExpensesLists(current_identity)))
+
+@app.route('/register', methods=['POST'])
+def registerNewWg():
+    ''' Registers a new wg with the posted name, returns 409 (conflict) on existing wg '''
+    print(request.json)
+    jsonAsDict = getDictFromPost(request)
+    wgName, hashed = jsonAsDict['wgName'], hashPw(jsonAsDict['password'])
+    if (wgName and hashed):
+        created = storage.createWG(wgName, hashed)
+        if created:
+            return Response('OK', 200)
+        return Response('Conflict', 409)
+    return Response('Cannot create wg, need name and password.', 400)
 
 
 @app.route('/wgs')
