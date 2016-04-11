@@ -48,7 +48,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 def getDictFromPost(request):
     if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
         postedJson = json.dumps(request.json)
-        print(postedJson)
+        #print(postedJson)
         return json.loads(postedJson)
 
 
@@ -121,6 +121,18 @@ def createExpensesList():
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
 
+@app.route('/deleteExpensesList', methods=['POST'])
+@jwt_required()
+def deleteExpensesList():
+    ''' Deletes the posted listId from DB '''
+    jsonAsDict = getDictFromPost(request)
+    listId = jsonAsDict['listId']
+    if listId != None and listId != '' and listId != 'undefined':
+        storedObjectDict = storage.deleteExpensesList(listId, current_identity)
+        return json.dumps(storedObjectDict)
+    return Response('Wrong format, will not store.', 400)
+
+
 @app.route('/expensesList')
 @jwt_required()
 def getExpensesList():
@@ -143,7 +155,7 @@ def getExpensesLists():
 @app.route('/register', methods=['POST'])
 def registerNewWg():
     ''' Registers a new wg with the posted name, returns 409 (conflict) on existing wg '''
-    print(request.json)
+    #print(request.json)
     jsonAsDict = getDictFromPost(request)
     wgName, hashed = jsonAsDict['wgName'], hashPw(jsonAsDict['password'])
     if (wgName and hashed):
@@ -161,12 +173,7 @@ def getWGs():
     return Response(json.dumps(storage.getWGs()))
 
 
-########## server start ##########
+########## dev server start ##########
 
 if __name__ == '__main__':
-    wgId = storage.createWG('mett', hashPw('vollesMett'))
-    if wgId != None:
-        storage.createExpensesList('Test', wgId)
-        print(storage.getWGs())
-        print(storage.getExpensesLists(wgId))
     app.run(host='0.0.0.0', debug=True)

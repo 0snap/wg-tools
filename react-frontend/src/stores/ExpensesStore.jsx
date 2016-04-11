@@ -42,6 +42,14 @@ function addExpensesList(id, name) {
     setActiveList(id);
 }
 
+function deleteExpensesList(id) {
+    // console.log("delete", id);
+    var removed = _expensesLists.filter(list => {
+        return list.id != id
+    });
+    setExpensesLists(removed);
+}
+
 function setExpensesLists(expensesLists, listName) {
     _expensesLists = expensesLists;
     //console.log(expensesLists)
@@ -65,7 +73,7 @@ function setWg(wg) {
 }
 
 function setActiveList(activeList, listName) {
-    //console.log('set active ' + activeList)
+    console.log('set active ' + activeList)
     var name = listName? listName : getNameForListId(activeList);
 
     browserHistory.push('/app/' + name);
@@ -76,14 +84,14 @@ function getIdForListName(listName) {
     var list = _expensesLists.filter(list => {
         return list.name == listName
     });
-    return list[0].id || undefined;
+    return list[0]? list[0].id : undefined;
 }
 
 function getNameForListId(listId) {
     var list = _expensesLists.filter(list => {
         return list.id == listId
     });
-    return list[0].name || undefined;
+    return list[0]? list[0].name : undefined
 }
 
 let ExpensesStore = assign({ }, EventEmitter.prototype, {
@@ -161,7 +169,9 @@ Dispatcher.register(function(action) {
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             break;
         case(Constants.DELETE_EXPENSES_LIST):
-            console.log("store delete exp list");
+            deleteExpensesList(action.id);
+            ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
+            ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
         case(Constants.FETCH_EXPENSES_LISTS):
             setExpensesLists(action.expensesLists, action.listName);

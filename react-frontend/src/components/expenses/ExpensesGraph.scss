@@ -4,9 +4,11 @@
 .expensesGraph {
     width: 65%;
     float: right;
-    padding-left: 50px;
     overflow: hidden;
     height: 85%;
+}
+
+canvas {
     border-radius: 5px;
     border: 2px solid $darkGrey;
     background: $bgGrey;

@@ -46,6 +46,7 @@ class ExpensesList(Document):
     wg = ReferenceField(WG, reverse_delete_rule=CASCADE)
     editable = BooleanField()
     expensePosts = ListField(EmbeddedDocumentField(ExpensePost))
+    tsDeleted = DateTimeField(default=None)
 
 
 
@@ -133,9 +134,12 @@ def delete(listId, wgId, postId):
 
 ## expenses list operations
 
-def getExpensesLists(wgId):
+def getExpensesLists(wgId, includeDeleted=False):
     wg = __getWgById(wgId)
-    return [{'id': str(expensesList.id), 'name': expensesList.name} for expensesList in ExpensesList.objects(wg=wg)]
+    lists = [{'id': str(expensesList.id), 'name': expensesList.name, 'tsDeleted': expensesList.tsDeleted} for expensesList in ExpensesList.objects(wg=wg)]
+    if not includeDeleted:
+        lists = list(filter(lambda entry: entry['tsDeleted'] == None, lists))
+    return lists
 
 
 def createExpensesList(name, wgId):
@@ -150,6 +154,12 @@ def createExpensesList(name, wgId):
     elif len(lists) == 1:
         return str(lists[0].id)
     return None
+
+
+def deleteExpensesList(listId, wgId):
+    ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
+    ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(tsDeleted=datetime.now)
+    return True
 
 
 def getExpensesPerPerson(listId, wgId):

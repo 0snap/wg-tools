@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import ExpensesListSelectOption from './ExpensesListSelectOption.jsx';
+import ConfirmBox from './ConfirmBox.jsx';
 
 import './ExpensesListSelector.scss'
+
+var expensesActions = require('../../actions/ExpensesActions.jsx');
 
 
 export default class ExpensesListSelector extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { show: false };
+        this.state = { deleteRequested: false };
         //console.log('selected list ', this.props.selected);
+    }
+
+    doDeleteList() {
+        console.log('perform delete');
+        expensesActions.deleteList(this.props.selected);
     }
 
     render() {
@@ -26,12 +34,14 @@ export default class ExpensesListSelector extends Component {
         }
         return(
             <div className="expensesListSelector"> 
-            <h3>Liste auswählen</h3>
+                <h3>Liste auswählen</h3>
                 <select className="expensesListSelector__select" value={this.props.selected} >
                     {this.props.expensesLists.map((list) => {
                         return <ExpensesListSelectOption key={list.id} list={list} />
                     })}
-                </select> 
+                </select>
+                <ConfirmBox text={'diese Liste löschen'} abortText={'doch nicht'} confirmText={'ja, löschen'}
+                    confirmCallback={this.doDeleteList.bind(this)} />
             </div>
         );
     }

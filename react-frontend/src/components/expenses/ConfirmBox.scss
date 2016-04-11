@@ -1,0 +1,20 @@
+@import '../variables.scss';
+
+.confirmBox__actionButton {
+    margin-right: 15px;
+    width: 100px;
+}
+
+.confirmBox__questButton {
+    font-size: 16px;
+}
+
+
+.confirmBox__actionButton:hover {
+    background: $darkGrey;
+    border: 1px solid $lightBlue;
+    color: $lightBlue;
+    opacity: 1;
+    transition: 150ms ease-in-out;
+    transform: scale(1.1);
+}

@@ -6,39 +6,42 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import ExpensesItem from '../../../src/components/expenses/ExpensesItem.jsx';
 
-const expensesItem = require('../../../src/components/expenses/ExpensesItem.jsx')
-
 
 describe('ExpensesItem', () => {
 
     const expItemData = { id: 123, color: '#ff', name: 'foo', amount: 23.42 };
     const defaultText = 'foo 23.42€✖';
     const deleteText = 'Löschen?NeinJa';
+    var expItem;
+    var itemNode;
 
-    it('renders correct content', () => {
-        const expItem = TestUtils.renderIntoDocument(
+    beforeEach(function() {
+        expItem = TestUtils.renderIntoDocument(
             <ExpensesItem item={expItemData} listId={'123456'} />
         );
-        const itemNode = ReactDOM.findDOMNode(expItem);
+        itemNode = ReactDOM.findDOMNode(expItem);
+    });
+
+
+    it('renders correct content', () => {
+        
         expect(itemNode.textContent).toEqual(defaultText);
+        expect(expItem.state.alive).toEqual(true);
+
     });
 
     it('becomes inactive after click on delete x-button', () => {
-        const expItem = TestUtils.renderIntoDocument(
-            <ExpensesItem item={expItemData} listId={'123456'} />
-        );
-        const itemNode = ReactDOM.findDOMNode(expItem);
+        
         TestUtils.Simulate.click(
             TestUtils.findRenderedDOMComponentWithTag(expItem, 'button')
         );
+
         expect(itemNode.textContent).toEqual(deleteText);
+        expect(expItem.state.alive).toEqual(false);
+
     });
 
     it('becomes active again with click on "no"', () => {
-        const expItem = TestUtils.renderIntoDocument(
-            <ExpensesItem item={expItemData} listId={'123456'} />
-        );
-        const itemNode = ReactDOM.findDOMNode(expItem);
         
         TestUtils.Simulate.click(
             TestUtils.findRenderedDOMComponentWithTag(expItem, 'button')
@@ -48,13 +51,12 @@ describe('ExpensesItem', () => {
         TestUtils.Simulate.click(
             yesNoButtons[0]
         );
+
         expect(itemNode.textContent).toEqual(defaultText);
+        expect(expItem.state.alive).toEqual(true);
     });
 
     it('get deleted with click on "yes"', () => {
-        const expItem = TestUtils.renderIntoDocument(
-            <ExpensesItem item={expItemData} listId={'123456'} />
-        );
         
         TestUtils.Simulate.click(
             TestUtils.findRenderedDOMComponentWithTag(expItem, 'button')
@@ -65,8 +67,9 @@ describe('ExpensesItem', () => {
             yesNoButtons[1]
         );
         
-        let itemNode = ReactDOM.findDOMNode(expItem);
+        ExpensesItem.prototype.doDelete = jest.genMockFunction();
+
         expect(itemNode.textContent).toEqual(defaultText);
-        // TODO mock call / use callback in item.
+        expect(expItem.state.alive).toEqual(true);
     });
 });

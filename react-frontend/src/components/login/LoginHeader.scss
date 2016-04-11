@@ -5,18 +5,12 @@
     background: $darkGrey;
     margin-bottom: 20px;
     border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 22px;
+    font-family: 'Architects Daughter';
     padding: 15px;
     text-align: right;
 }
 
 .loginHeader a {
-    color: $lightBlue;
-    cursor: pointer;
     margin-right: 30px;
-}
-
-.loginHeader__logout:hover {
-    color: $bgGrey;
 }

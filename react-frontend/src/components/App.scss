@@ -3,8 +3,6 @@
 @import './variables.scss';
 
 .app {
-    width: 100%;
-    overflow: hidden;
     padding: 20px;
     font-family: 'Oxygen', sans-serif;
     background-color: $bgGrey;
@@ -38,6 +36,15 @@ li {
 li:hover {
     left: $itemHoverWidth;
     transition: 150ms ease-in-out;
+}
+
+a {
+    color: $lightBlue;
+    cursor: pointer;
+}
+
+a:hover {
+    color: $bgGrey;
 }
 
 button {

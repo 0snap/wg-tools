@@ -134,6 +134,26 @@ let ExpensesActions = {
 
     },
 
+    deleteList(id) {
+        //console.log("post list " + name);
+        let _this = this;
+        request.post('http://localhost:5000/deleteExpensesList')
+            .send({listId: id})
+            .set('Content-Type', 'application/json; charset=UTF-8')
+            .set('Authorization', 'JWT ' + loginStore.getToken())
+            .set('Access-Control-Allow-Origin', '*')
+            .end(function(err, res) {
+                if(err) {
+                    console.log(err);
+                }
+                Dispatcher.dispatch({
+                    actionType: Constants.DELETE_EXPENSES_LIST,
+                    id: id
+                });
+        });
+
+    },
+
     setActiveList(listId) {
         Dispatcher.dispatch({
             actionType: Constants.ACTIVE_LIST,
