@@ -53,7 +53,7 @@ export default class LoginForm extends Component {
                     </div>
                 </form>
                 <div className="loginRegisterForm__register">
-                    <a><Link to="/register">neu registrieren</Link></a>
+                    <Link to="/register">neu registrieren</Link>
                 </div>
             </div>
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Constants from '../../constants/LoginConstants.jsx';
-import cookie from 'react-cookie';
 import { Link } from 'react-router'
 
 import './LoginHeader.scss';
@@ -23,11 +22,9 @@ export default class LoginHeader extends Component {
     render() {
         return (
             <div className='loginHeader'>
-                <a onClick={this.logout.bind(this)}>
-                    <Link to="/login">
+                <Link to='/login' onClick={this.logout.bind(this)}>
                     abmelden
-                    </Link>
-                </a>
+                </Link>
             </div>
         );
     }

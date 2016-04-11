@@ -6,11 +6,12 @@ import Constants from '../constants/LoginConstants.jsx';
 var _jwt;
 
 function storeLogin(jwt) {
-    //console.log('storing jwt ' + jwt);
+    console.log('login jwt ' + jwt);
     _jwt = jwt;
 }
 
 function logout() {
+    console.log('logout');
     _jwt = null;
 }
 

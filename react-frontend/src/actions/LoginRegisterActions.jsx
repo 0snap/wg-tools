@@ -1,7 +1,9 @@
 import Dispatcher from '../dispatcher/Dispatcher.jsx';
 import request from 'superagent';
-import Constants from '../constants/LoginConstants.jsx';
+import cookie from 'react-cookie';
+import { browserHistory } from 'react-router';
 
+import Constants from '../constants/LoginConstants.jsx';
 
 let LoginRegisterActions = {
 
@@ -15,17 +17,22 @@ let LoginRegisterActions = {
                 }
                 else {
                     let jwtResponse = JSON.parse(res.text)
-                    //console.log(res, jwtResponse);
+                    cookie.save(Constants.WG_TOOLS_AUTH, jwtResponse.access_token, {'path': '/', 'maxAge': 30*24*3600});
+                    browserHistory.push('/');
+                    // console.log(res, jwtResponse);
                     Dispatcher.dispatch({
                         actionType: Constants.LOGIN_SUCCESS,
                         jwt: jwtResponse.access_token
                     });
+
                 }
             })
         ;
     },
 
     logout() {
+        cookie.remove(Constants.WG_TOOLS_AUTH, {'path': '/'});
+        browserHistory.push('/login');
         Dispatcher.dispatch({
             actionType: Constants.LOGOUT_SUCCESS
         });
@@ -36,6 +43,17 @@ let LoginRegisterActions = {
             actionType: Constants.LOGIN_SUCCESS,
             jwt: token
         });
+    },
+
+    tryLoginByCookie() {
+        let token = cookie.load(Constants.WG_TOOLS_AUTH);
+        if (token) {
+            LoginRegisterActions.storeToken(token);
+            return token;
+        }
+        else {
+            return null;
+        }
     }
 
 }
