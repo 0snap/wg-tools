@@ -39,7 +39,7 @@ export default class ExpensesItem extends Component {
         }
         return (
             <li className='expensesItem'>
-                <span className='expensesItem__title' style={nameStyle}>{this.props.item.name}&nbsp;&nbsp;&nbsp;&nbsp;{this.props.item.amount}€</span>
+                <span className='expensesItem__title' style={nameStyle}>{this.props.item.name} {this.props.item.amount}€</span>
                 <button className='expensesItem__deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button>
             </li>
         );

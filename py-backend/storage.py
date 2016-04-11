@@ -86,6 +86,10 @@ def __getRandomColor():
     RGBLowHigh = [lambda: random.randint(0,63), lambda: random.randint(191,255)]
     RGBLowHigh.append(random.choice(RGBLowHigh))
     random.shuffle(RGBLowHigh)
+    # avoid dark blues
+    if RGBLowHigh[2]() > 190 and RGBLowHigh[0]() < 64 and RGBLowHigh[1]() < 64:
+        randomLow = random.randint(0,1)
+        RGBLowHigh[randomLow], RGBLowHigh[2] = RGBLowHigh[2], RGBLowHigh[randomLow]
     #print(RGBLowHigh[0](),RGBLowHigh[1](),RGBLowHigh[2]())
     randomHex = '#%02X%02X%02X' % (RGBLowHigh[0](),RGBLowHigh[1](),RGBLowHigh[2]())
     return randomHex

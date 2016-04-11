@@ -34,8 +34,8 @@ Generelles Verhalten:
     Token in Cookie (/)
     Logout (/)
     react-router (/)
-    URL Schema für Page State
-    Wg anlegen
+    URL Schema für Page State (/)
+    Wg anlegen (/)
     Header "abmelden" (/)
     leere Forms nicht submitten, auch wenn Backend graceful gebaut ist
     DB ids nicht ans Frontend leaken? -> geteilte Schlüssel aus wg/liste/name+datum(post)
