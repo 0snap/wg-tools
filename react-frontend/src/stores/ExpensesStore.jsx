@@ -73,7 +73,7 @@ function setWg(wg) {
 }
 
 function setActiveList(activeList, listName) {
-    console.log('set active ' + activeList)
+    // console.log('set active ' + activeList)
     var name = listName? listName : getNameForListId(activeList);
 
     browserHistory.push('/app/' + name);

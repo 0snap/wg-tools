@@ -15,8 +15,13 @@ export default class ExpensesListSelector extends Component {
         //console.log('selected list ', this.props.selected);
     }
 
+    handleSelect(event) {
+        // console.log('select ', event.target.value);
+        expensesActions.setActiveList(event.target.value);
+    }
+
     doDeleteList() {
-        console.log('perform delete');
+        // console.log('perform delete');
         expensesActions.deleteList(this.props.selected);
     }
 
@@ -35,7 +40,7 @@ export default class ExpensesListSelector extends Component {
         return(
             <div className="expensesListSelector"> 
                 <h3>Liste auswählen</h3>
-                <select className="expensesListSelector__select" value={this.props.selected} >
+                <select className="expensesListSelector__select" onChange={this.handleSelect.bind(this)} value={this.props.selected} >
                     {this.props.expensesLists.map((list) => {
                         return <ExpensesListSelectOption key={list.id} list={list} />
                     })}

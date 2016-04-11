@@ -6,12 +6,14 @@ import Constants from '../constants/LoginConstants.jsx';
 var _jwt;
 
 function storeLogin(jwt) {
-    console.log('login jwt ' + jwt);
-    _jwt = jwt;
+    if(jwt !== _jwt) {
+        // console.log('login jwt ' + jwt);
+        _jwt = jwt;
+    }
 }
 
 function logout() {
-    console.log('logout');
+    // console.log('logout');
     _jwt = null;
 }
 
@@ -42,8 +44,9 @@ Dispatcher.register(function(action) {
 
     switch(action.actionType) {
         case(Constants.LOGIN_SUCCESS):
-            storeLogin(action.jwt);
-            LoginStore.emitChange(Constants.LOGIN_STATUS_CHANGED);
+            if( storeLogin(action.jwt) ) {
+                LoginStore.emitChange(Constants.LOGIN_STATUS_CHANGED);
+            }
             break;
         case(Constants.LOGOUT_SUCCESS):
             logout();
