@@ -10,6 +10,7 @@ let Constants = keyMirror({
   FETCH_EXPENSES_LISTS: null,
   EXPENSES_LISTS_CHANGED: null,
   ACTIVE_LIST: null,
+  ACTIVE_LIST_NAME: null,
   FETCH_DEPTS: null,
   FETCH_WGS: null
 });

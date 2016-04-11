@@ -18,7 +18,7 @@ let LoginRegisterActions = {
                 else {
                     let jwtResponse = JSON.parse(res.text)
                     cookie.save(Constants.WG_TOOLS_AUTH, jwtResponse.access_token, {'path': '/', 'maxAge': 30*24*3600});
-                    browserHistory.push('/');
+                    browserHistory.push('/app');
                     // console.log(res, jwtResponse);
                     Dispatcher.dispatch({
                         actionType: Constants.LOGIN_SUCCESS,

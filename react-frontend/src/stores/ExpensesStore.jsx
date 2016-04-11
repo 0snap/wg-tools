@@ -1,6 +1,8 @@
 import Dispatcher from '../dispatcher/Dispatcher.jsx';
 import EventEmitter from 'events';
 import assign from 'object-assign';
+import { browserHistory } from 'react-router';
+
 import Constants from '../constants/ExpenseConstants.jsx';
 
 var _expenses = {};
@@ -40,10 +42,13 @@ function addExpensesList(id, name) {
     setActiveList(id);
 }
 
-function setExpensesLists(expensesLists) {
+function setExpensesLists(expensesLists, listName) {
     _expensesLists = expensesLists;
     //console.log(expensesLists)
-    if (_expensesLists[0]) {
+    if (listName) {
+        setActiveList(getIdForListName(listName), listName);
+    }
+    else if (_expensesLists[0]) {
         setActiveList(_expensesLists[0].id);
     }
 
@@ -59,9 +64,26 @@ function setWg(wg) {
     _wg = wg;
 }
 
-function setActiveList(activeList) {
+function setActiveList(activeList, listName) {
     //console.log('set active ' + activeList)
+    var name = listName? listName : getNameForListId(activeList);
+
+    browserHistory.push('/app/' + name);
     _activeList = activeList;
+}
+
+function getIdForListName(listName) {
+    var list = _expensesLists.filter(list => {
+        return list.name == listName
+    });
+    return list[0].id || undefined;
+}
+
+function getNameForListId(listId) {
+    var list = _expensesLists.filter(list => {
+        return list.id == listId
+    });
+    return list[0].name || undefined;
 }
 
 let ExpensesStore = assign({ }, EventEmitter.prototype, {
@@ -142,7 +164,7 @@ Dispatcher.register(function(action) {
             console.log("store delete exp list");
             break;
         case(Constants.FETCH_EXPENSES_LISTS):
-            setExpensesLists(action.expensesLists);
+            setExpensesLists(action.expensesLists, action.listName);
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
@@ -150,7 +172,6 @@ Dispatcher.register(function(action) {
             setActiveList(action.listId);
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
-
     }
 
 })

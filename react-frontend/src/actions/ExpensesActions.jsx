@@ -90,7 +90,7 @@ let ExpensesActions = {
         });
     },
 
-    fetchExpensesLists() {
+    fetchExpensesLists(listName) {
         request.get('http://localhost:5000/expensesLists')
             .set('Authorization', 'JWT ' + loginStore.getToken())
             .end(function(err, res) {
@@ -100,7 +100,8 @@ let ExpensesActions = {
             else {
                 Dispatcher.dispatch({
                     actionType: Constants.FETCH_EXPENSES_LISTS,
-                    expensesLists: JSON.parse(res.text)
+                    expensesLists: JSON.parse(res.text),
+                    listName: listName // hacky "select by name"
                 });
             }
         });

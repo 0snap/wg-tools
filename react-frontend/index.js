@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, Redirect, browserHistory } from 'react-router'
 
 import App from './src/components/App.jsx';
 import Login from './src/components/Login.jsx';
@@ -23,7 +23,7 @@ function checkAuthCookie(nextState, replace) {
         replace(
             {   
                 pathname:'/login',
-                state: { nextPathname: '/' } 
+                state: { nextPathname: '/app' } 
             });
     }
 }
@@ -34,7 +34,7 @@ function checkAlreadyLoggedIn(nextState, replace) {
     if (getLoginStatus()) {
         replace(
             {   
-                pathname:'/',
+                pathname:'/app',
                 state: { nextPathname: '/login' } 
             });
     }         
@@ -42,8 +42,9 @@ function checkAlreadyLoggedIn(nextState, replace) {
 
 render((
     <Router history={browserHistory}>
-        <Route path="/" component={App} onEnter={checkAuthCookie} />
-        <Route path="/login" component={Login} onEnter={checkAlreadyLoggedIn} />
-        <Route path='/register' component={Register} onEnter={checkAlreadyLoggedIn} />
+        <Route path="/app(/)(:activeListName)" component={App} onEnter={checkAuthCookie} />
+        <Route path="/login(/)" component={Login} onEnter={checkAlreadyLoggedIn} />
+        <Route path='/register(/)' component={Register} onEnter={checkAlreadyLoggedIn} />
+        <Redirect from='/' to='/app' />
     </Router>
 ), document.getElementById('content'));

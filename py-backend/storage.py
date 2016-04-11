@@ -135,13 +135,16 @@ def getExpensesLists(wgId):
 
 
 def createExpensesList(name, wgId):
-    ''' Creates and stores new ExpensesList object with the given name. Returns its id '''
+    ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
     wg = __getWgById(wgId)
     #print('create explist ', name, wgId, wg)
-    if len(ExpensesList.objects(name=name, wg=wg)) == 0:
+    lists = ExpensesList.objects(name=name, wg=wg)
+    if len(lists) == 0:
         expensesList = ExpensesList(name=name, wg=wg, editable=True)
         expensesList.save()
         return str(expensesList.id)
+    elif len(lists) == 1:
+        return str(lists[0].id)
     return None
 
 
