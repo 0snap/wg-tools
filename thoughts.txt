@@ -1,7 +1,7 @@
 Listen Header:
     Ausgaben in Listen ordnen + Dropdown (/)
     Listen anlegen (/)
-    Listen löschen
+    Listen löschen (/)
     Liste sperren, nur noch Schulden zeigen
 
 Listen verhalten:
@@ -41,7 +41,10 @@ Generelles Verhalten:
     DB ids nicht ans Frontend leaken? -> geteilte Schlüssel aus wg/liste/name+datum(post)
 
 
-Tests:
+
+Test setup für BE (/)
+Test setup für FE (/)
+
     FE - render
     FE - state -> login / app
     FE - routes

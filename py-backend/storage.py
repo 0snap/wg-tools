@@ -134,9 +134,10 @@ def delete(listId, wgId, postId):
 
 ## expenses list operations
 
-def getExpensesLists(wgId, includeDeleted=False):
+def getExpensesLists(wgId, name=None, includeDeleted=False):
     wg = __getWgById(wgId)
-    lists = [{'id': str(expensesList.id), 'name': expensesList.name, 'tsDeleted': expensesList.tsDeleted} for expensesList in ExpensesList.objects(wg=wg)]
+    allLists = ExpensesList.objects(wg=wg) if name == None else ExpensesList.objects(wg=wg, name=name)
+    lists = [{'id': str(expensesList.id), 'name': expensesList.name, 'tsDeleted': expensesList.tsDeleted} for expensesList in allLists]
     if not includeDeleted:
         lists = list(filter(lambda entry: entry['tsDeleted'] == None, lists))
     return lists
@@ -144,15 +145,18 @@ def getExpensesLists(wgId, includeDeleted=False):
 
 def createExpensesList(name, wgId):
     ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
-    wg = __getWgById(wgId)
-    #print('create explist ', name, wgId, wg)
-    lists = ExpensesList.objects(name=name, wg=wg)
+    print('create explist ', name, wgId)
+    lists = getExpensesLists(wgId, name)
+    print(lists)
     if len(lists) == 0:
+        # print('create new one')
+        wg = __getWgById(wgId)
         expensesList = ExpensesList(name=name, wg=wg, editable=True)
         expensesList.save()
         return str(expensesList.id)
     elif len(lists) == 1:
-        return str(lists[0].id)
+        # print('found old one')
+        return lists[0]['id']
     return None
 
 
