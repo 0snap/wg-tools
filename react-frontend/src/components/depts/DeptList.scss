@@ -1,8 +1,5 @@
-.deptList {
-    width: 100%;
-    float: left;
-}
-
 .deptItemList {
     list-style-type: none;
+    max-height: 500px;
+    overflow: auto;
 }

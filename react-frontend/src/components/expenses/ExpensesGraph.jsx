@@ -96,9 +96,7 @@ export default class ExpensesGraph extends Component {
 
     render() {
         if(this.props.expenses.length === 0) {
-            return (
-                <div className='expensesGraph' />
-            );
+            return ( null );
         }
         let chartData = this.buildChartData();
         // console.log(chartData);

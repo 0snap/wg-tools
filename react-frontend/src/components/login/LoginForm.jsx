@@ -5,7 +5,6 @@ import { Link } from 'react-router'
 var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
 
 
-
 export default class LoginForm extends Component {
 
     constructor(props) {
@@ -34,7 +33,7 @@ export default class LoginForm extends Component {
     render() {
 
         return (
-            <div className='loginRegisterForm'>
+            <div className='loginRegisterForm container'>
                 <h1>Einloggen</h1>
                 <form onSubmit={this.login.bind(this)}>
                     <div className="form-group">

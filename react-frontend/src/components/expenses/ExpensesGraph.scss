@@ -4,8 +4,7 @@
 .expensesGraph {
     width: 65%;
     float: right;
-    overflow: hidden;
-    height: 85%;
+    height: $expensesGraphHeight;
 }
 
 canvas {
@@ -13,11 +12,4 @@ canvas {
     border-radius: 5px;
     border: 2px solid $darkGrey;
     background: $bgGrey;
-}
-
-@media (max-width: 480px) {
-    .expensesGraph {
-        width: 0%;
-        heigth: 0%;
-    }
 }

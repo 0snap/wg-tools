@@ -28,25 +28,22 @@ export default class ExpensesItem extends Component {
         let nameStyle = {
             color: this.props.item.color
         }
-        if(!this.state.alive) {
+        if(this.state.alive) {
             return (
                 <li className='expensesItem'>
-                    <span className='expensesItem__title'>Löschen?</span>
-                    <button className='expensesItem__actionButton' onClick={this.onAbort.bind(this)}>Nein</button>
-                    <button className='expensesItem__actionButton' onClick={this.doDelete.bind(this)}>Ja</button>
+                    <span className='expensesItem__title' style={nameStyle}>{this.props.item.name} {this.props.item.amount}€</span>
+                    <button className='expensesItem__deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button>
                 </li>
             );
         }
         return (
             <li className='expensesItem'>
-                <span className='expensesItem__title' style={nameStyle}>{this.props.item.name} {this.props.item.amount}€</span>
-                <button className='expensesItem__deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button>
+                <span className='expensesItem__title'>Löschen?</span>
+                <button className='expensesItem__actionButton' onClick={this.onAbort.bind(this)}>Nein</button>
+                <button className='expensesItem__actionButton' onClick={this.doDelete.bind(this)}>Ja</button>
             </li>
         );
     }
-
-
-
 }
 
 ExpensesItem.propTypes = {

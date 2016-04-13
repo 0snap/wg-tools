@@ -13,12 +13,12 @@ export default class DeptList extends Component {
         let depts = this.props.deptList;
         // console.log(depts);
         if(Object.keys(depts).length === 0) {
-            return (<div className='deptList'><h3>Keine Schulden</h3></div>);
+            return (<div className='container__nocontent'><h3>Keine Schulden</h3></div>);
         }
         
         let _this = this;
         return (
-            <div className='deptList'>
+            <div>
                 <ul className='deptItemList'>
                 {depts.map(item => {
                     return <DeptItem borrower={item.borrower} amount={item.amount} sponsor={item.sponsor} />

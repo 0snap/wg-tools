@@ -21,7 +21,7 @@ export default class LoginHeader extends Component {
 
     render() {
         return (
-            <div className='loginHeader'>
+            <div className='loginHeader container-fluid'>
                 <Link to='/login' onClick={this.logout.bind(this)}>
                     abmelden
                 </Link>

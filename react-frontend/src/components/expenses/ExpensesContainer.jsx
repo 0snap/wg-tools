@@ -8,8 +8,6 @@ import Constants from '../../constants/ExpenseConstants.jsx';
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 var expensesActions = require('../../actions/ExpensesActions.jsx');
 
-import './ExpensesContainer.scss'
-
 
 export default class ExpensesContainer extends Component {
 
@@ -51,8 +49,8 @@ export default class ExpensesContainer extends Component {
     render() {
         //console.log("rendering container " + this.state.activeList);
         return(
-            <div className="expensesContainer">
-                <div className="expensesContainer__header">
+            <div className="container-fluid">
+                <div className="container__header">
                     <h1>Ausgaben</h1>
                     <ExpensesListCreateForm />
                     <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />

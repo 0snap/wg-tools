@@ -8,13 +8,10 @@
     border: 1px solid $lightGrey;
 }
 
-.expensesItem__title {
-    font-size: 20px;
-}
-
 .expensesItem__deleteButton {
     border: 1px solid $lightGrey;
     float: right;
+    font-size: 14px;
     height: 30px;
     line-height: 0px;
     position: relative;
@@ -33,6 +30,7 @@
 
 .expensesItem__actionButton {
     border: 1px solid $lightGrey;
+    font-size: 14px;
     float: right;
     margin: 5px;
     height: 30px;

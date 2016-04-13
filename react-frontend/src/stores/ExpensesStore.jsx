@@ -53,8 +53,8 @@ function deleteExpensesList(id) {
 function setExpensesLists(expensesLists, listName) {
     _expensesLists = expensesLists;
     //console.log(expensesLists)
-    if (listName) {
-        setActiveList(getIdForListName(listName), listName);
+    if (listName && getIdForListName(listName)) {
+        setActiveList(getIdForListName(listName));
     }
     else if (_expensesLists[0]) {
         setActiveList(_expensesLists[0].id);
@@ -72,11 +72,10 @@ function setWg(wg) {
     _wg = wg;
 }
 
-function setActiveList(activeList, listName) {
+function setActiveList(activeList) {
     // console.log('set active ' + activeList)
-    var name = listName? listName : getNameForListId(activeList);
 
-    browserHistory.push('/app/' + name);
+    browserHistory.push('/app/' + getNameForListId(activeList));
     _activeList = activeList;
 }
 

@@ -15,7 +15,7 @@ export default class ExpensesList extends Component {
         // console.log(expenses);
         
         if(Object.keys(expenses).length === 0) {
-            return (<div className='expensesDiv'><h3>Keine Ausgaben</h3></div>);
+            return (<div className='container__nocontent'><h3>Keine Ausgaben</h3></div>);
         }
 
         let _this = this;

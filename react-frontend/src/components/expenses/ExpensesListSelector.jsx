@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ExpensesListSelectOption from './ExpensesListSelectOption.jsx';
 import ConfirmBox from './ConfirmBox.jsx';
 
 import './ExpensesListSelector.scss'
@@ -42,7 +41,7 @@ export default class ExpensesListSelector extends Component {
                 <h3>Liste auswählen</h3>
                 <select className="expensesListSelector__select" onChange={this.handleSelect.bind(this)} value={this.props.selected} >
                     {this.props.expensesLists.map((list) => {
-                        return <ExpensesListSelectOption key={list.id} list={list} />
+                        return <option key={list.id} value={list.id}>{list.name}</option>
                     })}
                 </select>
                 <ConfirmBox text={'diese Liste löschen'} abortText={'doch nicht'} confirmText={'ja, löschen'}

@@ -3,31 +3,33 @@
 @import './variables.scss';
 
 .app {
-    padding: 20px;
     font-family: 'Oxygen', sans-serif;
     background-color: $bgGrey;
+    padding: 30px;
     color: $darkGrey;
+    padding-top: 40px;
 }
+
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Architects Daughter', cursive;
 }
 
 ul {
-    padding-top: 20px;
-    padding-bottom: 20px;
     border-radius: 5px;
     border: 2px solid $darkGrey;
     background: $lightGrey;
+    padding-top: 10px;
 }
 
 li {
     border-radius: 5px;
     background: $darkGrey;
     color: $bgGrey;
+    font-size: 20px;
     line-height: 40px;
     left: 0px;
-    margin-top: 5px;
+    margin-top: 15px;
     overflow: hidden;
     position: relative;
     padding: 7px 10px;
@@ -38,9 +40,22 @@ li:hover {
     transition: 150ms ease-in-out;
 }
 
+li:last-child {
+    margin-bottom: 15px;
+}
+
 a {
     color: $lightBlue;
     cursor: pointer;
+}
+
+label {
+    width: 80px;
+    margin-right: 40px;
+}
+
+input {
+    min-width: 300px;
 }
 
 a:hover {
@@ -76,4 +91,29 @@ input, select {
     font-size: $formFontSize;
     font-weight: bold;
     padding: 4px;
+}
+
+// override bootstrap container padding:
+.container-fluid {
+    padding: 15px 0;
+    margin-bottom: 30px;
+}
+
+.container__header {
+    background: $darkGrey;
+    border: 1px solid $lightBlue;
+    border-radius: 5px;
+    color: $bgGrey;
+    overflow: auto;
+    padding: 0 20px;
+    margin-bottom: 30px;
+    min-height: 80px;
+}
+
+.container__header h1, .container__header h3 {
+    color: $lightBlue;
+}
+
+.container__nocontent {
+    padding: 20px 50px;
 }
