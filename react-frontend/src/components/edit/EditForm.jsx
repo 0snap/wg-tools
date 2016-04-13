@@ -40,7 +40,7 @@ export default class EditForm extends Component {
     render() {
         if(this.props.activeList === undefined) {
             return (
-                <div className='editForm container__nocontent'>
+                <div className='container__nocontent'>
                     <h3>Keine Liste ausgewählt</h3>
                 </div>
             );
