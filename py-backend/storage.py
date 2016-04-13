@@ -161,7 +161,7 @@ def createExpensesList(name, wgId):
 
 
 def deleteExpensesList(listId, wgId):
-    ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
+    ''' Deletes expenses list object with the given id. '''
     ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(tsDeleted=datetime.now)
     return True
 

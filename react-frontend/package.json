@@ -11,15 +11,15 @@
     "test": "jest --config=jest.conf.json"
   },
   "author": "flx",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chart.js": "^1.0.2",
     "express": "^4.13.3",
     "keymirror": "^0.1.1",
-    "react": "^0.14.7",
+    "react": "^0.14.8",
     "react-chartjs": "^0.7.3",
     "react-cookie": "^0.4.5",
-    "react-dom": "^0.14.7",
+    "react-dom": "^0.14.8",
     "react-router": "^2.0.0"
   },
   "devDependencies": {
