@@ -11,12 +11,12 @@ export default class ExpensesList extends Component {
 
     render() {
         let expenses = this.props.expenses;
-        expenses.sort((a, b) => new Date(b.date).getTime() > new Date(a.date).getTime());
         // console.log(expenses);
-        
         if(Object.keys(expenses).length === 0) {
             return (<div className='container__nocontent'><h3>Keine Ausgaben</h3></div>);
         }
+        
+        expenses.sort((a, b) => new Date(b.date).getTime() > new Date(a.date).getTime());
 
         let _this = this;
         return (

@@ -10,7 +10,6 @@ export default class ExpensesListSelector extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { deleteRequested: false };
         //console.log('selected list ', this.props.selected);
     }
 

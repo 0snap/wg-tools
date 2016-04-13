@@ -37,7 +37,9 @@ export default class ConfirmBox extends Component {
             );
         }
         return (
-            <a className='confirmBox__questButton' onClick={this.questionableButtonClicked.bind(this)}>{this.props.text}</a>
+            <div className ='confirmBox'>
+                <a className='confirmBox__questButton' onClick={this.questionableButtonClicked.bind(this)}>{this.props.text}</a>
+            </div>
         );
     }
 

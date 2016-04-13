@@ -12,14 +12,15 @@ describe('ExpensesItem', () => {
     const expItemData = { id: 123, color: '#ff', name: 'foo', amount: 23.42 };
     const defaultText = 'foo 23.42€✖';
     const deleteText = 'Löschen?NeinJa';
-    var expItem;
-    var itemNode;
+    let expItem;
+    let itemNode;
 
     beforeEach(function() {
         expItem = TestUtils.renderIntoDocument(
             <ExpensesItem item={expItemData} listId={'123456'} />
         );
         itemNode = ReactDOM.findDOMNode(expItem);
+        expect(itemNode).toBeDefined();
     });
 
 
