@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-var expensesActions = require('../../actions/ExpensesActions.jsx');
 
 import './DeptItem.scss';
 

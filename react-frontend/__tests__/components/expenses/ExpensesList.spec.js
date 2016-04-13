@@ -29,7 +29,7 @@ describe('ExpensesList', () => {
         expect(headline.textContent).toEqual(noContentText);
     });
 
-    it('should render expenses list if expenses are set', () => {
+    it('should render expenses when if expenses are not empty', () => {
         let expList = TestUtils.renderIntoDocument(
             <ExpensesList listId={listId} expenses={expenses} />
         );
