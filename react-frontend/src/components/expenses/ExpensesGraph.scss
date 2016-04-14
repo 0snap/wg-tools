@@ -13,3 +13,16 @@ canvas {
     border: 2px solid $darkGrey;
     background: $bgGrey;
 }
+
+@media (max-width:767px) {
+    .expensesGraph {
+	    width: 0;
+	    height: 0;
+	}
+
+	canvas {
+	    height: 0;
+	    padding: 0;
+	    width: 0;
+	}
+}

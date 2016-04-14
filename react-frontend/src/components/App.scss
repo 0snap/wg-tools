@@ -1,15 +1,14 @@
 // all components will inherit the global style
 @import './global.scss'; 
 @import './variables.scss';
+@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 .app {
     font-family: 'Oxygen', sans-serif;
     background-color: $bgGrey;
     padding: 30px;
     color: $darkGrey;
-    padding-top: 40px;
 }
-
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Architects Daughter', cursive;
@@ -116,4 +115,24 @@ input, select {
 
 .container__nocontent {
     padding: 20px 50px;
+}
+
+
+/** media queries */
+
+
+@media (max-width:767px) {
+    .app {
+        padding: 0;
+        width: 99%;
+    }
+
+    li {
+        font-size: 16px;
+        line-height: 32px;
+        margin-top: 8px;
+        overflow: hidden;
+        position: relative;
+        padding: 3px 6px;
+    }
 }

@@ -11,3 +11,9 @@
     overflow: auto;
     max-height: $expensesGraphHeight;
 }
+
+@media (max-width:767px) {
+    .expensesList {
+	    width: 100%;
+	}
+}

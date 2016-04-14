@@ -7,3 +7,9 @@
 .deptItem__amount {
     float: right;
 }
+
+@media (max-width:767px) {
+    .deptItem {
+        width: 95%;
+    }
+}
