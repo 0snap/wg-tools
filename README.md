@@ -56,8 +56,10 @@ Everything is setup for development; start the frontend with "npm run dev" and t
 	[] dont leak DB ids to FE (still relevant?)
 	[x] Tunnel FE --> BE (Container Setup)
 	[x] Tunnel expenses actions
-	[] Tunnel login actions 
-	[] python cgi for production
+	[x] Tunnel login actions 
+	[x] python cgi for production
+	[] container setup
+	[] configurable endpoints for py-backend and mongo
 
 
 ### Tests:

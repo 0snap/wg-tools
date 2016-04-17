@@ -3,7 +3,7 @@ var path = require('path');
 var webpack = require('webpack');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-var forwarder = require('./src/services/ForwarderService.jsx');
+var forwarder = require('./server/ForwarderService.js');
 
 var config = require(path.resolve(__dirname, 'webpack.config.' + process.env.NODE_ENV + '.js'));
 var compiler = webpack(config);

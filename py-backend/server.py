@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 from flask import Flask, request, json, Response
-from flask.ext.cors import CORS
 
 from flask_jwt import JWT, jwt_required, current_identity
 import hashlib
@@ -39,7 +38,6 @@ app.config.setdefault('JWT_EXPIRATION_DELTA', timedelta(days=30))
 jwt = JWT(app, authenticate, identity)
 
 
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 ########## helper methods ###########

@@ -12,8 +12,8 @@ each ExpensesList contains a list of expensePosts.
 '''
 
 
-connect(host='mongodb://localhost:27017/depts3')
-#connect('depts', host='mongo', port=27017)
+#connect(host='mongodb://localhost:27017/depts3')
+connect(host='mongodb://mongo:27017/depts3')
 
 
 class WGWrapper(object):
