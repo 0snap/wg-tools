@@ -13,6 +13,7 @@
   "author": "flx",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.0",
     "chart.js": "^1.0.2",
     "express": "^4.13.3",
     "keymirror": "^0.1.1",

@@ -1,157 +1,142 @@
 import Dispatcher from '../dispatcher/Dispatcher.jsx';
 import request from 'superagent';
+
 import Constants from '../constants/ExpenseConstants.jsx';
+
+var apiService = require('../services/ApiService.jsx');
 var loginStore = require('../stores/LoginStore.jsx');
 
 let ExpensesActions = {
 
     storeExpense(name, amount, listId) {
         let _this = this;
-        request.post('http://localhost:5000/storeExpense')
-            .send({name: name, amount: amount, listId: listId})
-            .set('Content-Type', 'application/json; charset=UTF-8')
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .set('Access-Control-Allow-Origin', '*')
-            .end(function(err, res) {
-                if(err) {
-                    console.log(err);
-                }
-                else {
-                    //console.log(res);
-                    let stored = JSON.parse(res.text)
-                    //console.log(stored)
-                    Dispatcher.dispatch({
-                        actionType: Constants.ADD_EXPENSE_POST,
-                        name: stored.name,
-                        amount: stored.amount,
-                        date: stored.date,
-                        color: stored.color,
-                        id: stored.id, 
-                        listId: listId
-                    });
-                    _this.fetchDepts(listId);
-                }
-
-        });
-        //console.log(name, amount);
+        let payload = {name: name, amount: amount, listId: listId};
+        apiService.call(
+            'storeExpense', 
+            payload,
+            function(respText) {
+                let jsonResponse = JSON.parse(respText);
+                Dispatcher.dispatch({
+                    actionType: Constants.ADD_EXPENSE_POST,
+                    name: jsonResponse.name,
+                    amount: jsonResponse.amount,
+                    date: jsonResponse.date,
+                    color: jsonResponse.color,
+                    id: jsonResponse.id, 
+                    listId: listId
+                });
+                _this.fetchDepts(listId);
+            },
+            function(err) {
+                console.log(err);
+            }
+        );
     },
 
     deleteExpense(id, listId) {
         let _this = this;
-        request.del('http://localhost:5000/deleteExpense')
-            .send({ id: id, listId: listId})
-            .set('Content-Type', 'application/json; charset=UTF-8')
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .set('Access-Control-Allow-Origin', '*')
-            .end(function(err, res) {
-                if(err) {
-                    console.log(err);
-                }
-                else { 
-                    Dispatcher.dispatch({
-                        actionType: Constants.DELETE_EXPENSE_POST,
-                        id: id, 
-                        listId: listId
-                    });
-                    _this.fetchDepts(listId);
-                }
-            });
-        //console.log(timestamp);
+        let payload = { id: id, listId: listId };
+        apiService.call(
+            'deleteExpense', payload, 
+            function(respText) {
+                Dispatcher.dispatch({
+                    actionType: Constants.DELETE_EXPENSE_POST,
+                    id: id, 
+                    listId: listId
+                });
+                _this.fetchDepts(listId);
+            },
+            function(err) {
+                console.log(err);
+            }
+        );
     },
 
     fetchExpenses(listId) {
-        request.get('http://localhost:5000/expensesList?listId=' + listId)
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .end(function(err, res) {
-            if(err) {
-                console.log(err); 
+        apiService.call(
+            'expensesList', {listId: listId}, 
+            function(respText) {
+                let jsonResponse = JSON.parse(respText);
+                Dispatcher.dispatch({
+                    actionType: Constants.FETCH_EXPENSE_POSTS,
+                    expenses: jsonResponse
+                });
+            },
+            function(err) {
+                console.log(err);
             }
-            Dispatcher.dispatch({
-                actionType: Constants.FETCH_EXPENSE_POSTS,
-                expenses: JSON.parse(res.text)
-            });
-            //console.log(_this.state.expenses);
-        });
+        );
     },
 
     fetchDepts(listId) {
-        request.get('http://localhost:5000/meanDepts?listId=' + listId)
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .end(function(err, res) {
-            if(err) {
-                console.log(err);
-            }
-            else {
+        apiService.call(
+            'meanDepts', {listId: listId}, 
+            function(respText) {
+                let depts = JSON.parse(respText);
                 Dispatcher.dispatch({
                     actionType: Constants.FETCH_DEPTS,
-                    depts: JSON.parse(res.text)
+                    depts: depts
                 });
+            },
+            function(err) {
+                console.log(err);
             }
-        });
+        );
     },
 
     fetchExpensesLists(listName) {
-        request.get('http://localhost:5000/expensesLists')
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .end(function(err, res) {
-            if(err) {
-                console.log(err);
-            }
-            else {
+        apiService.call(
+            'expensesLists', undefined, 
+            function(respText) {
+                let jsonResponse = JSON.parse(respText);
                 Dispatcher.dispatch({
                     actionType: Constants.FETCH_EXPENSES_LISTS,
-                    expensesLists: JSON.parse(res.text),
+                    expensesLists: jsonResponse,
                     listName: listName // hacky "select by name"
                 });
+            },
+            function(err) {
+                console.log(err);
             }
-        });
+        );
     },
 
     storeList(name) {
         //console.log("post list " + name);
         let _this = this;
-        request.post('http://localhost:5000/createExpensesList')
-            .send({name: name})
-            .set('Content-Type', 'application/json; charset=UTF-8')
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .set('Access-Control-Allow-Origin', '*')
-            .end(function(err, res) {
-                if(err) {
-                    console.log(err);
-                }
-                let id = JSON.parse(res.text)
-                if(id != undefined ) {
-                    //console.log(stored)
+        apiService.call(
+            'createExpensesList', {name: name}, 
+            function(respText) {
+                if(respText) {
+                    let jsonResponse = JSON.parse(respText);
                     Dispatcher.dispatch({
                         actionType: Constants.ADD_EXPENSES_LIST,
                         name: name,
-                        id: id
+                        id: jsonResponse
                     });
-                    _this.setActiveList(id);
+                    _this.setActiveList(jsonResponse);
                 }
-
-        });
-
+            },
+            function(err) {
+                console.log(err);
+            }
+        );
     },
 
     deleteList(id) {
         //console.log("post list " + name);
-        let _this = this;
-        request.post('http://localhost:5000/deleteExpensesList')
-            .send({listId: id})
-            .set('Content-Type', 'application/json; charset=UTF-8')
-            .set('Authorization', 'JWT ' + loginStore.getToken())
-            .set('Access-Control-Allow-Origin', '*')
-            .end(function(err, res) {
-                if(err) {
-                    console.log(err);
-                }
+        apiService.call(
+            'deleteExpensesList', {listId: id}, 
+            function(respText) {
                 Dispatcher.dispatch({
                     actionType: Constants.DELETE_EXPENSES_LIST,
                     id: id
                 });
-        });
-
+            },
+            function(err) {
+                console.log(err);
+            }
+        );
     },
 
     setActiveList(listId) {

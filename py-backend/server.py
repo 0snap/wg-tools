@@ -28,7 +28,7 @@ def authenticate(wgName, password):
 
     
 def identity(payload):
-    wgId = payload['identity']
+    wgId = payload.get('identity')
     return wgId
 
 app = Flask(__name__)
@@ -46,7 +46,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 def getDictFromPost(request):
-    if request.headers['Content-Type'] == ('application/json; charset=UTF-8'):
+    if 'application/json' in request.headers.get('Content-Type'):
         postedJson = json.dumps(request.json)
         #print(postedJson)
         return json.loads(postedJson)
@@ -63,11 +63,11 @@ def calcDepts():
     expensesList = deptCalculator.calcDepts(jsonAsDict)
     return json.dumps(expensesList)
 
-@app.route('/meanDepts', methods=['GET'])
+@app.route('/meanDepts', methods=['POST'])
 @jwt_required()
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
-    listId = request.args.get('listId')
+    listId = getDictFromPost(request).get('listId')
     if listId != None and listId != 'undefined':
         persons = storage.getExpensesPerPerson(listId, current_identity)
         if len(persons) > 0:
@@ -85,16 +85,16 @@ def depts():
 def store():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
-    listId = jsonAsDict['listId']
-    name = jsonAsDict['name']
-    amount = float(jsonAsDict['amount'])
+    listId = jsonAsDict.get('listId')
+    name = jsonAsDict.get('name')
+    amount = float(jsonAsDict.get('amount'))
     if listId != None and listId != '' and listId != 'undefined' and name != None and name != '' and name != 'undefined' and amount != None and amount >= 0:
         storedObjectDict = storage.store(listId, current_identity, name, int(amount * 100))
         storedObjectDict['listId'] = listId
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
 
-@app.route('/deleteExpense', methods=['DELETE'])
+@app.route('/deleteExpense', methods=['POST'])
 @jwt_required()
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
@@ -115,7 +115,7 @@ def delete():
 def createExpensesList():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
-    name = jsonAsDict['name']
+    name = jsonAsDict.get('name')
     if name != None and name != '' and name != 'undefined':
         storedObjectDict = storage.createExpensesList(name, current_identity)
         return json.dumps(storedObjectDict)
@@ -125,19 +125,18 @@ def createExpensesList():
 @jwt_required()
 def deleteExpensesList():
     ''' Deletes the posted listId from DB '''
-    jsonAsDict = getDictFromPost(request)
-    listId = jsonAsDict['listId']
+    listId = getDictFromPost(request).get('listId')
     if listId != None and listId != '' and listId != 'undefined':
         storedObjectDict = storage.deleteExpensesList(listId, current_identity)
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
 
 
-@app.route('/expensesList')
+@app.route('/expensesList', methods=['POST'])
 @jwt_required()
 def getExpensesList():
     ''' Returns a json list of depts for a given listId'''
-    listId = request.args.get('listId')
+    listId = getDictFromPost(request).get('listId')
     if listId != None and listId != '' and listId != 'undefined':
         return Response(json.dumps(storage.getNormalizedExpensePosts(listId, current_identity)))
     return Response('List not found', 404)
@@ -146,7 +145,7 @@ def getExpensesList():
 ########## wg operations ##########
 
 
-@app.route('/expensesLists')
+@app.route('/expensesLists', methods=['POST'])
 @jwt_required()
 def getExpensesLists():
     ''' Returns a json list of all expensesLists for a given wg'''
@@ -157,7 +156,7 @@ def registerNewWg():
     ''' Registers a new wg with the posted name, returns 409 (conflict) on existing wg '''
     #print(request.json)
     jsonAsDict = getDictFromPost(request)
-    wgName, hashed = jsonAsDict['wgName'], hashPw(jsonAsDict['password'])
+    wgName, hashed = jsonAsDict.get('wgName'), hashPw(jsonAsDict.get('password'))
     if (wgName and hashed):
         created = storage.createWG(wgName, hashed)
         if created:

@@ -20,8 +20,8 @@ export default class DeptList extends Component {
         return (
             <div>
                 <ul className='deptItemList'>
-                {depts.map(item => {
-                    return <DeptItem borrower={item.borrower} amount={item.amount} sponsor={item.sponsor} />
+                {depts.map((item, index) => {
+                    return <DeptItem key={index} borrower={item.borrower} amount={item.amount} sponsor={item.sponsor} />
                 })}
                 </ul>
             </div>);

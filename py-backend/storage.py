@@ -83,7 +83,7 @@ def __normalizeExpensePost(post):
     return normalized
 
 def __getRandomColor():
-    ## have two random colors near one end of the spectrum, another random color near the other end
+    ''' Returns a random color as hex string. The color is strong, and not dark. especially not dark blue. '''
     RGBLowHigh = [lambda: random.randint(0,63), lambda: random.randint(191,255)]
     RGBLowHigh.append(random.choice(RGBLowHigh))
     random.shuffle(RGBLowHigh)
@@ -91,8 +91,8 @@ def __getRandomColor():
     if RGBLowHigh[2]() > 190 and RGBLowHigh[0]() < 64 and RGBLowHigh[1]() < 64:
         randomLow = random.randint(0,1)
         RGBLowHigh[randomLow], RGBLowHigh[2] = RGBLowHigh[2], RGBLowHigh[randomLow]
-    #print(RGBLowHigh[0](),RGBLowHigh[1](),RGBLowHigh[2]())
     randomHex = '#%02X%02X%02X' % (RGBLowHigh[0](),RGBLowHigh[1](),RGBLowHigh[2]())
+    #print(randomHex)
     return randomHex
 
 def getColorForName(listId, name):
