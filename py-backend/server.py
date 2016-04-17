@@ -94,7 +94,7 @@ def store():
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
 
-@app.route('/deleteExpense', methods=['POST'])
+@app.route('/deleteExpense', methods=['DELETE'])
 @jwt_required()
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
@@ -121,7 +121,7 @@ def createExpensesList():
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
 
-@app.route('/deleteExpensesList', methods=['POST'])
+@app.route('/deleteExpensesList', methods=['DELETE'])
 @jwt_required()
 def deleteExpensesList():
     ''' Deletes the posted listId from DB '''
@@ -145,7 +145,7 @@ def getExpensesList():
 ########## wg operations ##########
 
 
-@app.route('/expensesLists', methods=['POST'])
+@app.route('/expensesLists', methods=['GET'])
 @jwt_required()
 def getExpensesLists():
     ''' Returns a json list of all expensesLists for a given wg'''
