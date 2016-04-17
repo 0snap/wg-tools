@@ -23,13 +23,13 @@ export default class ExpensesContainer extends Component {
     componentDidMount() {
         expensesStore.addEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange.bind(this));
         expensesStore.addEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange.bind(this));
-        expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleListSelect.bind(this));
+        expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange.bind(this));
     }
 
     componentWillUnmount() {
         expensesStore.removeEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange.bind(this));
         expensesStore.removeEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange.bind(this));
-        expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleListSelect.bind(this));
+        expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange.bind(this));
     }
 
     handleExpensesChange() {
@@ -40,14 +40,14 @@ export default class ExpensesContainer extends Component {
         this.setState({ expensesLists: expensesStore.getExpensesLists() });
     }
 
-    handleListSelect() {
+    handleActiveListChange() {
         let activeList = expensesStore.getActiveList();
         expensesActions.fetchExpenses(activeList);
         this.setState({ activeList: activeList });
     }
 
     render() {
-        //console.log("rendering container " + this.state.activeList);
+        //console.log("rendering container " + this.state.activeList, this.state.expensesLists);
         return(
             <div className="container-fluid">
                 <div className="container__header">

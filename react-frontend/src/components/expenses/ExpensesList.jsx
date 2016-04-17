@@ -12,7 +12,7 @@ export default class ExpensesList extends Component {
     render() {
         let expenses = this.props.expenses;
         // console.log(expenses);
-        if(Object.keys(expenses).length === 0) {
+        if (Object.keys(expenses).length === 0 || !this.props.listId) {
             return (<div className='container__nocontent'><h3>Keine Ausgaben</h3></div>);
         }
         
@@ -32,5 +32,5 @@ export default class ExpensesList extends Component {
 
 ExpensesList.propTypes = {
     expenses: React.PropTypes.array.isRequired,
-    listId: React.PropTypes.string.isRequired
+    listId: React.PropTypes.string
 }

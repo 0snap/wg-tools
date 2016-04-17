@@ -31,6 +31,9 @@ function deleteExpense(id) {
 function setExpenses(expenses) {
     // backend returns expenses as list. transform into a dict with keys:
     _expenses = {};
+    if (!expenses) {
+        return;
+    }
     expenses.forEach(exp => {
         _expenses[exp.id] = exp;
     });
@@ -52,12 +55,14 @@ function deleteExpensesList(id) {
 
 function setExpensesLists(expensesLists, listName) {
     _expensesLists = expensesLists;
-    //console.log(expensesLists)
     if (listName && getIdForListName(listName)) {
         setActiveList(getIdForListName(listName));
     }
     else if (_expensesLists[0]) {
         setActiveList(_expensesLists[0].id);
+    }
+    else {
+        setActiveList(undefined);
     }
 
 }
@@ -74,8 +79,12 @@ function setWg(wg) {
 
 function setActiveList(activeList) {
     // console.log('set active ' + activeList)
-
-    browserHistory.push('/app/' + getNameForListId(activeList));
+    if (activeList) {
+        browserHistory.push('/app/' + getNameForListId(activeList));
+    }
+    else {
+        browserHistory.push('/app');
+    }
     _activeList = activeList;
 }
 

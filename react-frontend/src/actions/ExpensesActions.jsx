@@ -1,14 +1,14 @@
 import Dispatcher from '../dispatcher/Dispatcher.jsx';
-import request from 'superagent';
-
 import Constants from '../constants/ExpenseConstants.jsx';
 
 var apiService = require('../services/ApiService.jsx');
-var loginStore = require('../stores/LoginStore.jsx');
 
 let ExpensesActions = {
 
     storeExpense(name, amount, listId) {
+        if (!name || !amount || !listId) {
+            return;
+        }
         let _this = this;
         let payload = {name: name, amount: amount, listId: listId};
         apiService.call(
@@ -33,6 +33,9 @@ let ExpensesActions = {
     },
 
     deleteExpense(id, listId) {
+        if (!listId || !id) {
+            return;
+        }
         let _this = this;
         let payload = { id: id, listId: listId };
         apiService.call(
@@ -52,13 +55,19 @@ let ExpensesActions = {
     },
 
     fetchExpenses(listId) {
+        if (!listId) {
+            Dispatcher.dispatch({
+                actionType: Constants.FETCH_EXPENSE_POSTS,
+                expenses: undefined
+            });
+            return;
+        }
         apiService.call(
             'POST', 'expensesList', {listId: listId}, 
             function(respText) {
-                let jsonResponse = JSON.parse(respText);
                 Dispatcher.dispatch({
                     actionType: Constants.FETCH_EXPENSE_POSTS,
-                    expenses: jsonResponse
+                    expenses: JSON.parse(respText)
                 });
             },
             function(err) {
@@ -68,13 +77,19 @@ let ExpensesActions = {
     },
 
     fetchDepts(listId) {
+        if (!listId) {
+            Dispatcher.dispatch({
+                actionType: Constants.FETCH_DEPTS,
+                depts: undefined
+            });
+            return;
+        }
         apiService.call(
             'POST', 'meanDepts', {listId: listId}, 
             function(respText) {
-                let depts = JSON.parse(respText);
                 Dispatcher.dispatch({
                     actionType: Constants.FETCH_DEPTS,
-                    depts: depts
+                    depts: JSON.parse(respText)
                 });
             },
             function(err) {
@@ -101,7 +116,9 @@ let ExpensesActions = {
     },
 
     storeList(name) {
-        //console.log("post list " + name);
+        if (!name) {
+            return;
+        }
         let _this = this;
         apiService.call(
             'POST', 'createExpensesList', {name: name}, 
@@ -123,6 +140,9 @@ let ExpensesActions = {
     },
 
     deleteList(id) {
+        if (!id) {
+            return;
+        }
         //console.log("post list " + name);
         apiService.call(
             'DELETE', 'deleteExpensesList', {listId: id}, 

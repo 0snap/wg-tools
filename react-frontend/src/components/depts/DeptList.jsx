@@ -11,8 +11,7 @@ export default class DeptList extends Component {
 
     render() {
         let depts = this.props.deptList;
-        // console.log(depts);
-        if(Object.keys(depts).length === 0) {
+        if(!depts || Object.keys(depts).length === 0) {
             return (<div className='container__nocontent'><h3>Keine Schulden</h3></div>);
         }
         
@@ -29,5 +28,5 @@ export default class DeptList extends Component {
 }
 
 DeptList.propTypes = {
-    deptList: React.PropTypes.array.isRequired
+    deptList: React.PropTypes.array
 }

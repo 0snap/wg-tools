@@ -55,6 +55,9 @@ Everything is setup for development; start the frontend with "npm run dev" and t
 	[] dont submit empty forms
 	[] dont leak DB ids to FE (still relevant?)
 	[x] Tunnel FE --> BE (Container Setup)
+	[x] Tunnel expenses actions
+	[] Tunnel login actions 
+	[] python cgi for production
 
 
 ### Tests:

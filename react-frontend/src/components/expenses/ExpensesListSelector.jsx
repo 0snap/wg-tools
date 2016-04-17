@@ -53,5 +53,5 @@ export default class ExpensesListSelector extends Component {
 
 ExpensesListSelector.propTypes = {
     expensesLists: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.string.isRequired
+    selected: React.PropTypes.string
 }
