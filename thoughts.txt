@@ -39,13 +39,14 @@ Generelles Verhalten:
     Header "abmelden" (/)
     leere Forms nicht submitten, auch wenn Backend graceful gebaut ist
     DB ids nicht ans Frontend leaken? -> geteilte Schlüssel aus wg/liste/name+datum(post)
+    Tunnel FE -> BE für Container Setup (/)
 
 
 
 Test setup für BE (/)
 Test setup für FE (/)
 
-    FE - render
+    FE - render (/)
     FE - state -> login / app
     FE - routes
 

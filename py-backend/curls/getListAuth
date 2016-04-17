@@ -1,1 +1,1 @@
-curl -H "Authorization: JWT $2" -XGET http://localhost:5000/expensesList?listId=$1
+curl -H "Content-Type: application/json; charset=UTF-8" -H "Authorization: JWT $1" -XPOST  http://localhost:5000/expensesList -d '{"listId": "56ef31435a3c0476ac44b838"}'
