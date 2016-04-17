@@ -12,8 +12,7 @@ let ExpensesActions = {
         let _this = this;
         let payload = {name: name, amount: amount, listId: listId};
         apiService.call(
-            'storeExpense', 
-            payload,
+            'POST', 'storeExpense', payload,
             function(respText) {
                 let jsonResponse = JSON.parse(respText);
                 Dispatcher.dispatch({
@@ -37,7 +36,7 @@ let ExpensesActions = {
         let _this = this;
         let payload = { id: id, listId: listId };
         apiService.call(
-            'deleteExpense', payload, 
+            'DELETE', 'deleteExpense', payload,
             function(respText) {
                 Dispatcher.dispatch({
                     actionType: Constants.DELETE_EXPENSE_POST,
@@ -54,7 +53,7 @@ let ExpensesActions = {
 
     fetchExpenses(listId) {
         apiService.call(
-            'expensesList', {listId: listId}, 
+            'POST', 'expensesList', {listId: listId}, 
             function(respText) {
                 let jsonResponse = JSON.parse(respText);
                 Dispatcher.dispatch({
@@ -70,7 +69,7 @@ let ExpensesActions = {
 
     fetchDepts(listId) {
         apiService.call(
-            'meanDepts', {listId: listId}, 
+            'POST', 'meanDepts', {listId: listId}, 
             function(respText) {
                 let depts = JSON.parse(respText);
                 Dispatcher.dispatch({
@@ -86,7 +85,7 @@ let ExpensesActions = {
 
     fetchExpensesLists(listName) {
         apiService.call(
-            'expensesLists', undefined, 
+            'GET', 'expensesLists', undefined, 
             function(respText) {
                 let jsonResponse = JSON.parse(respText);
                 Dispatcher.dispatch({
@@ -105,7 +104,7 @@ let ExpensesActions = {
         //console.log("post list " + name);
         let _this = this;
         apiService.call(
-            'createExpensesList', {name: name}, 
+            'POST', 'createExpensesList', {name: name}, 
             function(respText) {
                 if(respText) {
                     let jsonResponse = JSON.parse(respText);
@@ -126,7 +125,7 @@ let ExpensesActions = {
     deleteList(id) {
         //console.log("post list " + name);
         apiService.call(
-            'deleteExpensesList', {listId: id}, 
+            'DELETE', 'deleteExpensesList', {listId: id}, 
             function(respText) {
                 Dispatcher.dispatch({
                     actionType: Constants.DELETE_EXPENSES_LIST,

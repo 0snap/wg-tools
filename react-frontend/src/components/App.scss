@@ -28,7 +28,7 @@ li {
     font-size: 20px;
     line-height: 40px;
     left: 0px;
-    margin-top: 15px;
+    margin-top: 8px;
     overflow: hidden;
     position: relative;
     padding: 7px 10px;
@@ -124,13 +124,11 @@ input, select {
 @media (max-width:767px) {
     .app {
         padding: 0;
-        width: 99%;
     }
 
     li {
         font-size: 16px;
         line-height: 32px;
-        margin-top: 8px;
         overflow: hidden;
         position: relative;
         padding: 3px 6px;

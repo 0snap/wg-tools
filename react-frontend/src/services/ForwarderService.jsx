@@ -3,7 +3,7 @@ var request = require('superagent');
 
 
 module.exports = function(req, res, next) {
-	request.post('http://localhost:5000/' + req.params.path)
+	request(req.method, 'http://localhost:5000/' + req.params.path)
 	    .set(req.headers)
 	    .send(req.body)
 	    .end( function(err, resBackend) {

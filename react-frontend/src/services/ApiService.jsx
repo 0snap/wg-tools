@@ -7,8 +7,8 @@ const endpoint = 'http://localhost:3000/api/';
 
 let ApiService = {
 
-	call(path, payload, onSuccess, onError) {
-		request.post(endpoint + path)
+	call(method, path, payload, onSuccess, onError) {
+		request(method, endpoint + path)
 	        .send(payload)
 	        .set('Content-Type', 'application/json; charset=UTF-8')
 	        .set('Authorization', 'JWT ' + loginStore.getToken())
