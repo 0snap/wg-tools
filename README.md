@@ -1,5 +1,9 @@
 # WG-Tools
 
+[![](https://badge.imagelayers.io/fixel/wg-tools:backend.svg)](https://imagelayers.io/?images=fixel/wg-tools:frontend 'Get your own badge on imagelayers.io')
+[![](https://badge.imagelayers.io/fixel/wg-tools:backend.svg)](https://imagelayers.io/?images=fixel/wg-tools:backend 'Get your own badge on imagelayers.io')
+[![](https://badge.imagelayers.io/fixel/wg-tools:mongo.svg)](https://imagelayers.io/?images=fixel/wg-tools:mongo 'Get your own badge on imagelayers.io')
+
 ## Purpose
 
 Lightweight application for self hosting. Stores expenses and calculates mean. Offers a human-usable interface for non-tech people. Currently under development, feel free to join. Nexts steps are a test setup, after the initial idea is roughly shaped into code. Then come all the things in "thoughts.txt".
