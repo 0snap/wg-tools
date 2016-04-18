@@ -6,13 +6,13 @@ COPY package.json package.json
 
 COPY webpack.config.production.js webpack.config.production.js
 COPY server/ForwarderService.js server/ForwarderService.js
-
-RUN npm install --production
-RUN npm run build
-
 COPY public public
 
-COPY node_modules node_modules
+RUN npm install --production
+
+COPY src src
+RUN npm run build
+RUN rm -rf src
 
 CMD npm run start
 

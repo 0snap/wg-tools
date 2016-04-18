@@ -7,6 +7,8 @@ mongo:
 depts:
   build: ./py-backend
   hostname: depts
+  volumes:
+    - /home/flx/workspace/wg-tools/py-backend/secrets:/secrets
   links: 
     - mongo:mongo
 
