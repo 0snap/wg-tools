@@ -1,20 +1,34 @@
 # WG-Tools
 
+You can get the whole application containerized for self hosting at dockerhub!
+
+Frontend:
 [![](https://badge.imagelayers.io/fixel/wg-tools:backend.svg)](https://imagelayers.io/?images=fixel/wg-tools:frontend 'Get your own badge on imagelayers.io')
+
+Backend:
 [![](https://badge.imagelayers.io/fixel/wg-tools:backend.svg)](https://imagelayers.io/?images=fixel/wg-tools:backend 'Get your own badge on imagelayers.io')
+
+Mongo-Container:
 [![](https://badge.imagelayers.io/fixel/wg-tools:mongo.svg)](https://imagelayers.io/?images=fixel/wg-tools:mongo 'Get your own badge on imagelayers.io')
 
 ## Purpose
 
-Lightweight application for self hosting. Stores expenses and calculates mean. Offers a human-usable interface for non-tech people. Currently under development, feel free to join. Nexts steps are a test setup, after the initial idea is roughly shaped into code. Then come all the things in "thoughts.txt".
 
-Its planned to host this app for my own usage purposes -- anyone who stumbles upon that page may use it as well. As soon as I find pre-alpha enough it will be hosted on wg-tools.de
+If you are living in a flat share and have to manage expenses or other stuff and you want some just-working tool for that purpose, then you are at the right place here. This applicaiton is meant for diy hosting and development. Feel free to contribute!
+
+A hosted and super-pre-alpha version can be found at: [wg-tools.de](http://wg-tools.de). 
+
+
+### Behavior
+
+You can create a WG (flat share) with a login, then actually login with that. The app stores expenses and calculates the mean among all participants. It offers a human-usable interface for non-tech people. Currently under development, so basically anything may change from now to then!!! Nexts steps are security tests for the login. Then come all the things that are not already checkmarked below in this readme.
 
 
 ## Usage
 
 You need a mongodb, python and nodejs.
-Everything is setup for development; start the frontend with "npm run dev" and the python server with "./server.py". Your mongodb should be running on localhost.
+Everything is setup for development; start the frontend with "npm run dev" and the python server with "script/devServer.sh". Your mongodb should be running on localhost.
+Or start everything inside a container if you just want to use this. Install docker-compose and start everything via 'up'.
 
 
 ## Todos
