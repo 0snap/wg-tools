@@ -1,5 +1,5 @@
 __pycache__
-react-frontend/public
+react-frontend/public/assets
 react-frontend/node_modules
 py-backend/secret
 py-backend/salt
