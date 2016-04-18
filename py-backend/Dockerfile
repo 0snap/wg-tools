@@ -9,8 +9,7 @@ COPY server.py server.py
 COPY deptCalculator.py deptCalculator.py
 COPY storage.py storage.py
 
-COPY secret secret
-COPY salt salt
+VOLUME ['./secrets']
 
 COPY script/server.sh script/server.sh
 CMD script/server.sh

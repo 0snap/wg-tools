@@ -18,7 +18,7 @@ Simple Flask-API for serving requests. API offers stuff like calculating depts a
 
 
 def hashPw(password):
-    salt = open('./salt', 'r', encoding='utf-8').read()
+    salt = open('./secrets/salt', 'r', encoding='utf-8').read()
     return hashlib.sha512(str(password + salt).encode('utf-8')).hexdigest()
 
 
@@ -32,7 +32,7 @@ def identity(payload):
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = open('./secret', 'r', encoding='utf-8').read()
+app.config['SECRET_KEY'] = open('./secrets/secret', 'r', encoding='utf-8').read()
 app.config.setdefault('JWT_EXPIRATION_DELTA', timedelta(days=30))
 
 jwt = JWT(app, authenticate, identity)
