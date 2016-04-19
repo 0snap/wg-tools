@@ -3,7 +3,7 @@ import request from 'superagent';
 var loginStore = require('../stores/LoginStore.jsx');
 
 
-const endpoint = 'http://localhost:3000/api/';
+const endpoint = 'http://wg-tools.de/api/';
 
 let ApiService = {
 

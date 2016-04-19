@@ -78,6 +78,7 @@ Or start everything inside a container if you just want to use this. Install doc
 	[x] python cgi for production
 	[] container setup
 	[] configurable endpoints for py-backend and mongo
+	[] message about backend-calls (eg. register already in use etc)
 
 
 ### Tests:
