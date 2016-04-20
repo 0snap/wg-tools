@@ -58,11 +58,21 @@ Or start everything inside a container if you just want to use this. Install doc
 	[] have some note panel
 	[] easy counter for stuff (eg. for series)
 
+### Header & Static Pages:
+	[] static pages (faq, about, etc)
+	[] navigation in header
+	[] "custom space with settings"-button
+
+### Custom space for configuring WG settings
+	[] store wg settings (data model etc)
+	[] graph granularity
+	[] list clipping interval (requires list clipping in general)
+	[] colortheme?
+
 
 ### General behavior:
 	[x] Confirm delete of items
 	[x] Confirm delete of lists
-	[] Comments on items
 	[x] Login
 	[x] Token in cookie
 	[x] Logout
@@ -70,15 +80,16 @@ Or start everything inside a container if you just want to use this. Install doc
 	[x] React-Router
 	[x] Create WG
 	[x] Header logout
-	[] dont submit empty forms
-	[] dont leak DB ids to FE (still relevant?)
 	[x] Tunnel FE --> BE (Container Setup)
 	[x] Tunnel expenses actions
 	[x] Tunnel login actions 
 	[x] python cgi for production
-	[] container setup
+	[x] container setup
 	[] configurable endpoints for py-backend and mongo
 	[] message about backend-calls (eg. register already in use etc)
+	[] Comments on items
+	[] dont submit empty forms
+	[] dont leak DB ids to FE (still relevant?)
 
 
 ### Tests:
