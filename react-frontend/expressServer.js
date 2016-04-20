@@ -5,14 +5,16 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var forwarder = require('./server/ForwarderService.js');
 
-var config = require(path.resolve(__dirname, 'webpack.config.' + process.env.NODE_ENV + '.js'));
-var compiler = webpack(config);
+var wpConfig = require(path.resolve(__dirname, 'webpack.config.' + process.env.NODE_ENV + '.js'));
+var compiler = webpack(wpConfig);
+
+var appConfig = require(path.resolve(__dirname, 'config/config.' + process.env.NODE_ENV + '.js'));
 
 var app = express();
 
 if(process.env.NODE_ENV == 'development') {
     app.use(require('webpack-dev-middleware')(compiler, {
-        publicPath: config.output.publicPath,
+        publicPath: wpConfig.output.publicPath,
         noInfo: true // dont get the noisy "built" infos
     }));
 
@@ -24,7 +26,7 @@ else {
 }
 
 // forward all requests to api
-app.all('/api/:path', jsonParser, forwarder);
+app.all('/api/:path', jsonParser, forwarder(appConfig.deptsEndpoint));
 
 
 app.all('*', function (req, res) {

@@ -14,6 +14,7 @@ COPY src src
 RUN npm run build
 RUN rm -rf src
 
+COPY config/config.production.js config/config.production.js
 CMD npm run start
 
 EXPOSE 3000

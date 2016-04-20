@@ -85,7 +85,7 @@ Or start everything inside a container if you just want to use this. Install doc
 	[x] Tunnel login actions 
 	[x] python cgi for production
 	[x] container setup
-	[] configurable endpoints for py-backend and mongo
+	[x] configurable endpoints for py-backend and mongo
 	[] message about backend-calls (eg. register already in use etc)
 	[] Comments on items
 	[] dont submit empty forms
@@ -104,5 +104,3 @@ Or start everything inside a container if you just want to use this. Install doc
     [x] BE - calculator
     [] BE - login
     [] BE - security
-    
-

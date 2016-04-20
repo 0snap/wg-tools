@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os
 from flask import Flask, request, json, Response
 
 from flask_jwt import JWT, jwt_required, current_identity
@@ -30,6 +31,9 @@ def identity(payload):
     wgId = payload.get('identity')
     return wgId
 
+
+########## Initialize app ##########
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = open('./secrets/secret', 'r', encoding='utf-8').read()
@@ -37,7 +41,7 @@ app.config.setdefault('JWT_EXPIRATION_DELTA', timedelta(days=30))
 
 jwt = JWT(app, authenticate, identity)
 
-
+storage.connectMongo(str(os.environ['MONGO_ENDPOINT']))
 
 
 ########## helper methods ###########
