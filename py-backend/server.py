@@ -10,6 +10,8 @@ from datetime import timedelta
 import deptCalculator
 import storage
 
+from decimal import *
+
 
 '''
 Simple Flask-API for serving requests. API offers stuff like calculating depts among people or storing data.
@@ -89,9 +91,9 @@ def store():
     jsonAsDict = getDictFromPost(request)
     listId = jsonAsDict.get('listId')
     name = jsonAsDict.get('name')
-    amount = float(jsonAsDict.get('amount'))
+    amount = Decimal(jsonAsDict.get('amount')) * Decimal('100')
     if listId != None and listId != '' and listId != 'undefined' and name != None and name != '' and name != 'undefined' and amount != None and amount >= 0:
-        storedObjectDict = storage.store(listId, current_identity, name, int(amount * 100))
+        storedObjectDict = storage.store(listId, current_identity, name, int(amount))
         storedObjectDict['listId'] = listId
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)
