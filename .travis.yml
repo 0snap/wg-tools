@@ -1,15 +1,24 @@
+sudo: required
+dist: trusty
+
 language: node_js
 node_js:
   - "5.5"
 python:
   - "3.5"
+
+before_install:
+  - sudo apt-get -y install python3-pip python-dev
+  - python3 -V
+  - pip3 -V
+
 install:
+  - sudo pip3 install -r py-backend/requirements.txt
   - cd react-frontend
   - npm install
-  - cd ../py-backend
-  - sudo pip3 install -r requirements.txt
+
 script:
-  - py.test
-  - cd ../react-frontend
   - npm run test
+  - cd ../py-backend
+  - py.test
 
