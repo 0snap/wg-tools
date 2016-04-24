@@ -8,8 +8,8 @@ module.exports = function(endpoint) {
 			.send(req.body)
 			.end( function(err, resBackend) {
 				if(err) {
-					console.log(err);
-					res.sendStatus(500);
+					console.log("Error forwarding request", endpoint, err.status);
+					res.status(err.status).send(err);
 				}
 				else {
 					res.send(resBackend);

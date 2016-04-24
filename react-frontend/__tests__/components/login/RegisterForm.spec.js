@@ -28,14 +28,12 @@ describe('RegisterForm', () => {
         let inputs = TestUtils.scryRenderedDOMComponentsWithTag(loginForm, 'input');
         
         TestUtils.Simulate.change( inputs[0], {target: {value: 'NEW USER' }} );
-        expect(loginForm.state.wgName).toEqual('NEW USER');
-
         TestUtils.Simulate.change( inputs[1], {target: {value: 'PASS' }} );
-        expect(loginForm.state.password).toEqual('PASS');
-        
         TestUtils.Simulate.change( inputs[2], {target: {value: 'PASS CONFIRM' }} );
-        expect(loginForm.state.passwordConfirm).toEqual('PASS CONFIRM');
 
+        expect(loginForm.state.wgName).toEqual('NEW USER');
+        expect(loginForm.state.password).toEqual('PASS');
+        expect(loginForm.state.passwordConfirm).toEqual('PASS CONFIRM');
     });
 
     it('should not submit unequal passwords', () => {
@@ -53,6 +51,21 @@ describe('RegisterForm', () => {
         expect(loginForm.state.wgName).toEqual('USER');
         expect(loginForm.state.password).toEqual('SECRET');
         expect(loginForm.state.passwordConfirm).toEqual('OTHER SECRET');
+    });
+
+    it('should display error text on unequal passwords', () => {
+
+        loginForm.setState({error: 'conflict'});
+        let errorMsg = TestUtils.findRenderedDOMComponentWithClass(loginForm, 'loginRegisterForm__error');
+        expect(errorMsg).toBeDefined();
+
+        loginForm.setState({error: 'password'});
+        errorMsg = TestUtils.findRenderedDOMComponentWithClass(loginForm, 'loginRegisterForm__error');
+        expect(errorMsg).toBeDefined();
+
+        loginForm.setState({error: 'foobar'});
+        errorMsg = TestUtils.scryRenderedDOMComponentsWithClass(loginForm, 'loginRegisterForm__error');
+        expect(errorMsg.length).toEqual(0);
     });
 
     it('should call action on valid form-submit', () => {

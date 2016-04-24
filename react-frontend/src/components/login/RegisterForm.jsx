@@ -4,38 +4,48 @@ import './LoginRegisterForm.scss';
 var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
 
 
+const errMsgs = [];
+errMsgs['conflict'] = <span className="loginRegisterForm__error">Dieser WG-Name existiert bereits</span>;
+errMsgs['password'] = <span className="loginRegisterForm__error">Passwörter sind nicht identisch</span>;
 
 export default class RegisterForm extends Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {
             wgName: '',
             password: '',
-            passwordConfirm: ''
+            passwordConfirm: '',
+            error: this.props.error
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({error: nextProps.error});
     }
 
     register(event) {
         event.preventDefault();
+
         if (this.state.password && this.state.password == this.state.passwordConfirm) {
             loginRegisterActions.register(this.state.wgName, this.state.password);
-            this.setState({wgName: ''});
-            this.setState({password: ''});
-            this.setState({passwordConfirm: ''});
+            this.setState({wgName: '', password: '', passwordConfirm: '', error: undefined})
+        }
+        else {
+            this.setState({error: 'password'});
         }
     }
 
     nameChange(event) {
-        this.setState({wgName: event.target.value});
+        this.setState({wgName: event.target.value, error: undefined});
     }
 
     passwordChange(event) {
-        this.setState({password: event.target.value});
+        this.setState({password: event.target.value, error: undefined});
     }
 
     passwordConfirmChange(event) {
-        this.setState({passwordConfirm: event.target.value});
+        this.setState({passwordConfirm: event.target.value, error: undefined});
     }
 
     render() {
@@ -51,6 +61,7 @@ export default class RegisterForm extends Component {
                         <label className="loginRegisterForm__label" htmlFor="name">WG-Name</label>
                         <input className="loginRegisterForm__input" id="name" value={this.state.wgName} onChange={this.nameChange.bind(this)} />
                     </div>
+                    {this.state.error == 'conflict'? errMsgs['conflict'] : null}
 
                     <div className="form-group">
                         <label className="loginRegisterForm__label" htmlFor="password">Passwort</label>
@@ -61,6 +72,7 @@ export default class RegisterForm extends Component {
                         <label className="loginRegisterForm__label" htmlFor="passwordConfirm">Passwort wdh.</label>
                         <input className="loginRegisterForm__input" id="passwordConfirm" type="password" value={this.state.passwordConfirm} onChange={this.passwordConfirmChange.bind(this)} />
                     </div>
+                    {this.state.error == 'password'? errMsgs['password'] : null}
 
                     <div className="form-group">
                         <label className="loginRegisterForm__label" htmlFor="submit">Registrieren</label>
@@ -71,4 +83,8 @@ export default class RegisterForm extends Component {
 
         );
     }
+}
+
+RegisterForm.propTypes = {
+    error: React.PropTypes.string
 }

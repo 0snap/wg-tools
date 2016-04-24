@@ -10,7 +10,7 @@ let LoginRegisterActions = {
     login(wgName, password) {
         apiService.login( { username: wgName, password: password },
             function(textResp) {
-                let jwtResponse = JSON.parse(textResp)
+                let jwtResponse = JSON.parse(textResp);
                 cookie.save(Constants.WG_TOOLS_AUTH, jwtResponse.access_token, {'path': '/', 'maxAge': 30*24*3600});
                 browserHistory.push('/app');
                 location.reload();
@@ -19,7 +19,12 @@ let LoginRegisterActions = {
                     jwt: jwtResponse.access_token
                 });
             },
-            function(err) { console.log(err); }
+            function(err) { 
+                Dispatcher.dispatch({
+                    actionType: Constants.LOGIN_ERROR,
+                    err: err
+                });
+            }
         );
     },
 
@@ -28,7 +33,12 @@ let LoginRegisterActions = {
             function(textResp) {
                 browserHistory.push('/login');
             },
-            function(err) { console.log(err); }
+            function(err) {
+                Dispatcher.dispatch({
+                    actionType: Constants.REGISTER_ERROR,
+                    err: err
+                });
+            }
         );
     },
 

@@ -42,13 +42,17 @@ let LoginStore = assign({ }, EventEmitter.prototype, {
 
 Dispatcher.register(function(action) {
 
-    switch(action.actionType) {
-        case(Constants.LOGIN_SUCCESS):
-            if( storeLogin(action.jwt) ) {
+    switch (action.actionType) {
+        case (Constants.LOGIN_SUCCESS):
+            if ( storeLogin(action.jwt) ) {
                 LoginStore.emitChange(Constants.LOGIN_STATUS_CHANGED);
             }
             break;
-        case(Constants.LOGOUT_SUCCESS):
+        case (Constants.LOGIN_ERROR):
+            LoginStore.emitChange(Constants.LOGIN_FAILED);
+        case (Constants.REGISTER_ERROR):
+            LoginStore.emitChange(Constants.REGISTER_FAILED);
+        case (Constants.LOGOUT_SUCCESS):
             logout();
             LoginStore.emitChange(Constants.LOGIN_STATUS_CHANGED);
             break;

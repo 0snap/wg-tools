@@ -49,4 +49,16 @@ describe('LoginForm', () => {
         expect(loginForm.state.wgName).toEqual('');
         expect(loginForm.state.password).toEqual('');
     });
+
+    it('should display error text on error', () => {
+
+        loginForm.setState({error: true});
+        let errorMsg = TestUtils.findRenderedDOMComponentWithClass(loginForm, 'loginRegisterForm__error');
+        expect(errorMsg).toBeDefined();
+
+        loginForm.setState({error: false});
+        errorMsg = TestUtils.scryRenderedDOMComponentsWithClass(loginForm, 'loginRegisterForm__error');
+        expect(errorMsg.length).toEqual(0);
+
+    });
 });
