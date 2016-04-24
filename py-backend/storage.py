@@ -41,6 +41,7 @@ class ExpensePost(Post):
     name = StringField()
     amount = IntField(min_value=0)
     color = StringField()
+    comment = StringField()
     tsDeleted = DateTimeField(default=None)
 
 class ExpensesList(Document):
@@ -77,6 +78,7 @@ def __normalizeExpensePost(post):
     normalized = {}
     normalized['name'] = post.name
     normalized['amount'] = round(float(post.amount/100), 2)
+    normalized['comment'] = post.comment
     normalized['date'] = post.date_modified
     normalized['id'] = str(post.id)
     normalized['color'] = post.color
@@ -118,10 +120,10 @@ def getNormalizedExpensePosts(listId, wgId, includeDeleted = False):
     return [__normalizeExpensePost(post) for post in __getExpensePosts(listId, wgId)]
 
 
-def store(listId, wgId, name, amount):
+def store(listId, wgId, name, amount, comment):
     # print("storing ", listId, name, amount)
     color = getColorForName(listId, name)
-    expensePost = ExpensePost(name=name, amount=amount, color=color)
+    expensePost = ExpensePost(name=name, amount=amount, color=color, comment=comment)
     stored = ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(push__expensePosts=expensePost)
     if not stored:
         return None

@@ -37,10 +37,13 @@ describe('EditForm', () => {
 
         TestUtils.Simulate.change( inputs[1], {target: {value: 15 }} );
         expect(editForm.state.amount).toEqual(15);
+
+        TestUtils.Simulate.change( inputs[2], {target: {value: 'COMMENT' }} );
+        expect(editForm.state.comment).toEqual('COMMENT');
     });
 
 
-    it('should call submit on form-submit', () => {
+    it('should call submit on form-submit without comment', () => {
 
         let inputs = TestUtils.scryRenderedDOMComponentsWithTag(editForm, 'input');
         
@@ -50,8 +53,26 @@ describe('EditForm', () => {
         let form = TestUtils.findRenderedDOMComponentWithTag(editForm, 'form');
         TestUtils.Simulate.submit( form );
 
-        expect(submitCallback).toBeCalledWith('SUPER', 100);
+        expect(submitCallback).toBeCalledWith('SUPER', 100, '');
         expect(editForm.state.name).toEqual('');
         expect(editForm.state.amount).toEqual(0);
+        expect(editForm.state.comment).toEqual('');
+    });
+
+    it('should call submit on form-submit with comment', () => {
+
+        let inputs = TestUtils.scryRenderedDOMComponentsWithTag(editForm, 'input');
+        
+        TestUtils.Simulate.change( inputs[0], {target: {value: 'SUPER' }} );
+        TestUtils.Simulate.change( inputs[1], {target: {value: 100 }} );
+        TestUtils.Simulate.change( inputs[2], {target: {value: 'COMMENT' }} );
+        
+        let form = TestUtils.findRenderedDOMComponentWithTag(editForm, 'form');
+        TestUtils.Simulate.submit( form );
+
+        expect(submitCallback).toBeCalledWith('SUPER', 100, 'COMMENT');
+        expect(editForm.state.name).toEqual('');
+        expect(editForm.state.amount).toEqual(0);
+        expect(editForm.state.comment).toEqual('');
     });
 });

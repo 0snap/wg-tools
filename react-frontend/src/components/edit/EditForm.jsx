@@ -11,22 +11,23 @@ export default class EditForm extends Component {
         this.state = {
             amount: 0,
             name: '',
+            comment: ''
         };
     }
 
     addExpense(event) {
         event.preventDefault();
-        var amount = this.state.amount;
-        var name = this.state.name.trim();
+        let amount = this.state.amount;
+        let name = this.state.name.trim();
+        let comment = this.state.comment.trim();
 
-        this.props.submitCallback(name, amount);
+        this.props.submitCallback(name, amount, comment);
 
         this.clearInputfields();
     }
 
     clearInputfields() {
-        this.setState({amount: 0});
-        this.setState({name: ''});
+        this.setState({amount: 0, name: '', comment: ''});
     }
 
     nameChange(event) {
@@ -35,6 +36,10 @@ export default class EditForm extends Component {
 
     amountChange(event) {
         this.setState({amount: event.target.value});
+    }
+
+    commentChange(event) {
+        this.setState({comment: event.target.value});
     }
 
     render() {
@@ -55,6 +60,11 @@ export default class EditForm extends Component {
                 <div className="form-group">
                     <label htmlFor="amount">Betrag</label>
                     <input id="amount" type="number" step="0.01" min="0" value={this.state.amount} onChange={this.amountChange.bind(this)} />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="comment">Kommentar</label>
+                    <input id="comment" value={this.state.comment} onChange={this.commentChange.bind(this)} />
                 </div>
 
                 <div className="form-group">

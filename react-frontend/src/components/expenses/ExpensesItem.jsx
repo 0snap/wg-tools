@@ -30,7 +30,7 @@ export default class ExpensesItem extends Component {
         }
         if(this.state.alive) {
             return (
-                <li className='expensesItem'>
+                <li className='expensesItem' title={this.props.item.comment}>
                     <span className='expensesItem__title' style={nameStyle}>{this.props.item.name} {this.props.item.amount}€</span>
                     <button className='expensesItem__deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button>
                 </li>

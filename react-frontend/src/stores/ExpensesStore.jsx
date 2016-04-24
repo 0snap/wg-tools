@@ -11,12 +11,13 @@ var _wg;
 var _expensesLists = [];
 var _activeList;
 
-function addExpense(id, name, amount, date, color) {
-    //console.log("shall add ", id, name, amount, date);
+function addExpense(id, name, amount, comment, date, color) {
+    console.log("shall add ", id, name, comment, amount, date);
     _expenses[id] = {
         name: name,
         amount: amount,
         date: date,
+        comment: comment,
         id: id,
         color: color
     }
@@ -150,7 +151,7 @@ Dispatcher.register(function(action) {
     switch(action.actionType) {
         case(Constants.ADD_EXPENSE_POST):
             //console.log('shall add ', action.name, action.amount, action.date, action.id);
-            addExpense(action.id, action.name, action.amount, action.date, action.color);
+            addExpense(action.id, action.name, action.amount, action.comment, action.date, action.color);
             ExpensesStore.emitChange(Constants.EXPENSE_POSTS_CHANGED);
             break;
         case(Constants.DELETE_EXPENSE_POST):

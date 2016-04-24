@@ -26,8 +26,8 @@ export default class EditContainer extends Component {
     }
 
 
-    addExpense(name, amount) {
-        expensesAction.storeExpense(name, amount, this.state.activeList);
+    addExpense(name, amount, comment) {
+        expensesAction.storeExpense(name, amount, comment, this.state.activeList);
     }
 
     render() {

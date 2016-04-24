@@ -86,8 +86,10 @@ Or start everything inside a container if you just want to use this. Install doc
 	[x] python cgi for production
 	[x] container setup
 	[x] configurable endpoints for py-backend and mongo
-	[] message about backend-calls (eg. register already in use etc)
-	[] Comments on items
+	[x] message about backend-calls (eg. register already in use etc)
+	[x] Comments on items
+	[] general "backend (un)reachable" error for frontend 
+	[] navigation, faq/about pages & link to github & homepage
 	[] dont submit empty forms
 	[] dont leak DB ids to FE (still relevant?)
 

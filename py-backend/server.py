@@ -92,8 +92,9 @@ def store():
     listId = jsonAsDict.get('listId')
     name = jsonAsDict.get('name')
     amount = Decimal(jsonAsDict.get('amount')) * Decimal('100')
+    comment = jsonAsDict.get('comment')
     if listId != None and listId != '' and listId != 'undefined' and name != None and name != '' and name != 'undefined' and amount != None and amount >= 0:
-        storedObjectDict = storage.store(listId, current_identity, name, int(amount))
+        storedObjectDict = storage.store(listId, current_identity, name, int(amount), comment)
         storedObjectDict['listId'] = listId
         return json.dumps(storedObjectDict)
     return Response('Wrong format, will not store.', 400)

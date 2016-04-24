@@ -5,12 +5,12 @@ var apiService = require('../services/ApiService.jsx');
 
 let ExpensesActions = {
 
-    storeExpense(name, amount, listId) {
+    storeExpense(name, amount, comment, listId) {
         if (!name || !amount || !listId) {
             return;
         }
         let _this = this;
-        let payload = {name: name, amount: amount, listId: listId};
+        let payload = {name: name, amount: amount, comment: comment, listId: listId};
         apiService.call(
             'POST', 'storeExpense', payload,
             function(respText) {
@@ -19,6 +19,7 @@ let ExpensesActions = {
                     actionType: Constants.ADD_EXPENSE_POST,
                     name: jsonResponse.name,
                     amount: jsonResponse.amount,
+                    comment: jsonResponse.comment,
                     date: jsonResponse.date,
                     color: jsonResponse.color,
                     id: jsonResponse.id, 

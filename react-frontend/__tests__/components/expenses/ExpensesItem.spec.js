@@ -9,7 +9,7 @@ import ExpensesItem from '../../../src/components/expenses/ExpensesItem.jsx';
 
 describe('ExpensesItem', () => {
 
-    const expItemData = { id: 123, color: '#ff', name: 'foo', amount: 23.42 };
+    const expItemData = { id: 123, color: '#ff', name: 'foo', amount: 23.42, comment: 'commi'};
     const defaultText = 'foo 23.42€✖';
     const deleteText = 'Löschen?NeinJa';
     let expItem;
@@ -27,6 +27,7 @@ describe('ExpensesItem', () => {
     it('renders correct content', () => {
         
         expect(itemNode.textContent).toEqual(defaultText);
+        expect(itemNode.title).toEqual('commi');
         expect(expItem.state.alive).toEqual(true);
 
     });
