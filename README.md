@@ -107,3 +107,11 @@ Or start everything inside a container if you just want to use this. Install doc
     [x] BE - calculator
     [] BE - login
     [] BE - security
+
+
+### Cool third party stuff
+
+	[x] docker hub (fixel/wg-tools)
+	[x] layers.io in README
+	[] travis ci
+	[] build stati in README
