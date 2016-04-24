@@ -132,9 +132,20 @@ def deleteExpensesList():
     ''' Deletes the posted listId from DB '''
     listId = getDictFromPost(request).get('listId')
     if listId != None and listId != '' and listId != 'undefined':
-        storedObjectDict = storage.deleteExpensesList(listId, current_identity)
-        return json.dumps(storedObjectDict)
-    return Response('Wrong format, will not store.', 400)
+        storage.deleteExpensesList(listId, current_identity)
+        return Response('OK', 200)
+    return Response('Wrong format, cannot delete list.', 400)
+
+
+@app.route('/lockExpensesList', methods=['POST'])
+@jwt_required()
+def lockExpensesList():
+    ''' Locks the posted listId from DB '''
+    listId = getDictFromPost(request).get('listId')
+    if listId != None and listId != '' and listId != 'undefined':
+        storage.lockExpensesList(listId, current_identity)
+        return Response('OK', 200)
+    return Response('Wrong format, cannot lock list.', 400)
 
 
 @app.route('/expensesList', methods=['POST'])

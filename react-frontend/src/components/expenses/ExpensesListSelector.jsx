@@ -20,7 +20,12 @@ export default class ExpensesListSelector extends Component {
 
     doDeleteList() {
         // console.log('perform delete');
-        expensesActions.deleteList(this.props.selected);
+        expensesActions.deleteList(this.props.selected.id);
+    }
+
+    doLockList() {
+        //console.log('perform lock');
+        expensesActions.lockList(this.props.selected.id);
     }
 
     render() {
@@ -35,16 +40,22 @@ export default class ExpensesListSelector extends Component {
                 </div>
             );
         }
+        let selected = this.props.selected ? this.props.selected.id : '';
+        let editable = this.props.selected ? this.props.selected.editable : false;
         return(
             <div className="expensesListSelector"> 
                 <h3>Liste auswählen</h3>
-                <select className="expensesListSelector__select" onChange={this.handleSelect.bind(this)} value={this.props.selected} >
+                <select className="expensesListSelector__select" onChange={this.handleSelect.bind(this)} value={selected} >
                     {this.props.expensesLists.map((list) => {
                         return <option key={list.id} value={list.id}>{list.name}</option>
                     })}
                 </select>
-                <ConfirmBox text={'diese Liste löschen'} abortText={'doch nicht'} confirmText={'ja, löschen'}
-                    confirmCallback={this.doDeleteList.bind(this)} />
+                <div>
+                    <ConfirmBox text={'diese Liste löschen'} abortText={'doch nicht'} confirmText={'ja, löschen'}
+                        confirmCallback={this.doDeleteList.bind(this)} />
+                {editable? <ConfirmBox text={'diese Liste sperren'} abortText={'doch nicht'} confirmText={'ja, sperren'}
+                        confirmCallback={this.doLockList.bind(this)} /> : null}
+                </div>
             </div>
         );
     }
@@ -53,5 +64,5 @@ export default class ExpensesListSelector extends Component {
 
 ExpensesListSelector.propTypes = {
     expensesLists: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.string
+    selected: React.PropTypes.object
 }

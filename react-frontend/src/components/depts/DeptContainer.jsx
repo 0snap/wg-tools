@@ -35,8 +35,7 @@ export default class DeptContainer extends Component {
     handleActiveListChange() {
         let activeList = expensesStore.getActiveList();
         //console.log('active', activeList),
-        expensesActions.fetchDepts(activeList);
-        this.setState({ activeList: activeList });
+        expensesActions.fetchDepts(activeList.id);
     }
 
     render() {

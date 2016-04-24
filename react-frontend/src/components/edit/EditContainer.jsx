@@ -10,7 +10,10 @@ export default class EditContainer extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { activeList: undefined };
+        this.state = {
+            activeList: undefined,
+            editable: true
+        };
     }
 
     componentDidMount() {
@@ -27,7 +30,7 @@ export default class EditContainer extends Component {
 
 
     addExpense(name, amount, comment) {
-        expensesAction.storeExpense(name, amount, comment, this.state.activeList);
+        expensesAction.storeExpense(name, amount, comment, this.state.activeList.id);
     }
 
     render() {

@@ -16,7 +16,7 @@ export default class ExpensesContainer extends Component {
         this.state = {
             expenses: expensesStore.getAllExpenses(),
             expensesLists: expensesStore.getExpensesLists(),
-            activeList: ''
+            activeList: undefined
         };
     }
 
@@ -42,7 +42,7 @@ export default class ExpensesContainer extends Component {
 
     handleActiveListChange() {
         let activeList = expensesStore.getActiveList();
-        expensesActions.fetchExpenses(activeList);
+        expensesActions.fetchExpenses(activeList.id);
         this.setState({ activeList: activeList });
     }
 
@@ -55,7 +55,7 @@ export default class ExpensesContainer extends Component {
                     <ExpensesListCreateForm />
                     <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
                 </div>
-                <ExpensesList expenses={this.state.expenses} listId={this.state.activeList} />
+                <ExpensesList expenses={this.state.expenses} activeList={this.state.activeList} />
                 <ExpensesGraph expenses={this.state.expenses} />
             </div>
         );

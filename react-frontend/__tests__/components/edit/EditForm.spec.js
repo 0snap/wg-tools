@@ -12,7 +12,8 @@ let expensesActions = require('../../../src/actions/ExpensesActions.jsx')
 describe('EditForm', () => {
 
     const noContent = 'Keine Liste ausgewählt';
-    const activeList = 'LIST ID';
+    const uneditableContent = 'Die ausgewählte Liste ist nicht mehr bearbeitbar';
+    const activeList = { id: 'LIST ID', name: 'LIST NAME', editable: true };
 
     let editForm;
     const submitCallback = jest.genMockFunction(); 
@@ -26,6 +27,13 @@ describe('EditForm', () => {
         editForm = TestUtils.renderIntoDocument( <EditForm activeList={undefined} submitCallback={submitCallback} /> );
         let headline = TestUtils.findRenderedDOMComponentWithTag(editForm, 'h3');
         expect(headline.textContent).toEqual(noContent);
+    });
+
+    it('should render text content if list is not editable', () => {
+        let activeList = { id: 'LIST ID', name: 'LIST NAME', editable: false };
+        editForm = TestUtils.renderIntoDocument( <EditForm activeList={activeList} submitCallback={submitCallback} /> );
+        let headline = TestUtils.findRenderedDOMComponentWithTag(editForm, 'h3');
+        expect(headline.textContent).toEqual(uneditableContent);
     });
 
     it('should change state on input', () => {

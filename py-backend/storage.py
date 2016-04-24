@@ -86,6 +86,17 @@ def __normalizeExpensePost(post):
     #print(normalized)
     return normalized
 
+
+def __normalizeExpenseList(expList):
+    normalized = {}
+    normalized['name'] = expList.name
+    normalized['tsDeleted'] = expList.tsDeleted
+    normalized['editable'] = expList.editable
+    normalized['id'] = str(expList.id)
+    print(normalized)
+    return normalized
+
+
 def __getRandomColor():
     ''' Returns a random color as hex string. The color is strong, and not dark. especially not dark blue. '''
     RGBLowHigh = [lambda: random.randint(0,63), lambda: random.randint(191,255)]
@@ -141,7 +152,7 @@ def delete(listId, wgId, postId):
 def getExpensesLists(wgId, name=None, includeDeleted=False):
     wg = __getWgById(wgId)
     allLists = ExpensesList.objects(wg=wg) if name == None else ExpensesList.objects(wg=wg, name=name)
-    lists = [{'id': str(expensesList.id), 'name': expensesList.name, 'tsDeleted': expensesList.tsDeleted} for expensesList in allLists]
+    lists = [ __normalizeExpenseList(expensesList) for expensesList in allLists ]
     if not includeDeleted:
         lists = list(filter(lambda entry: entry['tsDeleted'] == None, lists))
     return lists
@@ -149,24 +160,26 @@ def getExpensesLists(wgId, name=None, includeDeleted=False):
 
 def createExpensesList(name, wgId):
     ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
-    print('create explist ', name, wgId)
+    #print('create explist ', name, wgId)
     lists = getExpensesLists(wgId, name)
-    print(lists)
     if len(lists) == 0:
-        # print('create new one')
-        wg = __getWgById(wgId)
-        expensesList = ExpensesList(name=name, wg=wg, editable=True)
+        expensesList = ExpensesList(name=name, wg=__getWgById(wgId), editable=True)
         expensesList.save()
-        return str(expensesList.id)
-    elif len(lists) == 1:
-        # print('found old one')
-        return lists[0]['id']
+        return __normalizeExpenseList(expensesList)
+    elif len(lists) == 1: return lists[0]
     return None
 
 
 def deleteExpensesList(listId, wgId):
     ''' Deletes expenses list object with the given id. '''
     ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(tsDeleted=datetime.now)
+    return True
+
+
+def lockExpensesList(listId, wgId):
+    ''' Locks expenses list object with the given id. '''
+    #print('locked list', listId)
+    ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(editable=False)
     return True
 
 
@@ -188,6 +201,7 @@ def getExpensesPerPerson(listId, wgId):
     # print(people)
     return people
 
+
 ## WG operations
 
 def getWGs():
@@ -204,12 +218,10 @@ def getWGWrapper(name, pwHash):
 
 def createWG(name, pwHash):
     ''' Creates and stores new wg object with the given name. Returns its id '''
-    # TODO: check if exists
     if len(WG.objects(name=name)) > 0:
         return None
     wg = WG(name=name, pwHash = pwHash)
     wg.save()
-    #print('created wg')
     return wg.id
 
 

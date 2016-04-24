@@ -12,7 +12,7 @@ var _expensesLists = [];
 var _activeList;
 
 function addExpense(id, name, amount, comment, date, color) {
-    console.log("shall add ", id, name, comment, amount, date);
+    //console.log("shall add ", id, name, comment, amount, date);
     _expenses[id] = {
         name: name,
         amount: amount,
@@ -40,10 +40,10 @@ function setExpenses(expenses) {
     });
 }
 
-function addExpensesList(id, name) {
-    //console.log(id, name);
-    _expensesLists.push({id: id, name: name});
-    setActiveList(id);
+function addExpensesList(list) {
+    console.log(list);
+    _expensesLists.push(list);
+    setActiveList(list.id);
 }
 
 function deleteExpensesList(id) {
@@ -54,10 +54,17 @@ function deleteExpensesList(id) {
     setExpensesLists(removed);
 }
 
+function lockExpensesList(id) {
+    // console.log("delete", id);
+    var toLock = _expensesLists.map(list => {
+        if(list.id == id) { list.editable = false; }
+    });
+}
+
 function setExpensesLists(expensesLists, listName) {
     _expensesLists = expensesLists;
-    if (listName && getIdForListName(listName)) {
-        setActiveList(getIdForListName(listName));
+    if (listName && getListForName(listName)) {
+        setActiveList(getListForName(listName).id);
     }
     else if (_expensesLists[0]) {
         setActiveList(_expensesLists[0].id);
@@ -78,10 +85,11 @@ function setWg(wg) {
     _wg = wg;
 }
 
-function setActiveList(activeList) {
+function setActiveList(listId) {
     // console.log('set active ' + activeList)
+    let activeList = getListForId(listId);
     if (activeList) {
-        browserHistory.push('/app/' + getNameForListId(activeList));
+        browserHistory.push('/app/' + activeList.name);
     }
     else {
         browserHistory.push('/app');
@@ -89,18 +97,18 @@ function setActiveList(activeList) {
     _activeList = activeList;
 }
 
-function getIdForListName(listName) {
+function getListForName(listName) {
     var list = _expensesLists.filter(list => {
         return list.name == listName
     });
-    return list[0]? list[0].id : undefined;
+    return list[0];
 }
 
-function getNameForListId(listId) {
+function getListForId(listId) {
     var list = _expensesLists.filter(list => {
         return list.id == listId
     });
-    return list[0]? list[0].name : undefined
+    return list[0];
 }
 
 let ExpensesStore = assign({ }, EventEmitter.prototype, {
@@ -143,6 +151,13 @@ let ExpensesStore = assign({ }, EventEmitter.prototype, {
 
     getActiveList() {
         return _activeList;
+    },
+
+    isEditable() {
+        if (!_activeList) {
+            return false;
+        }
+        return _activeList.editable;
     }
 })
 
@@ -174,11 +189,16 @@ Dispatcher.register(function(action) {
             ExpensesStore.emitChange(Constants.FETCH_WGS);
             break;
         case(Constants.ADD_EXPENSES_LIST):
-            addExpensesList(action.id, action.name);
+            addExpensesList(action.storedList);
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             break;
         case(Constants.DELETE_EXPENSES_LIST):
             deleteExpensesList(action.id);
+            ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
+            ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
+            break;
+        case(Constants.LOCK_EXPENSES_LIST):
+            lockExpensesList(action.id);
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
@@ -187,7 +207,7 @@ Dispatcher.register(function(action) {
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
-        case(Constants.ACTIVE_LIST):
+        case(Constants.ACTIVE_LIST_ID):
             setActiveList(action.listId);
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;

@@ -1,5 +1,10 @@
 @import '../variables.scss';
 
+.confirmBox {
+	float: left;
+	margin-right: 20px;
+}
+
 .confirmBox__actionButton {
     margin-right: 15px;
     width: 100px;

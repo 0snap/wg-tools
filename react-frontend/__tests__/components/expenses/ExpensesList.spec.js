@@ -15,12 +15,12 @@ describe('ExpensesList', () => {
         {id: '1', name: 'n1'},
         {id: '2', name: 'n2'}
     ];
-    const listId = 'LIST ID';
+    const activeList = { id: 'LIST ID', name: 'LIST NAME', editable: true };
 
 
     it('should render noContentText if expenses are empty', () => {
         let expList = TestUtils.renderIntoDocument(
-            <ExpensesList listId={listId} expenses={[]} />
+            <ExpensesList activeList={activeList} expenses={[]} />
         );
         let expListNode = ReactDOM.findDOMNode(expList);
         expect(expListNode).toBeDefined();
@@ -31,7 +31,7 @@ describe('ExpensesList', () => {
 
     it('should render expenses when if expenses are not empty', () => {
         let expList = TestUtils.renderIntoDocument(
-            <ExpensesList listId={listId} expenses={expenses} />
+            <ExpensesList activeList={activeList} expenses={expenses} />
         );
         let expListNode = ReactDOM.findDOMNode(expList);
         expect(expListNode).toBeDefined();

@@ -37,12 +37,12 @@ Or start everything inside a container if you just want to use this. Install doc
     [x] List header, select with dropdown 
     [x] Create lists
     [x] Delete lists
-    [] make list uneditable
+    [x] make list uneditable
 
 ### List behavior:
     [] automatically create new list per week/month?
     [] make monthly/weekly lists uneditable on next month/week
-    [] no editform on uneditable lists
+    [x] no editform on uneditable lists
     [x] set new list as active after creation
 
 ### General panels:
@@ -88,6 +88,7 @@ Or start everything inside a container if you just want to use this. Install doc
 	[x] configurable endpoints for py-backend and mongo
 	[x] message about backend-calls (eg. register already in use etc)
 	[x] Comments on items
+	[x] ssl on server (caddy)
 	[] general "backend (un)reachable" error for frontend 
 	[] navigation, faq/about pages & link to github & homepage
 	[] dont submit empty forms

@@ -50,6 +50,13 @@ export default class EditForm extends Component {
                 </div>
             );
         }
+        if( !this.props.activeList.editable) {
+            return (
+                <div className='container__nocontent'>
+                    <h3>Die ausgewählte Liste ist nicht mehr bearbeitbar</h3>
+                </div>
+            );
+        }
         return (
             <form onSubmit={this.addExpense.bind(this)}>
                 <div className="form-group">
@@ -77,6 +84,6 @@ export default class EditForm extends Component {
 }
 
 EditForm.propTypes = {
-    activeList: React.PropTypes.string,
+    activeList: React.PropTypes.object,
     submitCallback: React.PropTypes.func.isRequired
 }

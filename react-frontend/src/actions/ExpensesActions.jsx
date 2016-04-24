@@ -128,10 +128,9 @@ let ExpensesActions = {
                     let jsonResponse = JSON.parse(respText);
                     Dispatcher.dispatch({
                         actionType: Constants.ADD_EXPENSES_LIST,
-                        name: name,
-                        id: jsonResponse
+                        storedList: jsonResponse
                     });
-                    _this.setActiveList(jsonResponse);
+                    _this.setActiveList(jsonResponse.id);
                 }
             },
             function(err) {
@@ -159,9 +158,27 @@ let ExpensesActions = {
         );
     },
 
+    lockList(id) {
+        if (!id) {
+            return;
+        }
+        apiService.call(
+            'POST', 'lockExpensesList', {listId: id}, 
+            function(respText) {
+                Dispatcher.dispatch({
+                    actionType: Constants.LOCK_EXPENSES_LIST,
+                    id: id
+                });
+            },
+            function(err) {
+                console.log(err);
+            }
+        );
+    },
+
     setActiveList(listId) {
         Dispatcher.dispatch({
-            actionType: Constants.ACTIVE_LIST,
+            actionType: Constants.ACTIVE_LIST_ID,
             listId: listId
         });
     }
