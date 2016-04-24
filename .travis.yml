@@ -4,9 +4,9 @@ node_js:
 python:
   - "3.5"
 install:
-  - npm install
-script: 
   - cd react-frontend
+  - npm install
+script:
   - npm run test
   - cd ../py-backend
   - py.test
