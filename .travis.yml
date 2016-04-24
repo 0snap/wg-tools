@@ -6,8 +6,10 @@ python:
 install:
   - cd react-frontend
   - npm install
-script:
-  - npm run test
   - cd ../py-backend
+  - pip install -r requirements.txt
+script:
   - py.test
+  - cd ../react-frontend
+  - npm run test
 
