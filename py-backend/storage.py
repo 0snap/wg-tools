@@ -93,7 +93,7 @@ def __normalizeExpenseList(expList):
     normalized['tsDeleted'] = expList.tsDeleted
     normalized['editable'] = expList.editable
     normalized['id'] = str(expList.id)
-    print(normalized)
+    #print(normalized)
     return normalized
 
 

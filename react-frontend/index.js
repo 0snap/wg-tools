@@ -8,8 +8,8 @@ import Register from './src/components/Register.jsx';
 import Constants from './src/constants/LoginConstants.jsx';
 
 
-var loginRegisterActions = require('./src/actions/LoginRegisterActions.jsx');
-var loginStore = require('./src/stores/LoginStore.jsx');
+let loginRegisterActions = require('./src/actions/LoginRegisterActions.jsx');
+let loginStore = require('./src/stores/LoginStore.jsx');
 
 
 function getLoginStatus() {

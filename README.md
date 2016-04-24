@@ -20,7 +20,7 @@ Mongo-Container:
 
 If you are living in a flat share and have to manage expenses or other stuff and you want some just-working tool for that purpose, then you are at the right place here. This applicaiton is meant for diy hosting and development. Feel free to contribute!
 
-A hosted and super-pre-alpha version can be found at: [wg-tools.de](http://wg-tools.de). 
+A hosted and super-pre-alpha version can be found at: [wg-tools.de](https://wg-tools.de). 
 
 
 ### Behavior
@@ -97,6 +97,7 @@ Or start everything inside a container if you just want to use this. Install doc
 	[] navigation, faq/about pages & link to github & homepage
 	[] dont submit empty forms
 	[] dont leak DB ids to FE (still relevant?)
+	[] server side rendering
 
 
 ### Tests:
@@ -117,5 +118,5 @@ Or start everything inside a container if you just want to use this. Install doc
 
 	[x] docker hub (fixel/wg-tools)
 	[x] layers.io in README
-	[] travis ci
-	[] build stati in README
+	[x] travis ci
+	[x] build status in README
