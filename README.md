@@ -2,6 +2,10 @@
 
 You can get the whole application containerized for self hosting at dockerhub!
 
+### Build
+[![Build Status](https://travis-ci.org/0ortmann/wg-tools.svg?branch=master)](https://travis-ci.org/0ortmann/wg-tools)
+
+### Docker Layer
 Frontend:
 [![](https://badge.imagelayers.io/fixel/wg-tools:backend.svg)](https://imagelayers.io/?images=fixel/wg-tools:frontend 'Get your own badge on imagelayers.io')
 
