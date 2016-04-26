@@ -42,8 +42,10 @@ export default class ExpensesContainer extends Component {
 
     handleActiveListChange() {
         let activeList = expensesStore.getActiveList();
-        expensesActions.fetchExpenses(activeList.id);
-        this.setState({ activeList: activeList });
+        if(activeList) {
+            expensesActions.fetchExpenses(activeList.id);
+            this.setState({ activeList: activeList });
+        }
     }
 
     render() {

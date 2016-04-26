@@ -41,7 +41,7 @@ function setExpenses(expenses) {
 }
 
 function addExpensesList(list) {
-    console.log(list);
+    //console.log(list);
     _expensesLists.push(list);
     setActiveList(list.id);
 }
