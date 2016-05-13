@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import EditForm from './EditForm.jsx';
 
 var expensesAction = require('../../actions/ExpensesActions.jsx');
 var expensesStore = require('../../stores/ExpensesStore.jsx');
@@ -29,17 +28,12 @@ export default class EditContainer extends Component {
     }
 
 
-    addExpense(name, amount, comment) {
-        expensesAction.storeExpense(name, amount, comment, this.state.activeList.id);
-    }
-
     render() {
         return (
             <div className="container-fluid">
                 <div className="container__header">
                     <h1>Eintrag anlegen</h1>
                 </div>
-                <EditForm activeList={this.state.activeList} submitCallback={this.addExpense.bind(this)} />
             </div>
         );
     }

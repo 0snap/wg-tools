@@ -3,6 +3,7 @@ import ExpensesList from './ExpensesList.jsx';
 import ExpensesGraph from './ExpensesGraph.jsx';
 import ExpensesListSelector from './ExpensesListSelector.jsx';
 import ExpensesListCreateForm from './ExpensesListCreateForm.jsx';
+import EditForm from './EditForm.jsx';
 import Constants from '../../constants/ExpenseConstants.jsx';
 
 import './ExpensesContainer.scss';
@@ -50,6 +51,10 @@ export default class ExpensesContainer extends Component {
         }
     }
 
+    addExpense(name, amount, comment) {
+        expensesAction.storeExpense(name, amount, comment, this.state.activeList.id);
+    }
+
     render() {
         //console.log("rendering container " + this.state.activeList, this.state.expensesLists);
         return(
@@ -58,6 +63,7 @@ export default class ExpensesContainer extends Component {
                     <h1>Ausgaben</h1>
                     <ExpensesListCreateForm />
                     <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
+                    <EditForm activeList={this.state.activeList} submitCallback={this.addExpense.bind(this)} />
                 </div>
                 <ExpensesList expenses={this.state.expenses} activeList={this.state.activeList} />
                 <ExpensesGraph expenses={this.state.expenses} />

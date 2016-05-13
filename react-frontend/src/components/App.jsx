@@ -26,7 +26,6 @@ export default class App extends Component {
             <div className='app'>
                 <LoginHeader />
                 <ExpensesContainer />
-                <EditContainer />
                 <DeptContainer />
             </div>
         );

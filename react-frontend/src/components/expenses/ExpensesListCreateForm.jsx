@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import MobileExpandable from './MobileExpandable.jsx';
 
-import './ExpensesListCreateForm.scss'
+import './ExpensesHeaderEntry.scss'
 
 var expensesActions = require('../../actions/ExpensesActions.jsx');
 
@@ -39,23 +40,22 @@ export default class ExpensesListCreateForm extends Component {
 
     render() {
         return (
-            <div className='expensesListCreateForm'>
-                <button className='expensesListCreateForm__mobileButton' onClick={this.showContent.bind(this)}>Add List</button>
-                <div className={this.state.cssMobileVisible}>
+            <MobileExpandable displayText='Add List'>
+                <div className='expensesListCreateForm'>
                     <h3 className='expensesListCreateForm__headline'>Liste anlegen</h3>
                     <form onSubmit={this.addList.bind(this)}>
-                        <div className="form-group">
-                            <label className="expensesListCreateForm__label" htmlFor="name">Name</label>
-                            <input className="expensesListCreateForm__input" id="name" value={this.state.name} onChange={this.handleNameChange.bind(this)} />
+                        <div className='form-group'>
+                            <label className='form__label' htmlFor='name'>Name</label>
+                            <input className='form__input' id='name' value={this.state.name} onChange={this.handleNameChange.bind(this)} />
                         </div>
 
-                        <div className="form-group">
-                            <label className="expensesListCreateForm__label" htmlFor="submit">Speichern</label>
-                            <button id="submit" type="submit">OK</button>
+                        <div className='form-group'>
+                            <label className='expensesListCreateForm__label' htmlFor='submit'>Speichern</label>
+                            <button id='submit' type='submit'>OK</button>
                         </div>
                     </form>
                 </div>
-            </div>
+            </MobileExpandable>
 
         );
     }

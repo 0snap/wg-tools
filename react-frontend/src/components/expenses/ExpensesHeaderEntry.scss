@@ -1,0 +1,17 @@
+@import '../variables.scss';
+
+.expensesListCreateForm, .expensesListSelector, .editForm  {
+    width: 33%;
+    float: left;
+    min-width: 260px;
+}
+
+.form__label {
+    width: 80px;
+    margin-right: 40px;
+}
+
+.form__select, .form__input {
+	width: 90%;
+    margin-bottom: 10px;
+}
