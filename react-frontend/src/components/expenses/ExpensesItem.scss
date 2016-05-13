@@ -6,16 +6,16 @@
 
 .expensesItem button {
     border: 1px solid $lightGrey;
+    float: right;
     font-size: 14px;
+    top: 6px;
 }
 
 .expensesItem__deleteButton {
     border: 1px solid $lightGrey;
-    float: right;
     height: 30px;
     line-height: 0px;
     position: relative;
-    top: 6px;
     width: 30px;
 }
 
@@ -30,8 +30,7 @@
 
 .expensesItem__actionButton {
     border: 1px solid $lightGrey;
-    float: right;
-    margin: 5px;
+    margin: 0 5px;
     height: 30px;
     line-height: 0px;
     position: relative;
@@ -46,7 +45,16 @@
     .expensesItem button {
         font-size: 12px;
         height: 25px;
-        width: 25px;
         top: 3px;
+    }
+    .expensesItem__deleteButton {
+        width: 25px;
+    }
+    .expensesItem__actionButton {
+        width: 40px;
+    }
+    .expensesItem__deleteButton:hover, .expensesItem__actionButton:hover {
+        transform: none;
+        transition: none;
     }
 }

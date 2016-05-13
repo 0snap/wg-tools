@@ -51,9 +51,9 @@ export default class ExpensesListSelector extends Component {
                     })}
                 </select>
                 <div>
-                    <ConfirmBox text={'diese Liste löschen'} abortText={'doch nicht'} confirmText={'ja, löschen'}
+                    <ConfirmBox text={'Liste löschen'} abortText={'doch nicht'} confirmText={'ja, löschen'}
                         confirmCallback={this.doDeleteList.bind(this)} />
-                {editable? <ConfirmBox text={'diese Liste sperren'} abortText={'doch nicht'} confirmText={'ja, sperren'}
+                {editable? <ConfirmBox text={'Liste sperren'} abortText={'doch nicht'} confirmText={'ja, sperren'}
                         confirmCallback={this.doLockList.bind(this)} /> : <span>(diese Liste ist gesperrt)</span>}
                 </div>
             </div>

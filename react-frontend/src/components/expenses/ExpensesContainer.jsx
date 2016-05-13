@@ -5,6 +5,8 @@ import ExpensesListSelector from './ExpensesListSelector.jsx';
 import ExpensesListCreateForm from './ExpensesListCreateForm.jsx';
 import Constants from '../../constants/ExpenseConstants.jsx';
 
+import './ExpensesContainer.scss';
+
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 var expensesActions = require('../../actions/ExpensesActions.jsx');
 
@@ -52,7 +54,7 @@ export default class ExpensesContainer extends Component {
         //console.log("rendering container " + this.state.activeList, this.state.expensesLists);
         return(
             <div className="container-fluid">
-                <div className="container__header">
+                <div className="container__header expensesContainer__header">
                     <h1>Ausgaben</h1>
                     <ExpensesListCreateForm />
                     <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />

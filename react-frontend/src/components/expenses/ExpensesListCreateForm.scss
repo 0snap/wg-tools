@@ -14,3 +14,15 @@
 .expensesListCreateForm__input {
     min-width: 260px;
 }
+
+@media (min-width:768px) {
+	.expensesListCreateForm__mobileButton {
+		display: none;
+	}
+}
+
+@media (max-width:767px) {
+	.mobile-not-visible {
+		display: none;
+	}
+}

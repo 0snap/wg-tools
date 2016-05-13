@@ -126,11 +126,21 @@ input, select {
         padding: 0;
     }
 
+    .container__header {
+        margin-bottom: 10px;
+        min-height: 70px;
+    }
+
     li {
         font-size: 16px;
         line-height: 32px;
         overflow: hidden;
         position: relative;
         padding: 3px 6px;
+    }
+
+    li:hover {
+        left: 0;
+        transition: none;
     }
 }
