@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ExpensesList from './ExpensesList.jsx';
 import ExpensesGraph from './ExpensesGraph.jsx';
+import ExpensesHeader from './ExpensesHeader.jsx';
 import ExpensesListSelector from './ExpensesListSelector.jsx';
 import ExpensesListCreateForm from './ExpensesListCreateForm.jsx';
 import EditForm from './EditForm.jsx';
@@ -59,12 +60,7 @@ export default class ExpensesContainer extends Component {
         //console.log("rendering container " + this.state.activeList, this.state.expensesLists);
         return(
             <div className="container-fluid">
-                <div className="container__header expensesContainer__header">
-                    <h1>Ausgaben</h1>
-                    <ExpensesListCreateForm />
-                    <ExpensesListSelector expensesLists={this.state.expensesLists} selected={this.state.activeList} />
-                    <EditForm activeList={this.state.activeList} submitCallback={this.addExpense.bind(this)} />
-                </div>
+                <ExpensesHeader expensesLists={this.state.expensesLists} selected={this.state.activeList} />
                 <ExpensesList expenses={this.state.expenses} activeList={this.state.activeList} />
                 <ExpensesGraph expenses={this.state.expenses} />
             </div>
