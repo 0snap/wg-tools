@@ -1,17 +1,48 @@
 @import '../variables.scss';
 
-.expensesListCreateForm, .expensesListSelector, .editForm  {
-    width: 33%;
-    float: left;
-    min-width: 260px;
-}
 
 .form__label {
-    width: 80px;
-    margin-right: 40px;
+	min-width: 85px;
+	margin-right: 10px;
 }
 
 .form__select, .form__input {
-	width: 90%;
+    background-color: $lightGrey;
+    border-radius: 5px;
     margin-bottom: 10px;
+    color: $darkGrey;
+    font-size: $formFontSize;
+    padding: 4px;
+}
+
+.expensesListCreateForm, .expensesListSelector, .editForm  {
+	.form-group {
+		margin-bottom: 0;
+	}
+}
+
+@media (min-width:768px) {
+	.expensesListCreateForm, .expensesListSelector, .editForm  {
+	    width: 90%;
+	    margin: 0 auto 15px auto;
+	}
+
+	.form__select, .form__input {
+	    min-width: 165px;
+	    width: 60%;
+	}
+
+}
+
+@media (max-width:767px) {
+	.expensesListCreateForm, .expensesListSelector, .editForm  {
+	    width: 90%;
+	    float: left;
+		margin-bottom: 15px;
+	}
+
+	.form__select, .form__input {
+	    min-width: 180px;
+	    width: 60%;
+	}
 }

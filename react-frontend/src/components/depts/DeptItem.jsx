@@ -17,7 +17,7 @@ export default class DeptItem extends Component {
             color: this.props.borrower.color
         }
         return (
-            <li className='deptItem'>
+            <li className='deptItem moneyItem'>
                 <span style={borrowerNameStyle}>{this.props.borrower.name}</span> an <span style={sponsorNameStyle}>{this.props.sponsor.name}</span>: <span className='deptItem__amount'>{this.props.amount}€</span>
             </li>
         );

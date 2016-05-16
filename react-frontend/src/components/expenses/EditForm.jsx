@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MobileExpandable from './MobileExpandable.jsx';
 var expensesAction = require('../../actions/ExpensesActions.jsx');
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 import Constants from '../../constants/ExpenseConstants.jsx';
@@ -46,49 +45,43 @@ export default class EditForm extends Component {
     render() {
         if(this.props.activeList === undefined) {
             return (
-                <MobileExpandable displayText='Eintrag anlegen'>
-                    <div className='container__nocontent'>
-                        <h3>Keine Liste ausgewählt</h3>
-                    </div>
-                </MobileExpandable>
+                <div className='container__nocontent'>
+                    <h3>Keine Liste ausgewählt</h3>
+                </div>
             );
         }
         if( !this.props.activeList.editable) {
             return (
-                <MobileExpandable displayText='Eintrag anlegen'>
-                    <div className='container__nocontent'>
-                        <h3>Die ausgewählte Liste ist nicht mehr bearbeitbar</h3>
-                    </div>
-                </MobileExpandable>
+                <div className='container__nocontent'>
+                    <h3>Die ausgewählte Liste ist nicht mehr bearbeitbar</h3>
+                </div>
             );
         }
         return (
-            <MobileExpandable displayText='Eintrag anlegen'>
-                <div className='editForm'>
-                    <h3>Eintrag anlegen</h3>
-                    <form onSubmit={this.addExpense.bind(this)}>
-                        <div className="form-group">
-                            <label className='form__label' htmlFor="name">Name</label>
-                            <input className='form__input' id="name" value={this.state.name} onChange={this.nameChange.bind(this)} />
-                        </div>
+            <div className='editForm'>
+                <h3>Eintrag anlegen</h3>
+                <form onSubmit={this.addExpense.bind(this)}>
+                    <div className="form-group">
+                        <label className='form__label' htmlFor="name">Name</label>
+                        <input className='form__input' id="name" value={this.state.name} onChange={this.nameChange.bind(this)} />
+                    </div>
 
-                        <div className="form-group">
-                            <label className='form__label' htmlFor="amount">Betrag</label>
-                            <input className='form__input' id="amount" type="number" step="0.01" min="0" value={this.state.amount} onChange={this.amountChange.bind(this)} />
-                        </div>
+                    <div className="form-group">
+                        <label className='form__label' htmlFor="amount">Betrag</label>
+                        <input className='form__input' id="amount" type="number" step="0.01" min="0" value={this.state.amount} onChange={this.amountChange.bind(this)} />
+                    </div>
 
-                        <div className="form-group">
-                            <label className='form__label' htmlFor="comment">Kommentar</label>
-                            <input className='form__input' id="comment" value={this.state.comment} onChange={this.commentChange.bind(this)} />
-                        </div>
+                    <div className="form-group">
+                        <label className='form__label' htmlFor="comment">Kommentar</label>
+                        <input className='form__input' id="comment" value={this.state.comment} onChange={this.commentChange.bind(this)} />
+                    </div>
 
-                        <div className="form-group">
-                            <label className='form__label' htmlFor="submit">Speichern</label>
-                            <button id="submit" type="submit">OK</button>
-                        </div>
-                    </form>
-                </div>
-            </MobileExpandable>
+                    <div className="form-group">
+                        <label className='form__label' htmlFor="submit">Speichern</label>
+                        <button id="submit" type="submit">OK</button>
+                    </div>
+                </form>
+            </div>
         );
     }
 }

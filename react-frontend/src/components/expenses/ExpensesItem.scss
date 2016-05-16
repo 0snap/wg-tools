@@ -1,7 +1,7 @@
 @import '../variables.scss';
 
 .expensesItem {
-    width: 88%;
+    width: 93%;
 }
 
 .expensesItem button {
@@ -40,7 +40,7 @@
 
 @media (max-width:767px) {
     .expensesItem {
-        width: 90%;
+        width: 95%;
     }
     .expensesItem button {
         font-size: 12px;

@@ -1,10 +1,10 @@
-jest.unmock('../../../src/components/edit/EditForm.jsx');
+jest.unmock('../../../src/components/expenses/EditForm.jsx');
 
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import EditForm from '../../../src/components/edit/EditForm.jsx';
+import EditForm from '../../../src/components/expenses/EditForm.jsx';
 
 let expensesActions = require('../../../src/actions/ExpensesActions.jsx')
 

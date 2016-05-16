@@ -34,27 +34,18 @@ li {
     padding: 7px 10px;
 }
 
-li:hover {
+.moneyItem:hover {
     left: $itemHoverWidth;
     transition: 150ms ease-in-out;
 }
 
-li:last-child {
+.moneyItem:last-child {
     margin-bottom: 15px;
 }
 
 a {
     color: $lightBlue;
     cursor: pointer;
-}
-
-label {
-    width: 80px;
-    margin-right: 40px;
-}
-
-input {
-    min-width: 300px;
 }
 
 a:hover {
@@ -79,17 +70,6 @@ button:hover {
 label {
     margin-right: 3%;
     font-size: $formFontSize;
-}
-
-input, select {
-    background-color: $lightGrey;
-    width: 30%;
-    min-width: 200px;
-    color: $darkGrey;
-    border-radius: 5px;
-    font-size: $formFontSize;
-    font-weight: bold;
-    padding: 4px;
 }
 
 // override bootstrap container padding:
@@ -131,7 +111,7 @@ input, select {
         min-height: 70px;
     }
 
-    li {
+    .moneyItem {
         font-size: 16px;
         line-height: 32px;
         overflow: hidden;
@@ -139,7 +119,7 @@ input, select {
         padding: 3px 6px;
     }
 
-    li:hover {
+    .moneyItem:hover {
         left: 0;
         transition: none;
     }

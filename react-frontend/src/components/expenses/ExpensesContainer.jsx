@@ -7,8 +7,6 @@ import ExpensesListCreateForm from './ExpensesListCreateForm.jsx';
 import EditForm from './EditForm.jsx';
 import Constants from '../../constants/ExpenseConstants.jsx';
 
-import './ExpensesContainer.scss';
-
 var expensesStore = require('../../stores/ExpensesStore.jsx');
 var expensesActions = require('../../actions/ExpensesActions.jsx');
 

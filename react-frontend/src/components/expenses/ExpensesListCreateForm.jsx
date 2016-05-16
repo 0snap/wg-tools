@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MobileExpandable from './MobileExpandable.jsx';
 
 import './ExpensesHeaderEntry.scss'
 
@@ -40,23 +39,19 @@ export default class ExpensesListCreateForm extends Component {
 
     render() {
         return (
-            <MobileExpandable displayText='Add List'>
-                <div className='expensesListCreateForm'>
-                    <h3 className='expensesListCreateForm__headline'>Liste anlegen</h3>
-                    <form onSubmit={this.addList.bind(this)}>
-                        <div className='form-group'>
-                            <label className='form__label' htmlFor='name'>Name</label>
-                            <input className='form__input' id='name' value={this.state.name} onChange={this.handleNameChange.bind(this)} />
-                        </div>
-
-                        <div className='form-group'>
-                            <label className='expensesListCreateForm__label' htmlFor='submit'>Speichern</label>
-                            <button id='submit' type='submit'>OK</button>
-                        </div>
-                    </form>
-                </div>
-            </MobileExpandable>
-
+            <div className='expensesListCreateForm'>
+                <h3 className='expensesListCreateForm__headline'>Liste anlegen</h3>
+                <form onSubmit={this.addList.bind(this)}>
+                    <div className='form-group'>
+                        <label className='form__label' htmlFor='name'>Name</label>
+                        <input className='form__input' id='name' value={this.state.name} onChange={this.handleNameChange.bind(this)} />
+                    </div>
+                    <div className='form-group'>
+                        <label className='form__label' htmlFor='submit'>Speichern</label>
+                        <button id='submit' type='submit'>OK</button>
+                    </div>
+                </form>
+            </div>
         );
     }
 
