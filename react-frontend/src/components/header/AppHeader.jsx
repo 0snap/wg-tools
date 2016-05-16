@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Constants from '../../constants/LoginConstants.jsx';
 import { Link } from 'react-router'
 
-import './LoginHeader.scss';
+import './AppHeader.scss';
 
 var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
 
 
 
-export default class LoginHeader extends Component {
+export default class AppHeader extends Component {
     
 
     constructor(props) {
@@ -21,7 +21,7 @@ export default class LoginHeader extends Component {
 
     render() {
         return (
-            <div className='loginHeader container-fluid'>
+            <div className='appHeader container-fluid'>
                 <Link to='/login' onClick={this.logout.bind(this)}>
                     abmelden
                 </Link>

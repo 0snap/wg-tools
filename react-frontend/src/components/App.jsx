@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LoginHeader from './login/LoginHeader.jsx';
+import AppHeader from './header/AppHeader.jsx';
 import ExpensesContainer from './expenses/ExpensesContainer.jsx';
 import DeptContainer from './depts/DeptContainer.jsx';
 
@@ -23,7 +23,7 @@ export default class App extends Component {
         // console.log(this.props.params.activeListName);
         return (
             <div className='app'>
-                <LoginHeader />
+                <AppHeader />
                 <ExpensesContainer />
                 <DeptContainer />
             </div>

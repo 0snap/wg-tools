@@ -1,7 +1,7 @@
 @import '../variables.scss';
 
 
-.loginHeader {
+.appHeader {
     background: $darkGrey;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -11,6 +11,6 @@
     text-align: right;
 }
 
-.loginHeader a {
+.appHeader a {
     margin-right: 30px;
 }

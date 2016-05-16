@@ -9,6 +9,12 @@
     margin-top: 80px;
     width: 50%;
     padding: 40px 80px; 
+    text-align: justify;
+}
+
+.loginRegisterForm hr {
+    background: $lightBlue;
+    border-top: 1px solid $lightBlue;
 }
 
 .loginRegisterForm h1 {
@@ -21,8 +27,10 @@
 }
 
 .loginRegisterForm__input {
-    width: 300px;
+    border-radius: 5px;
+    color: $darkGrey;
     min-width: 180px;
+    width: 300px;
 }
 
 .loginRegisterForm__button {
@@ -40,4 +48,29 @@
 
 .loginRegisterForm__error {
     color: #ff3300;
+}
+
+@media (max-width: 768px) {
+    .loginRegisterForm {
+        margin-top: 80px;
+        min-width: 100%;
+        padding: 6%; 
+        width: 100%;
+    }
+
+    .loginRegisterForm h1 {
+        margin-bottom: 30px;
+    }
+
+    .loginRegisterForm__label {
+        font-size: 12px;
+        margin-right: 10px;
+        width: 85px;
+    }
+
+    .loginRegisterForm__input {
+        color: $darkGrey;
+        min-width: 180px;
+        width: 60%;
+    }
 }

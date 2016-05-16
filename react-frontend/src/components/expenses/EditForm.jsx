@@ -45,16 +45,12 @@ export default class EditForm extends Component {
     render() {
         if(this.props.activeList === undefined) {
             return (
-                <div className='container__nocontent'>
-                    <h3>Keine Liste ausgewählt</h3>
-                </div>
+                <h3>Keine Liste ausgewählt</h3>
             );
         }
         if( !this.props.activeList.editable) {
             return (
-                <div className='container__nocontent'>
-                    <h3>Die ausgewählte Liste ist nicht mehr bearbeitbar</h3>
-                </div>
+                <h3>Die ausgewählte Liste ist nicht mehr bearbeitbar</h3>
             );
         }
         return (

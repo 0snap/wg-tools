@@ -56,6 +56,7 @@ export default class RegisterForm extends Component {
                     Bei wg-tools kannst du dich einfach registrieren, wenn der Name noch nicht vergeben ist. Merk dir das Passwort und teile es mit deinen Mitbewohnern (klebt es z.B. an den Kühlschrank).
                     Alle WG-Bewohner dürfen alle Funktionen nutzen. 
                 </p>
+                <hr />
                 <form onSubmit={this.register.bind(this)}>
                     <div className="form-group">
                         <label className="loginRegisterForm__label" htmlFor="name">WG-Name</label>
