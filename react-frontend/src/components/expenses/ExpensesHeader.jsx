@@ -10,6 +10,7 @@ var expensesActions = require('../../actions/ExpensesActions.jsx');
 
 
 const CSS_NOT_VISIBLE = 'mobile-not-visible';
+const CSS_NAVIGATION_ACTIVE = 'active';
 
 export default class ExpensesHeader extends Component {
 
@@ -40,12 +41,17 @@ export default class ExpensesHeader extends Component {
         return id == this.state.flyoutContent? '' : CSS_NOT_VISIBLE;
     }
 
+    isActiveCss(id) {
+        return id == this.state.flyoutContent? CSS_NAVIGATION_ACTIVE : '';
+    }
+
     getFlyoutContent() {
         if ( !this.state.flyoutContent ) {
             return undefined;
         }
         return this.menu;
     }
+
 
     setFlyoutContent(event) {
         let clickedId = event.target.id;
@@ -63,17 +69,17 @@ export default class ExpensesHeader extends Component {
             <div className="container__header expensesHeader">
                 <h1>Ausgaben</h1>
                 <ul className='container__header__navigation'>
-                    <li className='container__header__navigationEntry'>
+                    <li className={this.isActiveCss(0) + ' container__header__navigationEntry'}>
                         <a id={0} onClick={this.setFlyoutContent.bind(this)}>
                             Liste <i className='fa fa-plus-circle' aria-hidden='true'/>
                         </a>
                     </li>
-                    <li className='container__header__navigationEntry'>
+                    <li className={this.isActiveCss(1) + ' container__header__navigationEntry'}>
                         <a id={1} onClick={this.setFlyoutContent.bind(this)}>
                             Liste <i className='fa fa-sort-amount-asc' aria-hidden='true'/>
                         </a>
                     </li>
-                    <li className='container__header__navigationEntry'>
+                    <li className={this.isActiveCss(2) + ' container__header__navigationEntry'}>
                         <a id={2} onClick={this.setFlyoutContent.bind(this)}>
                             Eintrag <i className='fa fa-plus-circle' aria-hidden='true'/>
                         </a>

@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 @media (min-width:768px) {
 	.container__header__navigation {
 		display: none;
@@ -28,6 +30,10 @@
 		margin: 0 30px 0 0;
 		padding: 0;
 		width: auto;
+	}
+	.active a {
+		color: $bgGrey;
+		text-decoration: underline;
 	}
 	.container__header__flyout div {
 		animation: slide-in 0.5s forwards;
