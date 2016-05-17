@@ -93,10 +93,13 @@ def store():
     name = jsonAsDict.get('name')
     amount = Decimal(jsonAsDict.get('amount')) * Decimal('100')
     comment = jsonAsDict.get('comment')
+    print(amount, name, listId)
     if listId != None and listId != '' and listId != 'undefined' and name != None and name != '' and name != 'undefined' and amount != None and amount >= 0:
         storedObjectDict = storage.store(listId, current_identity, name, int(amount), comment)
-        storedObjectDict['listId'] = listId
-        return json.dumps(storedObjectDict)
+        if storedObjectDict:
+            storedObjectDict['listId'] = listId
+            return json.dumps(storedObjectDict)
+        return Response('List is locked, cannot store', 409)
     return Response('Wrong format, will not store.', 400)
 
 @app.route('/deleteExpense', methods=['DELETE'])
@@ -109,6 +112,7 @@ def delete():
     if listId != None and listId != '' and listId != 'undefined' and oid != None and oid != '' and oid != 'undefined':
         if storage.delete(listId, current_identity, oid):
             return Response('OK', 200)
+        return Response('List is locked, cannot delete', 409)
     return Response('Not found', 404)
 
 

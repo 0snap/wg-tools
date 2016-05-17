@@ -15,9 +15,11 @@ describe('ExpensesItem', () => {
     let expItem;
     let itemNode;
 
+    const activeList = { id: 'LIST ID', name: 'LIST NAME', editable: true };
+
     beforeEach(function() {
         expItem = TestUtils.renderIntoDocument(
-            <ExpensesItem item={expItemData} listId={'123456'} />
+            <ExpensesItem item={expItemData} activeList={activeList} />
         );
         itemNode = ReactDOM.findDOMNode(expItem);
         expect(itemNode).toBeDefined();
@@ -58,7 +60,7 @@ describe('ExpensesItem', () => {
         expect(expItem.state.alive).toEqual(true);
     });
 
-    it('get deleted with click on "yes"', () => {
+    it('gets deleted with click on "yes"', () => {
         
         TestUtils.Simulate.click(
             TestUtils.findRenderedDOMComponentWithTag(expItem, 'button')
@@ -73,5 +75,18 @@ describe('ExpensesItem', () => {
 
         expect(itemNode.textContent).toEqual(defaultText);
         expect(expItem.state.alive).toEqual(true);
+    });
+
+    it('does not render delete-button if list not editable', () => {
+        let inactiveList = { id: 'LIST ID', name: 'LIST NAME', editable: false };
+        expItem = TestUtils.renderIntoDocument(
+            <ExpensesItem item={expItemData} activeList={inactiveList} />
+        );
+        itemNode = ReactDOM.findDOMNode(expItem);
+
+        let buttons = TestUtils.scryRenderedDOMComponentsWithTag(expItem, 'button')
+
+        expect(buttons.length).toEqual(0);
+        
     });
 });

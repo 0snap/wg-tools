@@ -1,0 +1,1 @@
+curl -H "Content-type: application/json; charset=UTF-8" -H "Authorization: JWT $1" -XPOST localhost:5000/storeExpense -d '{"name":"Felix","amount":"135", "listId": "5739cb285a3c0424ffa9cd94"}'

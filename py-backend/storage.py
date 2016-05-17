@@ -133,18 +133,25 @@ def getNormalizedExpensePosts(listId, wgId, includeDeleted = False):
 
 def store(listId, wgId, name, amount, comment):
     # print("storing ", listId, name, amount)
-    color = getColorForName(listId, name)
-    expensePost = ExpensePost(name=name, amount=amount, color=color, comment=comment)
-    stored = ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(push__expensePosts=expensePost)
-    if not stored:
-        return None
-    return __normalizeExpensePost(expensePost)
+    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
+    print(lists)
+    if lists[0] and lists[0].editable:
+        color = getColorForName(listId, name)
+        expensePost = ExpensePost(name=name, amount=amount, color=color, comment=comment)
+        stored = ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(push__expensePosts=expensePost)
+        if not stored:
+            return None
+        return __normalizeExpensePost(expensePost)
+    return None
 
 
 def delete(listId, wgId, postId):
     #print("shall delete ", listId, postId)
-    ExpensesList.objects(id=listId, wg=__getWgById(wgId), expensePosts__id=postId).update(set__expensePosts__S__tsDeleted=datetime.now)
-    return True
+    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
+    if lists[0] and lists[0].editable:
+        ExpensesList.objects(id=listId, wg=__getWgById(wgId), expensePosts__id=postId).update(set__expensePosts__S__tsDeleted=datetime.now)
+        return True
+    return False
 
 
 ## expenses list operations

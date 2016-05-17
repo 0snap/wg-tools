@@ -22,6 +22,11 @@
 }
 
 @media (min-width:768px) {
+	.editForm {
+		border-left: 1px solid $lightBlue;
+		padding-left: 12px;
+	}
+	
 	.expensesListCreateForm, .expensesListSelector, .editForm  {
 	    width: 90%;
 	    margin: 0 auto 15px auto;
