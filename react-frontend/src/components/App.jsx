@@ -16,7 +16,10 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        expensesActions.fetchExpensesLists(this.props.params.activeListName);
+        // pass successCallback: wait for lists being fetched, then set active 
+        expensesActions.fetchExpensesLists( () => 
+            expensesActions.setActiveListByName(this.props.params.activeListName)
+        );
     }
 
     render() {

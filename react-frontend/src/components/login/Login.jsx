@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
-import LoginForm from './login/LoginForm.jsx';
-import Constants from '../constants/LoginConstants.jsx';
+import LoginForm from './LoginForm.jsx';
+import Constants from '../../constants/LoginConstants.jsx';
 
-var loginStore = require('../stores/LoginStore.jsx');
+import AppHeader from '../header/AppHeader.jsx';
+
+var loginStore = require('../../stores/LoginStore.jsx');
 
 
 export default class Login extends Component {
@@ -30,7 +32,8 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div className='login'>
+            <div className='container-fluid'>
+                <AppHeader />
                 <LoginForm error={this.state.error}/>
             </div>);
     }

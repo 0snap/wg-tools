@@ -11,8 +11,7 @@ export default class DeptContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            deptList: expensesStore.getDepts(),
-            activeList: undefined
+            deptList: expensesStore.getDepts()
         };
         this.handleStoreChange = this.handleStoreChange.bind(this);
         this.handleActiveListChange = this.handleActiveListChange.bind(this);
@@ -39,6 +38,10 @@ export default class DeptContainer extends Component {
         //console.log('active', activeList),
         if (activeList) {
             expensesActions.fetchDepts(activeList.id);
+        }
+        else {
+            // no active list, so there cannot be depts
+            this.setState( { deptList: undefined } );
         }
     }
 

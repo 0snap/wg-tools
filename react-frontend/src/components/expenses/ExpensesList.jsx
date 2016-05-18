@@ -17,12 +17,12 @@ export default class ExpensesList extends Component {
         }
         
         expenses.sort((a, b) => new Date(b.date).getTime() > new Date(a.date).getTime());
-
+        
         let _this = this;
         return (
             <div className='expensesList'>
                 <ul className='expensesItemList'>
-                {expenses.map(item => {
+                {expenses.map((item, idx) => {
                     return <ExpensesItem key={item.id} item={item} activeList={this.props.activeList} />
                 })}
                 </ul>

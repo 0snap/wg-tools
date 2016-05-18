@@ -3,8 +3,8 @@ import { render } from 'react-dom';
 import { Router, Route, Redirect, browserHistory } from 'react-router'
 
 import App from './src/components/App.jsx';
-import Login from './src/components/Login.jsx';
-import Register from './src/components/Register.jsx';
+import Login from './src/components/login/Login.jsx';
+import Register from './src/components/login/Register.jsx';
 import About from './src/components/staticPages/About.jsx';
 import FAQ from './src/components/staticPages/FAQ.jsx';
 import Constants from './src/constants/LoginConstants.jsx';

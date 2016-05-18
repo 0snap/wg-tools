@@ -50,7 +50,7 @@ export default class RegisterForm extends Component {
 
     render() {
         return (
-            <div className='loginRegisterForm container'>
+            <div className='loginRegisterForm'>
                 <h1>Registrieren</h1>
                 <p>
                     Bei wg-tools kannst du dich einfach registrieren, wenn der Name noch nicht vergeben ist. Merk dir das Passwort und teile es mit deinen Mitbewohnern (klebt es z.B. an den Kühlschrank).

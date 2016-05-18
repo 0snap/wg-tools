@@ -50,8 +50,11 @@ export default class ExpensesContainer extends Component {
         let activeList = expensesStore.getActiveList();
         if(activeList) {
             expensesActions.fetchExpenses(activeList.id);
-            this.setState({ activeList: activeList });
         }
+        else {
+            this.setState( { expenses: [] } );
+        }
+        this.setState({ activeList: activeList });
     }
 
     addExpense(name, amount, comment) {

@@ -49,7 +49,7 @@ export default class About extends Component {
                         </p>
                         <h3 className='staticPage__content__headline'>Über mich</h3>
                         <p className='staticPage__content__text'>
-                            Ich bin Felix / Fixel, 24 Jahre alt und Hamburger Jung. Bescheuerte Homepage: <a href='https:fixel.express' target='_blank'>fixel.express</a>
+                            Ich bin Felix / Fixel, 24 Jahre alt und Hamburger Jung. Bescheuerte Homepage: <a href='https://fixel.express' target='_blank'>fixel.express</a>
                         </p>
                     </div>
                 </div>

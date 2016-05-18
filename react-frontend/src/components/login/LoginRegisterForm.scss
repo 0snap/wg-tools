@@ -1,3 +1,4 @@
+@import '../global.scss';
 @import '../variables.scss';
 
 .loginRegisterForm {
@@ -6,8 +7,6 @@
     background: $darkGrey;
     color: $lightBlue;
     min-width: 460px;
-    margin-top: 80px;
-    width: 50%;
     padding: 40px 80px; 
     text-align: justify;
 }

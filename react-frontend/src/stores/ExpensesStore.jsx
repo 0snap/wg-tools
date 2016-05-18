@@ -52,6 +52,7 @@ function deleteExpensesList(id) {
         return list.id != id
     });
     setExpensesLists(removed);
+    setAnyListActive();
 }
 
 function lockExpensesList(id) {
@@ -61,18 +62,8 @@ function lockExpensesList(id) {
     });
 }
 
-function setExpensesLists(expensesLists, listName) {
+function setExpensesLists(expensesLists) {
     _expensesLists = expensesLists;
-    if (listName && getListForName(listName)) {
-        setActiveList(getListForName(listName).id);
-    }
-    else if (_expensesLists[0]) {
-        setActiveList(_expensesLists[0].id);
-    }
-    else {
-        setActiveList(undefined);
-    }
-
 }
 
 
@@ -85,8 +76,16 @@ function setWg(wg) {
     _wg = wg;
 }
 
+function setActiveListByName(listName) {
+    if (!listName) {
+        setAnyListActive();
+    }
+    else if (getListForName(listName)) {
+        setActiveList(getListForName(listName).id);
+    }
+}
+
 function setActiveList(listId) {
-    // console.log('set active ' + activeList)
     let activeList = getListForId(listId);
     if (activeList) {
         browserHistory.push('/app/' + activeList.name);
@@ -95,6 +94,15 @@ function setActiveList(listId) {
         browserHistory.push('/app');
     }
     _activeList = activeList;
+}
+
+function setAnyListActive() {
+    if(_expensesLists[0]) {
+        setActiveList(_expensesLists[0].id);
+    }
+    else {
+        setActiveList(undefined);
+    }
 }
 
 function getListForName(listName) {
@@ -203,8 +211,12 @@ Dispatcher.register(function(action) {
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
         case(Constants.FETCH_EXPENSES_LISTS):
-            setExpensesLists(action.expensesLists, action.listName);
+            setExpensesLists(action.expensesLists);
             ExpensesStore.emitChange(Constants.EXPENSES_LISTS_CHANGED);
+            break;
+        case(Constants.ACTIVE_LIST_NAME):
+            //console.log("store: by name", action.listName)
+            setActiveListByName(action.listName);
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
         case(Constants.ACTIVE_LIST_ID):

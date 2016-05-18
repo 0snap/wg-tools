@@ -42,7 +42,7 @@ export default class LoginForm extends Component {
         }
 
         return (
-            <div className='loginRegisterForm container'>
+            <div className='loginRegisterForm'>
                 <h1>Einloggen</h1>
                 <form onSubmit={this.login.bind(this)}>
                     <div className="form-group">

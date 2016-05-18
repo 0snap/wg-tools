@@ -100,16 +100,16 @@ let ExpensesActions = {
         );
     },
 
-    fetchExpensesLists(listName) {
+    fetchExpensesLists(successCallback) {
         apiService.call(
             'GET', 'expensesLists', undefined, 
             function(respText) {
                 let jsonResponse = JSON.parse(respText);
                 Dispatcher.dispatch({
                     actionType: Constants.FETCH_EXPENSES_LISTS,
-                    expensesLists: jsonResponse,
-                    listName: listName // hacky "select by name"
+                    expensesLists: jsonResponse
                 });
+                successCallback();
             },
             function(err) {
                 console.log(err);
@@ -181,6 +181,13 @@ let ExpensesActions = {
         Dispatcher.dispatch({
             actionType: Constants.ACTIVE_LIST_ID,
             listId: listId
+        });
+    },
+
+    setActiveListByName(listName) {
+        Dispatcher.dispatch({
+            actionType: Constants.ACTIVE_LIST_NAME,
+            listName: listName
         });
     }
 
