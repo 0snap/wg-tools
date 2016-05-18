@@ -29,7 +29,8 @@ export default class ExpensesGraph extends Component {
         this.props.expenses.map( exp => {
             dates.push(exp.date);
         });
-        dates = dates.sort((a, b) => new Date(b) < new Date(a))
+
+        dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
         //console.log(dates);
         return dates;
     }

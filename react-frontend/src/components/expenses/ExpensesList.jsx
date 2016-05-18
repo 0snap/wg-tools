@@ -16,7 +16,7 @@ export default class ExpensesList extends Component {
             return (<div className='container__nocontent'><h3>Keine Ausgaben</h3></div>);
         }
         
-        expenses.sort((a, b) => new Date(b.date).getTime() > new Date(a.date).getTime());
+        expenses.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         
         let _this = this;
         return (
