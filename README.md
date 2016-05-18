@@ -20,7 +20,7 @@ Mongo-Container:
 
 If you are living in a flat share and have to manage expenses or other stuff and you want some just-working tool for that purpose, then you are at the right place here. This applicaiton is meant for diy hosting and development. Feel free to contribute!
 
-A hosted and super-pre-alpha version can be found at: [wg-tools.de](https://wg-tools.de). 
+A hosted version can be found at: [wg-tools.de](https://wg-tools.de). 
 
 
 ### Behavior
@@ -63,9 +63,10 @@ Or start everything inside a container if you just want to use this. Install doc
 	[] easy counter for stuff (eg. for series)
 
 ### Header & Static Pages:
-	[] static pages (faq, about, etc)
-	[] navigation in header
+	[x] static pages (faq, about, etc)
+	[x] navigation in header
 	[] "custom space with settings"-button
+	[] mobile header == hamburger
 
 ### Custom space for configuring WG settings
 	[] store wg settings (data model etc)

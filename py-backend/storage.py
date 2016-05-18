@@ -134,7 +134,6 @@ def getNormalizedExpensePosts(listId, wgId, includeDeleted = False):
 def store(listId, wgId, name, amount, comment):
     # print("storing ", listId, name, amount)
     lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
-    print(lists)
     if lists[0] and lists[0].editable:
         color = getColorForName(listId, name)
         expensePost = ExpensePost(name=name, amount=amount, color=color, comment=comment)

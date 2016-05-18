@@ -20,7 +20,7 @@ export default class ExpensesItem extends Component {
 
     doDelete() {
         this.setState({alive: true});
-        expensesActions.deleteExpense(this.props.item.id, this.props.activeList.listId);
+        expensesActions.deleteExpense(this.props.item.id, this.props.activeList.id);
     }
 
     render() {

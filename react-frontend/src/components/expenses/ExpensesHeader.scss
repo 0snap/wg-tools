@@ -36,12 +36,13 @@
 		text-decoration: underline;
 	}
 	.container__header__flyout div {
-		animation: slide-in 0.5s forwards;
-		transform: translateX(-100%);
-		-webkit-transform: translateX(-100%);
-		-webkit-animation: slide-in 0.5s forwards;
+		animation: slide-in 0.3s forwards;
+		transform: translateX(100%);
+		-webkit-transform: translateX(100%);
+		-webkit-animation: slide-in 0.3s forwards;
 	}
 	@keyframes slide-in {
+	    50% { transform: translateX(-50%); }
 	    100% { transform: translateX(0%); }
 	}
 

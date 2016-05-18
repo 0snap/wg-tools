@@ -34,6 +34,7 @@ let ExpensesActions = {
     },
 
     deleteExpense(id, listId) {
+        console.log("delete");
         if (!listId || !id) {
             return;
         }
