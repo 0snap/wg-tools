@@ -14,17 +14,19 @@ export default class DeptContainer extends Component {
             deptList: expensesStore.getDepts(),
             activeList: undefined
         };
+        this.handleStoreChange = this.handleStoreChange.bind(this);
+        this.handleActiveListChange = this.handleActiveListChange.bind(this);
     }
 
     componentDidMount() {
-        expensesStore.addEventListener(Constants.FETCH_DEPTS, this.handleStoreChange.bind(this));
-        expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange.bind(this));
+        expensesStore.addEventListener(Constants.FETCH_DEPTS, this.handleStoreChange);
+        expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
     }
 
 
     componentWillUnmount() {
-        expensesStore.removeEventListener(Constants.FETCH_DEPTS, this.handleStoreChange.bind(this));
-        expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange.bind(this));
+        expensesStore.removeEventListener(Constants.FETCH_DEPTS, this.handleStoreChange);
+        expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
     }
 
     handleStoreChange() {

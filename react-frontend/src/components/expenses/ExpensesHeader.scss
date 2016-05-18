@@ -1,5 +1,6 @@
 @import '../variables.scss';
 
+
 @media (min-width:768px) {
 	.container__header__navigation {
 		display: none;
@@ -14,7 +15,6 @@
 	.mobile-not-visible {
 		display: none;
 	}
-
 
 	.container__header__navigation {
 		background: none;

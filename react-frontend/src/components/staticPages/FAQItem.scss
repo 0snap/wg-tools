@@ -1,0 +1,68 @@
+@import '../variables.scss';
+
+.faqItem {
+	color: $lightBlue;
+	padding: 15px;
+}
+
+.faqItem__icon {
+	color: $bgGrey;
+	float: left;
+	font-size: 18px;
+	margin: 0 15px;
+}
+
+.faqItem__question {
+	font-family: 'Architects Daughter';
+	font-size: 22px;
+}
+
+.faqItem__answer {
+	clear: both;
+	color: $bgGrey;
+	padding: 10px 0 20px 60px;
+}
+
+.not-visible {
+	display: none;
+}
+
+
+@media(min-width: 768px) {
+	.faqItem__clickable:hover, .active {
+		cursor: pointer;
+		.faqItem__icon {
+			transform: scale(1.3);
+			transition: 0.1s ease-in-out;
+		}
+	}
+}
+
+@media(max-width: 767px) {
+	.active {
+		cursor: pointer;
+		.faqItem__icon {
+			transform: scale(1.3);
+			transition: 0.1s ease-in-out;
+		}
+	}	
+	.faqItem {
+		color: $lightBlue;
+		padding: 5px;
+	}
+
+	.faqItem__icon {
+		font-size: 12px;
+		margin: 0 8px;
+	}
+
+	.faqItem__question {
+		font-family: 'Architects Daughter';
+		font-size: 18px;
+	}
+
+	.faqItem__answer {
+		font-size: 12px;
+		padding: 7px 0 10px 35px;
+	}
+}

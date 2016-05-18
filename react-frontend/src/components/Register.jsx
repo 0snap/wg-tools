@@ -12,14 +12,15 @@ export default class Register extends Component {
         this.state = {
             error: undefined
         };
+        this.handleRegisterFail = this.handleRegisterFail.bind(this);
     }
 
     componentDidMount() {
-        loginStore.addEventListener(Constants.REGISTER_FAILED, this.handleRegisterFail.bind(this));
+        loginStore.addEventListener(Constants.REGISTER_FAILED, this.handleRegisterFail);
     }
 
     componentWillUnmount() {
-        loginStore.removeEventListener(Constants.REGISTER_FAILED, this.handleRegisterFail.bind(this));
+        loginStore.removeEventListener(Constants.REGISTER_FAILED, this.handleRegisterFail);
     }
 
     handleRegisterFail() {

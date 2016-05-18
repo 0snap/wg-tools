@@ -1,18 +1,7 @@
 // all components will inherit the global style
-@import './global.scss'; 
 @import './variables.scss';
-@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import './global.scss'; 
 
-.app {
-    font-family: 'Oxygen', sans-serif;
-    background-color: $bgGrey;
-    padding: 30px;
-    color: $darkGrey;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Architects Daughter', cursive;
-}
 
 ul {
     border-radius: 5px;
@@ -21,7 +10,7 @@ ul {
     padding-top: 10px;
 }
 
-li {
+.moneyItem {
     border-radius: 5px;
     background: $darkGrey;
     color: $bgGrey;
@@ -43,72 +32,17 @@ li {
     margin-bottom: 15px;
 }
 
-a {
-    color: $lightBlue;
-    cursor: pointer;
-}
-
-a:hover {
-    color: $bgGrey;
-}
-
-button {
-    background-color: $lightGrey;
-    background: $lightGrey;
-    font-weight: bold;
-    color: $darkGrey;
-    width: 80px;
-    height: 32px;
-    border-radius: 5px;
-    border: 1px solid $lightGrey;
-}
-
-button:hover {
-    opacity: 0.7;
-}
 
 label {
     margin-right: 3%;
     font-size: $formFontSize;
 }
 
-// override bootstrap container padding:
-.container-fluid {
-    padding: 15px 0;
-    margin-bottom: 30px;
-}
-
-.container__header {
-    background: $darkGrey;
-    border: 1px solid $lightBlue;
-    border-radius: 5px;
-    color: $bgGrey;
-    overflow: auto;
-    padding: 0 20px;
-    margin-bottom: 30px;
-    min-height: 80px;
-}
-
-.container__header h1, .container__header h3 {
-    color: $lightBlue;
-}
-
-.container__nocontent {
-    padding: 20px 50px;
-}
-
 
 /** media queries */
-
-
 @media (max-width:767px) {
     .app {
         padding: 0;
-    }
-
-    .container__header {
-        margin-bottom: 10px;
-        min-height: 70px;
     }
 
     .moneyItem {

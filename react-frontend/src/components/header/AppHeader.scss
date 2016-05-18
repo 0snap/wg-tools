@@ -3,14 +3,29 @@
 
 .appHeader {
     background: $darkGrey;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     border-radius: 5px;
     font-size: 22px;
     font-family: 'Architects Daughter';
     padding: 15px;
-    text-align: right;
+    text-align: left;
 }
 
 .appHeader a {
+    margin: 0 20px;
+    text-align: left;
+}
+
+.appHeader__loginLink {
+	float: right;
     margin-right: 30px;
+}
+
+
+@media (max-width: 767px) {
+    .appHeader a {
+        font-size: 14px;
+        margin: 0 5px;
+        text-align: left;
+    }
 }

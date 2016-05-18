@@ -13,14 +13,15 @@ export default class Login extends Component {
         this.state = {
             error: undefined
         };
+        this.handleLoginFail = this.handleLoginFail.bind(this);
     }
 
     componentDidMount() {
-        loginStore.addEventListener(Constants.LOGIN_FAILED, this.handleLoginFail.bind(this));
+        loginStore.addEventListener(Constants.LOGIN_FAILED, this.handleLoginFail);
     }
 
     componentWillUnmount() {
-        loginStore.removeEventListener(Constants.LOGIN_FAILED, this.handleLoginFail.bind(this));
+        loginStore.removeEventListener(Constants.LOGIN_FAILED, this.handleLoginFail);
     }
 
     handleLoginFail() {

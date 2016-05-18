@@ -1,0 +1,18 @@
+@import '../variables.scss';
+@import '../global.scss';
+
+.staticPage__content {
+	background: $darkGrey;
+	border-radius: 5px;
+	font-size: 16px;
+	padding: 20px;
+	text-align: justify;
+}
+
+.staticPage__content__headline {
+	color: $lightBlue;
+}
+
+.staticPage__content__text {
+	color: $bgGrey;
+}
