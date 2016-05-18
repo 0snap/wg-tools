@@ -32,7 +32,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div className='container-fluid'>
+            <div className='login'>
                 <AppHeader />
                 <LoginForm error={this.state.error}/>
             </div>);

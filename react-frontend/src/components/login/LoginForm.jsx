@@ -42,29 +42,30 @@ export default class LoginForm extends Component {
         }
 
         return (
-            <div className='loginRegisterForm'>
-                <h1>Einloggen</h1>
-                <form onSubmit={this.login.bind(this)}>
-                    <div className="form-group">
-                        <label className="loginRegisterForm__label" htmlFor="name">WG-Name</label>
-                        <input className="loginRegisterForm__input" id="name" value={this.state.wgName} onChange={this.nameChange.bind(this)} />
-                    </div>
+            <div className='container-fluid'>
+                <div className='loginRegisterForm'>
+                    <h1>Einloggen</h1>
+                    <form onSubmit={this.login.bind(this)}>
+                        <div className="form-group">
+                            <label className="loginRegisterForm__label" htmlFor="name">WG-Name</label>
+                            <input className="loginRegisterForm__input" id="name" value={this.state.wgName} onChange={this.nameChange.bind(this)} />
+                        </div>
 
-                    <div className="form-group">
-                        <label className="loginRegisterForm__label" htmlFor="password">Passwort</label>
-                        <input className="loginRegisterForm__input" id="password" type="password" value={this.state.password} onChange={this.passwordChange.bind(this)} />
+                        <div className="form-group">
+                            <label className="loginRegisterForm__label" htmlFor="password">Passwort</label>
+                            <input className="loginRegisterForm__input" id="password" type="password" value={this.state.password} onChange={this.passwordChange.bind(this)} />
+                        </div>
+                        <div className="form-group">
+                            <label className="loginRegisterForm__label" htmlFor="submit">Einloggen</label>
+                            <button className="loginRegisterForm__button" id="submit" type="submit">Go!</button>
+                        </div>
+                        {errMsg}
+                    </form>
+                    <div className="loginRegisterForm__register">
+                        <Link to="/register">neu registrieren</Link>
                     </div>
-                    <div className="form-group">
-                        <label className="loginRegisterForm__label" htmlFor="submit">Einloggen</label>
-                        <button className="loginRegisterForm__button" id="submit" type="submit">Go!</button>
-                    </div>
-                    {errMsg}
-                </form>
-                <div className="loginRegisterForm__register">
-                    <Link to="/register">neu registrieren</Link>
                 </div>
             </div>
-
         );
     }
 }

@@ -31,7 +31,7 @@ export default class Register extends Component {
 
     render() {
         return (
-            <div className='container-fluid'>
+            <div className='register'>
                 <AppHeader />
                 <RegisterForm error={this.state.error}/>
             </div>);

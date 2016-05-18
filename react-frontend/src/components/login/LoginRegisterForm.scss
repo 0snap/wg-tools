@@ -26,9 +26,11 @@
 }
 
 .loginRegisterForm__input {
+    background-color: $bgGrey;
     border-radius: 5px;
     color: $darkGrey;
     min-width: 180px;
+    padding: 3px;
     width: 300px;
 }
 
