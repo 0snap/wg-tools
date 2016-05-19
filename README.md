@@ -42,6 +42,7 @@ Or start everything inside a container if you just want to use this. Install doc
     [x] Create lists
     [x] Delete lists
     [x] make list uneditable
+    [x] mobile header
 
 ### List behavior:
     [] automatically create new list per week/month?
@@ -56,6 +57,11 @@ Or start everything inside a container if you just want to use this. Install doc
 ### Direct depts:
 	[] Graph for direct borrows
     [] List-types?
+
+### Pittances:
+	[] db: store pittances
+	[] calculator: concept of pittance + calc
+	[] fe: intuitive concept! 
 
 
 ### Group notes:
