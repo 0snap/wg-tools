@@ -1,5 +1,4 @@
 @import '../variables.scss';
-@import '../global.scss';
 
 .staticPage__content {
 	background: $darkGrey;
@@ -15,4 +14,11 @@
 
 .staticPage__content__text {
 	color: $bgGrey;
+}
+
+
+@media(max-width: 767px) {
+	.staticPage {
+		height: 100vh;
+	}
 }

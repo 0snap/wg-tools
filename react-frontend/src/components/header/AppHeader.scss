@@ -1,5 +1,5 @@
 @import '../variables.scss';
-
+@import '~hamburgers/_sass/hamburgers/hamburgers.scss';
 
 .appHeader {
     background: $darkGrey;
@@ -11,7 +11,7 @@
     text-align: left;
 }
 
-.appHeader a {
+.appHeader__menuLink, appHeader__loginLink {
     margin: 0 20px;
     text-align: left;
 }
@@ -21,9 +21,65 @@
 }
 
 
-@media (max-width: 767px) {
-    .appHeader a {
-        font-size: 14px;
-        margin: 0 5px;
+@media (min-width: 768px) {
+    .hamburger {
+        display: none;
     }
+}
+
+
+@media (max-width: 767px) {
+    .appHeader {
+        border-left: 1px solid $lightBlue;
+        border-bottom: 1px solid $lightBlue;
+        border-radius: 0;
+        height: $appHeaderHeight;
+        padding: 5px 5px;
+        position: fixed;
+        right: 0;
+        z-index: 5;
+    }
+    .appHeader.is-active {
+        border: none;
+        height: 100vh;
+        width: 100vw;
+    }
+    .appHeader__menuLink, .appHeader__loginLink {
+        font-size: 18px;
+        float: left;
+        opacity: 1;
+        width: 100%;
+    }
+    .appHeader__menuLink {
+        margin: 15px 30px;
+    }
+    .appHeader__loginLink {
+        margin: 25px 30px;
+    }
+    .mobile-not-visible {
+        display: none;
+        opacity: 0;
+    }
+    .hamburger {
+        outline: 0;
+        float: right;
+    }
+    .hamburger:hover {
+            opacity: 1;
+    }
+
+    .hamburger.is-active {
+        .hamburger-inner {
+            &, &::before, &::after {
+                background-color: $bgGrey;
+            }
+        }
+    }
+
+    .hamburger-inner {
+        &, &::before, &::after {
+            background-color: $lightBlue;
+        }
+    }
+
 }

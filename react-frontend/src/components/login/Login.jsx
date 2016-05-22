@@ -5,6 +5,8 @@ import Constants from '../../constants/LoginConstants.jsx';
 
 import AppHeader from '../header/AppHeader.jsx';
 
+import './LoginRegister.scss';
+
 var loginStore = require('../../stores/LoginStore.jsx');
 
 

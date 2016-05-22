@@ -9,6 +9,7 @@ import About from './src/components/staticPages/About.jsx';
 import FAQ from './src/components/staticPages/FAQ.jsx';
 import Constants from './src/constants/LoginConstants.jsx';
 
+import './src/components/global.scss';
 
 let loginRegisterActions = require('./src/actions/LoginRegisterActions.jsx');
 let loginStore = require('./src/stores/LoginStore.jsx');

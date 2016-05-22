@@ -1,6 +1,5 @@
 // all components will inherit the global style
 @import './variables.scss';
-@import './global.scss'; 
 
 
 ul {
@@ -43,6 +42,7 @@ label {
 @media (max-width:767px) {
     .app {
         padding: 0;
+        background: $darkGrey;
     }
 
     .moneyItem {

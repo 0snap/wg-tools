@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Constants from '../../constants/ExpenseConstants.jsx';
 import { Link } from 'react-router'
+import classNames from 'classnames';
 
 import './AppHeader.scss';
 
@@ -14,7 +15,10 @@ export default class AppHeader extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { activeList: expensesStore.getActiveList() };
+        this.state = {
+            activeList: expensesStore.getActiveList(),
+            hamburgerExpanded: false
+        };
 
         this.handleActiveListChange = this.handleActiveListChange.bind(this);
     }
@@ -38,25 +42,37 @@ export default class AppHeader extends Component {
 
     getLoginLink() {
         if(loginStore.isLoggedIn()) {
-            return <Link className='appHeader__loginLink' to='/login' onClick={this.logout.bind(this)}>
+            return <Link className={this.getLinkClassnames(true)} to='/login' onClick={this.logout.bind(this)}>
                     abmelden
                 </Link>
         }
         else {
-            return <Link className='appHeader__loginLink' to='/login' >
+            return <Link className={this.getLinkClassnames(true)} to='/login' >
                     anmelden
                 </Link>
         }
     }
 
+    toggleHamburger() {
+        this.setState({ hamburgerExpanded: !this.state.hamburgerExpanded });
+    }
+
+    getLinkClassnames(isLoginLink) {
+        return classNames( 
+            'appHeader__menuLink', {
+            'mobile-not-visible': !this.state.hamburgerExpanded,
+            'appHeader__loginLink': isLoginLink
+        });
+    }
+
     getActiveListLink() {
         if (this.state.activeList && loginStore.isLoggedIn()) {
-            return <Link to={'/app/' + this.state.activeList.name}>
+            return <Link className={this.getLinkClassnames()} to={'/app/' + this.state.activeList.name} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
         }
         else if (loginStore.isLoggedIn()) {
-            return <Link to={'/app'}>
+            return <Link className={this.getLinkClassnames()} to={'/app'} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
         }
@@ -64,13 +80,21 @@ export default class AppHeader extends Component {
     }
 
     render() {
+        let hamburgerClassnames = classNames('hamburger hamburger--slider', {'is-active': this.state.hamburgerExpanded});
+        let headerClassnames = classNames('appHeader', {'is-active': this.state.hamburgerExpanded});
+        
         return (
             <div className='container-fluid'>
-                <div className='appHeader'>
-                    <Link to='/about'>
+                <div className={headerClassnames}>
+                    <button className={hamburgerClassnames} type='button' onClick={this.toggleHamburger.bind(this)}>
+                        <span className='hamburger-box'>
+                            <span className='hamburger-inner'></span>
+                        </span>
+                    </button>
+                    <Link className={this.getLinkClassnames()} to='/about' onClick={this.toggleHamburger.bind(this)}>
                         about
                     </Link>
-                    <Link to='/faq'>
+                    <Link className={this.getLinkClassnames()} to='/faq' onClick={this.toggleHamburger.bind(this)}>
                         faq
                     </Link>
                     {this.getActiveListLink()}

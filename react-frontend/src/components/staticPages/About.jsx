@@ -11,11 +11,11 @@ export default class About extends Component {
 
     render() {
         return (
-            <div className='static'>
+            <div className='staticPage'>
                 <AppHeader />
                 <div className='container-fluid'>
                     <div className='container__header'>
-                        <h1>About: WG-Tools</h1>
+                        <h1>WG-Tools</h1>
                     </div>
                     <div className='staticPage__content'>
                         <h3 className='staticPage__content__headline'>Kurzüberblick</h3>
