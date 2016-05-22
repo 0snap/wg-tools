@@ -27,7 +27,9 @@ else {
 
 // forward all requests to api
 app.all('/api/:path', jsonParser, forwarder(appConfig.deptsEndpoint));
-
+app.get('/robots.txt', function(req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'robots.txt'))
+});
 
 app.all('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
