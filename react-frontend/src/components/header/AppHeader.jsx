@@ -47,7 +47,7 @@ export default class AppHeader extends Component {
                 </Link>
         }
         else {
-            return <Link className={this.getLinkClassnames(true)} to='/login' >
+            return <Link className={this.getLinkClassnames(true)} to='/login' onClick={this.toggleHamburger.bind(this)}>
                     anmelden
                 </Link>
         }
