@@ -60,8 +60,8 @@ export default class AppHeader extends Component {
     getLinkClassnames(isLoginLink) {
         return classNames( 
             'appHeader__menuLink', {
-            'mobile-not-visible': !this.state.hamburgerExpanded,
-            'appHeader__loginLink': isLoginLink
+            'appHeader__loginLink': isLoginLink, 
+            'is-active': this.state.hamburgerExpanded
         });
     }
 
@@ -82,7 +82,7 @@ export default class AppHeader extends Component {
     render() {
         let hamburgerClassnames = classNames('hamburger hamburger--slider', {'is-active': this.state.hamburgerExpanded});
         let headerClassnames = classNames('appHeader', {'is-active': this.state.hamburgerExpanded});
-        
+        let wrapperClassnames = classNames({'mobile-not-visible': !this.state.hamburgerExpanded});
         return (
             <div className='container-fluid'>
                 <div className={headerClassnames}>
@@ -91,14 +91,16 @@ export default class AppHeader extends Component {
                             <span className='hamburger-inner'></span>
                         </span>
                     </button>
-                    <Link className={this.getLinkClassnames()} to='/about' onClick={this.toggleHamburger.bind(this)}>
-                        about
-                    </Link>
-                    <Link className={this.getLinkClassnames()} to='/faq' onClick={this.toggleHamburger.bind(this)}>
-                        faq
-                    </Link>
-                    {this.getActiveListLink()}
-                    {this.getLoginLink()}
+                    <div className={wrapperClassnames}>
+                        <Link className={this.getLinkClassnames()} to='/about' onClick={this.toggleHamburger.bind(this)}>
+                            about
+                        </Link>
+                        <Link className={this.getLinkClassnames()} to='/faq' onClick={this.toggleHamburger.bind(this)}>
+                            faq
+                        </Link>
+                        {this.getActiveListLink()}
+                        {this.getLoginLink()}
+                    </div>
                 </div>
             </div>
         );

@@ -44,6 +44,8 @@
         border: none;
         height: 100vh;
         width: 100vw;
+        transition: height 0.3s cubic-bezier(0.1, 0.2, 0.5, 0.8);
+        -webkit-transition: height 0.3s cubic-bezier(0.1, 0.2, 0.5, 0.8);
     }
     .appHeader__menuLink, .appHeader__loginLink {
         font-size: 18px;
@@ -57,9 +59,9 @@
     .appHeader__loginLink {
         margin: 25px 30px;
     }
-    .mobile-not-visible {
-        display: none;
-        opacity: 0;
+    .appHeader__menuLink.is-active, .appHeader__loginLink.is-active {
+        animation: smooth-in 0.4s forwards;
+        -webkit-animation: smooth-in 0.4s forwards;
     }
     .hamburger {
         float: right;
@@ -82,6 +84,14 @@
         &, &::before, &::after {
             background-color: $lightBlue;
         }
+    }
+
+    @keyframes smooth-in {
+        100% { transform: translateX(10%); }
+    }
+
+    @-webkit-keyframes smooth-in {
+        100% { -webkit-transform: translateX(10%); }
     }
 
 }
