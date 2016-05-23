@@ -33,7 +33,8 @@
         border-left: 1px solid $lightBlue;
         border-bottom: 1px solid $lightBlue;
         border-radius: 0;
-        height: $appHeaderHeight;
+        font-size: 14px;
+        height: 45px;
         padding: 5px 5px;
         position: fixed;
         right: 0;
@@ -61,11 +62,12 @@
         opacity: 0;
     }
     .hamburger {
-        outline: 0;
         float: right;
+        outline: 0;
+        width: 60px;
     }
     .hamburger:hover {
-            opacity: 1;
+        opacity: 1;
     }
 
     .hamburger.is-active {
