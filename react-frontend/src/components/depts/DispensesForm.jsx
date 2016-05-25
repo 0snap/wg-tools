@@ -59,15 +59,13 @@ export default class DispensesForm extends Component {
         return (
             <div className='dispensesForm'>
                 <form onSubmit={this.setDispenses.bind(this)}>
-                    <div className='form-group'>
-                        <span className='dispensesForm__info'>Spenden <i className='fa fa-info-circle' title={DISPENSES_INFO}/></span>
-                        <span className='dispensesForm__space' />
-                        <button className='dispensesForm__arrow' type='button' onClick={this.decrease.bind(this)}>&lsaquo;</button>
-                        <input className='dispensesForm__dispensesInput' id='amount' type='number' step='0.01' min='0' value={this.state.amount} onChange={this.amountChange.bind(this)} />€
-                        <button className='dispensesForm__arrow' type='button' onClick={this.increase.bind(this)}>&rsaquo;</button>
-                        <span className='dispensesForm__space' />
-                        <button className='dispensesForm__submit' type='submit'>Speichern</button>
-                    </div>
+                    <span className='dispensesForm__info'>Spenden <i className='fa fa-info-circle' title={DISPENSES_INFO}/></span>
+                    <span className='dispensesForm__space' />
+                    <button className='dispensesForm__arrow' type='button' onClick={this.decrease.bind(this)}>&lsaquo;</button>
+                    <input className='dispensesForm__dispensesInput' id='amount' type='number' step='0.01' min='0' value={this.state.amount} onChange={this.amountChange.bind(this)} />€
+                    <button className='dispensesForm__arrow' type='button' onClick={this.increase.bind(this)}>&rsaquo;</button>
+                    <span className='dispensesForm__space' />
+                    <button className='dispensesForm__submit' type='submit'>Speichern</button>
                 </form>
             </div>
         );

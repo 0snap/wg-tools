@@ -66,7 +66,7 @@ def depts():
     listId = getDictFromPost(request).get('listId')
     if listId != None and listId != 'undefined':
         persons = storage.getExpensesPerPerson(listId, current_identity)
-        dispenses = storage.getExpensesList(listId, current_identity).get('dispenses')
+        dispenses = storage.getDispenses(listId, current_identity)
         if len(persons) > 0:
             meanDepts = deptCalculator.calcDepts(persons, dispenses)
             return json.dumps(meanDepts)
@@ -161,8 +161,8 @@ def setDispenses():
     ''' Returns a json list of depts for a given listId'''
     postedJson = getDictFromPost(request)
     listId = postedJson.get('listId')
-    dispenses = postedJson.get('dispenses')
-    if listId != None and listId != '' and listId != 'undefined' and dispenses != None and dispenses > 0:
+    dispenses = Decimal(postedJson.get('dispenses')) * Decimal('100')
+    if listId != None and listId != '' and listId != 'undefined' and dispenses != None and dispenses >= 0:
         return Response(json.dumps(storage.setDispenses(listId, current_identity, dispenses)))
     return Response('List not found', 404)
 

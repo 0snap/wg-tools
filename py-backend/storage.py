@@ -93,7 +93,7 @@ def __normalizeExpenseList(expList):
     normalized['name'] = expList.name
     normalized['tsDeleted'] = expList.tsDeleted
     normalized['editable'] = expList.editable
-    normalized['dispenses'] = expList.dispenses
+    normalized['dispenses'] = round(float(expList.dispenses/100), 2)
     normalized['id'] = str(expList.id)
     #print(normalized)
     return normalized
@@ -204,6 +204,12 @@ def setDispenses(listId, wgId, dispenses):
     ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(dispenses=dispenses)
     return True
 
+
+def getDispenses(listId, wgId):
+    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
+    if len(lists) == 1: 
+        return lists[0].dispenses
+    return None
 
 def getExpensesPerPerson(listId, wgId):
     ''' Returns a list in the form [{name: 'foo' amount: 'sum-amounts-for-foo', color: '#fff'}] 

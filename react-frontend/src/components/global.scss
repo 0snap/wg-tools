@@ -74,6 +74,10 @@ button:hover {
         background: $darkGrey;
     }
 
+    button:hover {
+        opacity: 1;
+    }
+
 	.container__header {
         border: none;        
         padding: 0 15px 10px 15px;

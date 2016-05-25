@@ -42,5 +42,23 @@
 }
 
 @media (max-width:767px) {
-    
+	.dispensesForm {
+		margin-bottom: 0;
+	}
+	.dispensesForm__dispensesInput {
+		width: 60px;
+	}
+    .dispensesForm__info {
+    	display: inline-block;
+		width: 100%;
+	}
+	.dispensesForm__space {
+		display: none;
+	}
+	.dispensesForm__arrow {
+		width: 50px;
+	}
+	.dispensesForm__arrow:hover {
+		color: $bgGrey;
+	}
 }
