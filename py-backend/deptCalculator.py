@@ -47,9 +47,7 @@ def makeEven(borrowers, sponsors, dispenseAmount):
 def makeEvenDispenses(sponsors, dispenseAmount):
     result = list()
     while dispenseAmount > 0:
-        print(sponsors)
         name, sponsor = sponsors.pop(0)
-        print(sponsor)
         total = Decimal(dispenseAmount - sponsor['amount']).quantize(Decimal('0.01'))
         if total > 0:
             dispenseAmount = total
