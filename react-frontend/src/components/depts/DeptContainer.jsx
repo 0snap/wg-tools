@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import DeptList from './DeptList.jsx'
+import DispensesForm from './DispensesForm.jsx'
 
 import Constants from '../../constants/ExpenseConstants.jsx';
 
@@ -35,7 +36,6 @@ export default class DeptContainer extends Component {
 
     handleActiveListChange() {
         let activeList = expensesStore.getActiveList();
-        //console.log('active', activeList),
         if (activeList) {
             expensesActions.fetchDepts(activeList.id);
         }
@@ -50,6 +50,8 @@ export default class DeptContainer extends Component {
             <div className="container-fluid">
                 <div className="container__header">
                     <h1>Schulden</h1>
+                    <DispensesForm activeList={expensesStore.getActiveList()} />
+
                 </div>
                 <DeptList deptList={this.state.deptList}/>
             </div>

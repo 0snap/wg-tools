@@ -6,9 +6,6 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import EditForm from '../../../src/components/expenses/EditForm.jsx';
 
-let expensesActions = require('../../../src/actions/ExpensesActions.jsx')
-
-
 describe('EditForm', () => {
 
     const noContent = 'Keine Liste ausgewählt';
@@ -23,7 +20,7 @@ describe('EditForm', () => {
     });
 
 
-    it('should render no content if no active list is undefined', () => {
+    it('should render no content if no active list is defined', () => {
         editForm = TestUtils.renderIntoDocument( <EditForm activeList={undefined} submitCallback={submitCallback} /> );
         let headline = TestUtils.findRenderedDOMComponentWithTag(editForm, 'h3');
         expect(headline.textContent).toEqual(noContent);

@@ -7,7 +7,6 @@ import TestUtils from 'react-addons-test-utils';
 import ConfirmBox from '../../../src/components/expenses/ConfirmBox.jsx';
 
 
-
 describe('ConfirmBox', () => {
 
     const text = 'TEXT';

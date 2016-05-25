@@ -1,0 +1,46 @@
+@import '../variables.scss';
+
+
+.dispensesForm {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+
+.dispensesForm__dispensesInput {
+	background: $darkGrey;
+	border: none;
+	color: $lightBlue;
+    width: 80px;
+}
+
+.dispensesForm__arrow {
+	background: none;
+	border: none;
+	color: $bgGrey;
+	display: inline-block;
+	text-align: center;
+	width: 30px;
+}
+
+.dispensesForm__arrow:hover {
+	opacity: 1;
+	color: $lightBlue;
+}
+
+.dispensesForm__info i:hover {
+	color: $lightBlue;
+}
+
+.dispensesForm__space {
+	display: inline-block;
+	width: 30px;
+}
+
+.dispensesForm__submit {
+	font-size: 14px;
+}
+
+@media (max-width:767px) {
+    
+}

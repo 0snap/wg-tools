@@ -13,7 +13,9 @@ let Constants = keyMirror({
   ACTIVE_LIST_ID: null,
   ACTIVE_LIST_CHANGED: null,
   FETCH_DEPTS: null,
-  FETCH_WGS: null
+  FETCH_WGS: null,
+  DISPENSES: null,
+  DISPENSES_CHANGED: null
 });
 
 module.exports = Constants;

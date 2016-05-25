@@ -177,6 +177,24 @@ let ExpensesActions = {
         );
     },
 
+    setDispenses(listId, dispenseAmount) {
+        if (!listId) {
+            return;
+        }
+        apiService.call(
+            'POST', 'setDispenses', {listId: listId, dispenses: dispenseAmount}, 
+            function(respText) {
+                Dispatcher.dispatch({
+                    actionType: Constants.DISPENSES,
+                    dispenses: dispenseAmount
+                });
+            },
+            function(err) {
+                console.log(err);
+            }
+        );
+    },
+
     setActiveList(listId) {
         Dispatcher.dispatch({
             actionType: Constants.ACTIVE_LIST_ID,

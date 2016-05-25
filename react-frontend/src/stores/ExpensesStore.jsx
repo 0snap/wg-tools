@@ -57,9 +57,10 @@ function deleteExpensesList(id) {
 
 function lockExpensesList(id) {
     // console.log("delete", id);
-    var toLock = _expensesLists.map(list => {
-        if(list.id == id) { list.editable = false; }
-    });
+    var toLock = getListForId(id);
+    if (toLock) {
+        toLock.editable = false;
+    }
 }
 
 function setExpensesLists(expensesLists) {
@@ -117,6 +118,15 @@ function getListForId(listId) {
         return list.id == listId
     });
     return list[0];
+}
+
+
+function setDispensesForActiveList(dispenses) {
+    // console.log("delete", id);
+    if (_activeList) {
+        _activeList.dispenses = dispenses;
+        getListForId(_activeList.id).dispenses = dispenses;
+    }
 }
 
 let ExpensesStore = assign({ }, EventEmitter.prototype, {
@@ -221,6 +231,10 @@ Dispatcher.register(function(action) {
             break;
         case(Constants.ACTIVE_LIST_ID):
             setActiveList(action.listId);
+            ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
+            break;
+        case(Constants.DISPENSES):
+            setDispensesForActiveList(action.dispenses);
             ExpensesStore.emitChange(Constants.ACTIVE_LIST_CHANGED);
             break;
     }
