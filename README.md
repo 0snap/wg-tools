@@ -32,7 +32,7 @@ You can create a WG (flat share) with a login, then actually login with that. Th
 
 You need a mongodb, python and nodejs.
 Everything is setup for development; start the frontend with "npm run dev" and the python server with "script/devServer.sh". Your mongodb should be running on localhost.
-Or start everything inside a container if you just want to use this. Install docker-compose and start everything via 'up'.
+Or start everything inside a container. Install docker-compose and start everything via 'up'.
 
 
 ## Todos
@@ -58,11 +58,11 @@ Or start everything inside a container if you just want to use this. Install doc
 	[] Graph for direct borrows
     [] List-types?
 
-### Pittances:
-	[] db: store pittances
-	[] calculator: concept of pittance + calc
-	[] fe: intuitive concept! 
-
+### Dispenses:
+	[x] db: store dispenses
+	[x] calculator: concept of dispense + calc
+	[x] fe: intuitive concept!
+	[] fe: styling
 
 ### Group notes:
 	[] have some note panel
@@ -72,14 +72,13 @@ Or start everything inside a container if you just want to use this. Install doc
 	[x] static pages (faq, about, etc)
 	[x] navigation in header
 	[] "custom space with settings"-button
-	[] mobile header == hamburger
+	[x] mobile header ==> hamburger
 
 ### Custom space for configuring WG settings
 	[] store wg settings (data model etc)
 	[] graph granularity
 	[] list clipping interval (requires list clipping in general)
 	[] colortheme?
-
 
 ### General behavior:
 	[x] Confirm delete of items
@@ -100,9 +99,9 @@ Or start everything inside a container if you just want to use this. Install doc
 	[x] message about backend-calls (eg. register already in use etc)
 	[x] Comments on items
 	[x] ssl on server (caddy)
+	[x] navigation, faq/about pages & link to github & homepage
+	[x] dont submit empty forms
 	[] general "backend (un)reachable" error for frontend 
-	[] navigation, faq/about pages & link to github & homepage
-	[] dont submit empty forms
 	[] dont leak DB ids to FE (still relevant?)
 	[] server side rendering
 
