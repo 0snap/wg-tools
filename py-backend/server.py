@@ -59,14 +59,6 @@ def getDictFromPost(request):
 ########## dept calculation ##########
 
 
-@app.route('/calcDeptsFromPostData', methods=['POST'])
-@jwt_required()
-def calcDepts():
-    ''' Calculates the "mean" of all depts contained in the post-data'''
-    jsonAsDict = getDictFromPost(request)
-    expensesList = deptCalculator.calcDepts(jsonAsDict)
-    return json.dumps(expensesList)
-
 @app.route('/meanDepts', methods=['POST'])
 @jwt_required()
 def depts():
@@ -74,8 +66,9 @@ def depts():
     listId = getDictFromPost(request).get('listId')
     if listId != None and listId != 'undefined':
         persons = storage.getExpensesPerPerson(listId, current_identity)
+        dispenses = storage.getExpensesList(listId, current_identity).get('dispenses')
         if len(persons) > 0:
-            meanDepts = deptCalculator.calcDepts(persons)
+            meanDepts = deptCalculator.calcDepts(persons, dispenses)
             return json.dumps(meanDepts)
         return json.dumps([])
     return Response('Need a list id', 400)
@@ -158,6 +151,19 @@ def getExpensesList():
     listId = getDictFromPost(request).get('listId')
     if listId != None and listId != '' and listId != 'undefined':
         return Response(json.dumps(storage.getNormalizedExpensePosts(listId, current_identity)))
+    return Response('List not found', 404)
+
+
+
+@app.route('/setDispenses', methods=['POST'])
+@jwt_required()
+def setDispenses():
+    ''' Returns a json list of depts for a given listId'''
+    postedJson = getDictFromPost(request)
+    listId = postedJson.get('listId')
+    dispenses = postedJson.get('dispenses')
+    if listId != None and listId != '' and listId != 'undefined' and dispenses != None and dispenses > 0:
+        return Response(json.dumps(storage.setDispenses(listId, current_identity, dispenses)))
     return Response('List not found', 404)
 
 

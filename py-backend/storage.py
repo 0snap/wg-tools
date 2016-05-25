@@ -49,6 +49,7 @@ class ExpensesList(Document):
     wg = ReferenceField(WG, reverse_delete_rule=CASCADE)
     editable = BooleanField()
     expensePosts = ListField(EmbeddedDocumentField(ExpensePost))
+    dispenses = IntField(min_value=0, default=0)
     tsDeleted = DateTimeField(default=None)
 
 
@@ -92,6 +93,7 @@ def __normalizeExpenseList(expList):
     normalized['name'] = expList.name
     normalized['tsDeleted'] = expList.tsDeleted
     normalized['editable'] = expList.editable
+    normalized['dispenses'] = expList.dispenses
     normalized['id'] = str(expList.id)
     #print(normalized)
     return normalized
@@ -176,6 +178,15 @@ def createExpensesList(name, wgId):
     return None
 
 
+def getExpensesList(listId, wgId):
+    ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
+    #print('create explist ', name, wgId)
+    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
+    if len(lists) == 1: 
+        return __normalizeExpenseList(lists[0])
+    return None
+
+
 def deleteExpensesList(listId, wgId):
     ''' Deletes expenses list object with the given id. '''
     ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(tsDeleted=datetime.now)
@@ -186,6 +197,11 @@ def lockExpensesList(listId, wgId):
     ''' Locks expenses list object with the given id. '''
     #print('locked list', listId)
     ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(editable=False)
+    return True
+
+
+def setDispenses(listId, wgId, dispenses):
+    ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(dispenses=dispenses)
     return True
 
 
