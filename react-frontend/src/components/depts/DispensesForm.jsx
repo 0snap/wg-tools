@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Tooltip from 'rc-tooltip';
 import Constants from '../../constants/ExpenseConstants.jsx';
 
 import './DispensesForm.scss';
@@ -42,6 +43,16 @@ export default class DispensesForm extends Component {
         this.setState({amount: event.target.value});
     }
 
+    getTooltip() {
+        let style = { 
+            height: '40px',
+            width: '80px'
+        };
+        return <Tooltip placement='bottomRight' trigger={['click', 'hover']} style={style} overlay={<span>{DISPENSES_INFO}</span>} >
+                <i className='fa fa-info-circle'/>
+            </Tooltip>
+    }
+
     render() {
         if ( !this.props.activeList) {
             return null;
@@ -49,7 +60,7 @@ export default class DispensesForm extends Component {
         else if (!this.props.activeList.editable) {
             return (
                 <div className='dispensesForm'>
-                    <span className='dispensesForm__info'>Spenden <i className='fa fa-info-circle' title={DISPENSES_INFO}/></span>
+                    <span className='dispensesForm__info'>Spenden {this.getTooltip()}</span>
                     <span className='dispensesForm__space' />
                     {this.state.amount}€
                     <span className='dispensesForm__space' />
@@ -59,7 +70,7 @@ export default class DispensesForm extends Component {
         return (
             <div className='dispensesForm'>
                 <form onSubmit={this.setDispenses.bind(this)}>
-                    <span className='dispensesForm__info'>Spenden <i className='fa fa-info-circle' title={DISPENSES_INFO}/></span>
+                    <span className='dispensesForm__info'>Spenden {this.getTooltip()}</span>
                     <span className='dispensesForm__space' />
                     <button className='dispensesForm__arrow' type='button' onClick={this.decrease.bind(this)}>&lsaquo;</button>
                     <input className='dispensesForm__dispensesInput' id='amount' type='number' step='0.01' min='0' value={this.state.amount} onChange={this.amountChange.bind(this)} />€

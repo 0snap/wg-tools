@@ -1,5 +1,5 @@
 @import '../variables.scss';
-
+@import '~rc-tooltip/assets/bootstrap.css';
 
 .dispensesForm {
 	font-size: 18px;
@@ -61,4 +61,15 @@
 	.dispensesForm__arrow:hover {
 		color: $bgGrey;
 	}
+}
+
+
+.rc-tooltip {
+	max-width: 70%;
+	left: 10%;
+}
+
+.rc-tooltip-inner {
+	color: $bgGrey;
+	background-color: $darkGrey;
 }
