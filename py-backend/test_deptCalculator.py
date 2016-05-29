@@ -153,6 +153,17 @@ def test_make_even_sanity_with_dispenses():
     #print(result)
     assert result == expectedResult
 
+def test_make_even_dispenses():
+    s1 = ('s1', {'name':'s1', 'amount': Decimal(1.33)})
+    s2 = ('s2', {'name':'s2', 'amount': Decimal(1.33)})
+    s3 = ('s3', {'name':'s3', 'amount': Decimal(0.33)})
+
+    expectedResult = [{'borrower': {'name':'Spende'}, 'amount': 1.33, 'sponsor':{'name':'s1'}},
+        {'borrower': {'name':'Spende'}, 'amount': 1.33, 'sponsor':{'name':'s2'}},
+        {'borrower': {'name':'Spende'}, 'amount': 0.33, 'sponsor':{'name':'s3'}}]
+
+    result = deptCalculator.makeEvenDispenses([s1, s2, s3], Decimal('3'))
+    assert result == expectedResult
 
 def test_sponsors_calculation():
     foo, bar, baz, ping, pong = getExpensePersons()
