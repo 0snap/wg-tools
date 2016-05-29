@@ -4,7 +4,7 @@ import { Router, browserHistory } from 'react-router';
 
 import routes from './routes.js';
 
-import './src/components/global.scss';
+import './src/global.scss';
 
 render((
     <Router history={browserHistory}>

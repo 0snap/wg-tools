@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import AppHeader from './header/AppHeader.jsx';
-import ExpensesContainer from './expenses/ExpensesContainer.jsx';
-import DeptContainer from './depts/DeptContainer.jsx';
+import AppHeader from '../components/header/AppHeader.jsx';
+import ExpensesContainer from '../components/expenses/ExpensesContainer.jsx';
+import DeptContainer from '../components/depts/DeptContainer.jsx';
 
 import Constants from '../constants/LoginConstants.jsx';
 

@@ -1,7 +1,7 @@
 import React, { Component } from  'react'
 import { Route, Redirect } from 'react-router';
 
-import App from './src/components/App.jsx';
+import App from './src/containers/App.jsx';
 import Login from './src/components/login/Login.jsx';
 import Register from './src/components/login/Register.jsx';
 import About from './src/components/staticPages/About.jsx';
