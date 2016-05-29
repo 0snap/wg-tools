@@ -61,10 +61,10 @@ let LoginRegisterActions = {
         let token = cookie.load(Constants.WG_TOOLS_AUTH);
         if (token) {
             LoginRegisterActions.storeToken(token);
-            return token;
+            return true;
         }
         else {
-            return null;
+            return false;
         }
     }
 
