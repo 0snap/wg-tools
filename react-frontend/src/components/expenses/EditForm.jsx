@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-var expensesAction = require('../../actions/ExpensesActions.jsx');
-var expensesStore = require('../../stores/ExpensesStore.jsx');
-import Constants from '../../constants/ExpenseConstants.jsx';
-
 
 export default class EditForm extends Component {
 

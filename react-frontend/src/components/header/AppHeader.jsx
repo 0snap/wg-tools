@@ -6,9 +6,6 @@ import classNames from 'classnames';
 import './AppHeader.scss';
 
 var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
-var loginStore = require('../../stores/LoginStore.jsx');
-var expensesStore = require('../../stores/ExpensesStore.jsx');
-
 
 export default class AppHeader extends Component {
     
@@ -16,23 +13,8 @@ export default class AppHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeList: expensesStore.getActiveList(),
             hamburgerExpanded: false
         };
-
-        this.handleActiveListChange = this.handleActiveListChange.bind(this);
-    }
-
-    componentDidMount() {
-        expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
-    }
-
-    componentWillUnmount() {
-        expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
-    }
-
-    handleActiveListChange() {
-        this.setState({ activeList: expensesStore.getActiveList() });
     }
 
 
@@ -41,7 +23,7 @@ export default class AppHeader extends Component {
     }
 
     getLoginLink() {
-        if(loginStore.isLoggedIn()) {
+        if(this.props.isLoggedIn) {
             return <Link className={this.getLinkClassnames(true)} to='/login' onClick={this.logout.bind(this)}>
                     abmelden
                 </Link>
@@ -66,12 +48,12 @@ export default class AppHeader extends Component {
     }
 
     getActiveListLink() {
-        if (this.state.activeList && loginStore.isLoggedIn()) {
-            return <Link className={this.getLinkClassnames()} to={'/app/' + this.state.activeList.name} onClick={this.toggleHamburger.bind(this)}>
+        if (this.props.activeList && this.props.isLoggedIn) {
+            return <Link className={this.getLinkClassnames()} to={'/app/' + this.props.activeList.name} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
         }
-        else if (loginStore.isLoggedIn()) {
+        else if (this.props.isLoggedIn) {
             return <Link className={this.getLinkClassnames()} to={'/app'} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
@@ -105,4 +87,10 @@ export default class AppHeader extends Component {
             </div>
         );
     }
+}
+
+
+AppHeader.propTypes = {
+    activeList: React.PropTypes.object,
+    isLoggedIn: React.PropTypes.bool.isRequired
 }

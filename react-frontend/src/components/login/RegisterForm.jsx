@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import './LoginRegisterForm.scss';
 
 var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');

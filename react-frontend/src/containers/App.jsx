@@ -8,6 +8,7 @@ import Constants from '../constants/ExpenseConstants.jsx';
 import './App.scss';
 
 var expensesStore = require('../stores/ExpensesStore.jsx');
+var loginStore = require('../stores/LoginStore.jsx');
 var expensesActions = require('../actions/ExpensesActions.jsx');
 
 export default class App extends Component {
@@ -68,10 +69,9 @@ export default class App extends Component {
 
 
 	render() {
-		// console.log(this.props.params.activeListName);
 		return (
 			<div className='app'>
-				<AppHeader />
+				<AppHeader activeList={this.state.activeList} isLoggedIn={loginStore.isLoggedIn()} />
 				<ExpensesContainer expenses={this.state.expenses} expensesLists={this.state.expensesLists} activeList={this.state.activeList} />
 				<DeptContainer deptList={this.state.deptList} activeList={this.state.activeList} />
 			</div>

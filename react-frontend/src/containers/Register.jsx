@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import RegisterForm from './RegisterForm.jsx';
-import Constants from '../../constants/LoginConstants.jsx';
+import RegisterForm from '../components/login/RegisterForm.jsx';
+import Constants from '../constants/LoginConstants.jsx';
 
-import AppHeader from '../header/AppHeader.jsx';
+import AppHeader from '../components/header/AppHeader.jsx';
 
 import './LoginRegister.scss';
 
-var loginStore = require('../../stores/LoginStore.jsx');
+var loginStore = require('../stores/LoginStore.jsx');
 
 export default class Register extends Component {
 
@@ -34,8 +34,9 @@ export default class Register extends Component {
     render() {
         return (
             <div className='register'>
-                <AppHeader />
+                <AppHeader activeList={undefined} isLoggedIn={loginStore.isLoggedIn()} />
                 <RegisterForm error={this.state.error}/>
-            </div>);
+            </div>
+        );
     }
 }

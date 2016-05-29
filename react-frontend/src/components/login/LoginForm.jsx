@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './LoginRegisterForm.scss';
 import { Link } from 'react-router'
+
+import './LoginRegisterForm.scss';
 
 var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
 

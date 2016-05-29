@@ -2,10 +2,10 @@ import React, { Component } from  'react'
 import { Route, Redirect } from 'react-router';
 
 import App from './src/containers/App.jsx';
-import Login from './src/components/login/Login.jsx';
-import Register from './src/components/login/Register.jsx';
-import About from './src/components/staticPages/About.jsx';
-import FAQ from './src/components/staticPages/FAQ.jsx';
+import Login from './src/containers/Login.jsx';
+import Register from './src/containers/Register.jsx';
+import About from './src/containers/About.jsx';
+import FAQ from './src/containers/FAQ.jsx';
 import Constants from './src/constants/LoginConstants.jsx';
 
 
