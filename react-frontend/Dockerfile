@@ -1,6 +1,6 @@
 FROM node:5
 
-COPY index.js index.js
+COPY client.js client.js
 COPY expressServer.js expressServer.js
 COPY package.json package.json
 

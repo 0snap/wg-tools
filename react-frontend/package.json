@@ -2,7 +2,7 @@
   "name": "wg-tools",
   "version": "0.0.1",
   "description": "wg-tools frontend",
-  "main": "index.js",
+  "main": "client.js",
   "scripts": {
     "dev": "NODE_ENV=development node expressServer.js",
     "start": "NODE_ENV=production node expressServer.js",
