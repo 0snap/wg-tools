@@ -1,42 +1,48 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
 import LoginForm from '../components/login/LoginForm.jsx';
 import Constants from '../constants/LoginConstants.jsx';
-
 import AppHeader from '../components/header/AppHeader.jsx';
 
 import './LoginRegister.scss';
 
-var loginStore = require('../stores/LoginStore.jsx');
+import { login } from '../actions/LoginRegisterActionCreators.jsx';
 
 
-export default class Login extends Component {
+class Login extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: undefined
-        };
-        this.handleLoginFail = this.handleLoginFail.bind(this);
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			error: undefined
+		};
+		this.doLogin = this.doLogin.bind(this);
+	}
 
-    componentDidMount() {
-        loginStore.addEventListener(Constants.LOGIN_FAILED, this.handleLoginFail);
-    }
+	doLogin(wgName, password) {
+		this.props.dispatch(login(wgName, password))
+	}
 
-    componentWillUnmount() {
-        loginStore.removeEventListener(Constants.LOGIN_FAILED, this.handleLoginFail);
-    }
-
-    handleLoginFail() {
-        this.setState({error: true});
-    }
-
-    render() {
-        return (
-            <div className='login'>
-                <AppHeader activeList={undefined} isLoggedIn={loginStore.isLoggedIn()} />
-                <LoginForm error={this.state.error}/>
-            </div>);
-    }
+	render() {
+		return (
+			<div className='login'>
+				<AppHeader isLoggedIn={false} />
+				<LoginForm error={this.props.loginError} loginCallback={this.doLogin}/>
+			</div>);
+	}
 }
+
+Login.propTypes = {
+	loginError: React.PropTypes.bool.isRequired,
+	dispatch: React.PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+	return { 
+		loginError: state.loginError
+	};
+}
+
+
+export default connect(mapStateToProps)(Login)

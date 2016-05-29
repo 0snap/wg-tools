@@ -29,7 +29,7 @@ export default class RegisterForm extends Component {
         event.preventDefault();
 
         if (this.state.password && this.state.password == this.state.passwordConfirm) {
-            loginRegisterActions.register(this.state.wgName, this.state.password);
+            this.props.registerCallback(this.state.wgName, this.state.password);
             this.setState({wgName: '', password: '', passwordConfirm: '', error: undefined})
         }
         else {
@@ -89,5 +89,6 @@ export default class RegisterForm extends Component {
 }
 
 RegisterForm.propTypes = {
-    error: React.PropTypes.string
+    error: React.PropTypes.string,
+    registerCallback: React.PropTypes.func.isRequired
 }

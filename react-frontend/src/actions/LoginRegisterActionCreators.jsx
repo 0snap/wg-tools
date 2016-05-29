@@ -4,61 +4,71 @@ import { browserHistory } from 'react-router';
 import Constants from '../constants/LoginConstants.jsx';
 var apiService = require('../services/ApiService.jsx');
 
-export function loginInit(wgName) {
-	return { type: Constants.LOGIN_INITIATED, wgName }
+
+function loginSuccess(jsonWebToken) {
+	return { type: Constants.LOGIN_SUCCESS, jwt: jsonWebToken }
 }
 
-export function loginSuccess(jsonWebToken) {
-	return { type: Constants.LOGIN_SUCCESS, jsonWebToken }
+function loginError(err) {
+	return { type: Constants.LOGIN_ERROR, error: err }
 }
 
-export function loginError(err) {
-	return { type: Constants.LOGIN_ERROR, err }
+export function login(wgName, password) {
+	return function(dispatch) {
+		apiService.login(
+			{ username: wgName, password: password },
+			function(textResp) {
+				let jsonWebToken = JSON.parse(textResp);
+				cookie.save(Constants.WG_TOOLS_AUTH, jsonWebToken, {'path': '/', 'maxAge': 30*24*3600});
+				browserHistory.push('/app');
+				location.reload();
+				return dispatch(loginSuccess(jsonWebToken));
+			},
+			function(err) { return dispatch(loginError(err)) }
+		);
+	}
 }
 
-export function login(wgName, password) login(wgName, password) {
-	dispatch(loginInit(wgName))
-	apiService.login(
-		{ username: wgName, password: password },
-		function(textResp) { dispatch(loginSuccess(JSON.parse(textResp))) },
-		function(err) { dispatch(loginError(err)) }
-	);
+function registerSuccess() {
+	return { type: Constants.REGISTER_SUCCESS }
 }
 
+function registerError(err) {
+	return { type: Constants.REGISTER_ERROR, error: err }
+}
 
 export function register(wgName, password) {
-	return { type: Constants.REGISTER, wgName, password }
+	return function(dispatch) {
+		apiService.callUnauthed('POST', 'register', { wgName: wgName, password: password },
+			function(textResp) {
+				browserHistory.push('/login');
+				return dispatch(registerSuccess());
+			},
+			function(err) { return dispatch(registerError(err)) }
+		);
+	}
+}
+
+function logoutSuccess() {
+	return { type: Constants.LOGOUT_SUCCESS }
 }
 
 export function logout() {
-	return { type: Constants.LOGOUT }
-}
-
-export function storeToken(token) {
-	return { type: Constants.LOGIN_SUCCESS, token }
+	return function(dispatch) {
+		cookie.remove(Constants.WG_TOOLS_AUTH, {'path': '/'});
+		browserHistory.push('/login');
+		dispatch(logoutSuccess);
+	}
 }
 
 export function tryLoginByCookie() {
-	return { type: Constants.TRY_LOGIN_BY_COOKE }
-}
-
-function fetchUser(login) {
-  return {
-	[CALL_API]: {
-	  types: [ USER_REQUEST, USER_SUCCESS, USER_FAILURE ],
-	  endpoint: `users/${login}`,
-	  schema: Schemas.USER
+	return function(dispatch) {
+		let token = cookie.load(Constants.WG_TOOLS_AUTH);
+		if (token) {
+			dispatch(loginSuccess(token));
+		}
+		else {
+			rdispatch(loginError());
+		}
 	}
-  }
-}
-
-export function loadUser(login, requiredFields = []) {
-  return (dispatch, getState) => {
-	const user = getState().entities.users[login]
-	if (user && requiredFields.every(key => user.hasOwnProperty(key))) {
-	  return null
-	}
-
-	return dispatch(fetchUser(login))
-  }
 }

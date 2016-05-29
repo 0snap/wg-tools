@@ -1,42 +1,47 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
 import RegisterForm from '../components/login/RegisterForm.jsx';
 import Constants from '../constants/LoginConstants.jsx';
-
 import AppHeader from '../components/header/AppHeader.jsx';
 
 import './LoginRegister.scss';
 
-var loginStore = require('../stores/LoginStore.jsx');
+import { register } from '../actions/LoginRegisterActionCreators.jsx';
+
 
 export default class Register extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            error: undefined
-        };
-        this.handleRegisterFail = this.handleRegisterFail.bind(this);
+        this.doRegister = this.doRegister.bind(this);
     }
 
-    componentDidMount() {
-        loginStore.addEventListener(Constants.REGISTER_FAILED, this.handleRegisterFail);
-    }
-
-    componentWillUnmount() {
-        loginStore.removeEventListener(Constants.REGISTER_FAILED, this.handleRegisterFail);
-    }
-
-    handleRegisterFail() {
-        this.setState({error: 'conflict'});
+    doRegister(wgName, password) {
+        this.props.dispatch(register(wgName, password))
     }
 
     render() {
+        let error = this.props.registerError? 'conflict' : undefined;
         return (
             <div className='register'>
-                <AppHeader activeList={undefined} isLoggedIn={loginStore.isLoggedIn()} />
-                <RegisterForm error={this.state.error}/>
+                <AppHeader isLoggedIn={false} />
+                <RegisterForm error={error} registerCallback={this.doRegister} />
             </div>
         );
     }
 }
+
+Register.propTypes = {
+    registerError: React.PropTypes.bool.isRequired,
+    dispatch: React.PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+    return { 
+        registerError: state.registerError
+    };
+}
+
+
+export default connect(mapStateToProps)(Register)
