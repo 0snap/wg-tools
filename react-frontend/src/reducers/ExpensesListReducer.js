@@ -1,4 +1,5 @@
 import Constants from '../constants/ExpenseConstants.jsx';
+import concat from 'lodash/concat';
 
 const initialState = {
 	expensesLists: [],
@@ -11,7 +12,7 @@ const initialState = {
 	setActiveListError: false
 }
 
-function getListForName(listName) {
+function getListForName(listName, expensesLists) {
     return expensesLists.filter(list => {
         return list.name == listName
     })[0];
@@ -26,9 +27,8 @@ function getListForId(listId, expensesLists) {
 export default function expensesLists(state = initialState, action) {
 	switch(action.type) {
 		case Constants.ADD_EXPENSES_LIST_SUCCESS:
-			let expensesLists = state.expensesLists.push(action.storedList);
 			return Object.assign({}, state, {
-				expensesLists: expensesLists,
+				expensesLists: concat(state.expensesLists, action.storedList),
 				storeError: false
 			});
 		case Constants.ADD_EXPENSES_LIST_ERROR:
@@ -36,8 +36,10 @@ export default function expensesLists(state = initialState, action) {
 				storeError: true
 			});
 		case Constants.DELETE_EXPENSES_LIST_SUCCESS:
+			let removed = state.expensesLists.filter(list => {return list.id != action.deletedId})
 			return Object.assign({}, state, {
-				expensesLists: state.expensesLists.filter(list => {return list.id != action.deletedId}),
+				expensesLists: removed,
+				activeList: removed[0],
 				deleteError: false
 			});
 		case Constants.DELETE_EXPENSES_LIST_ERROR:
@@ -45,9 +47,12 @@ export default function expensesLists(state = initialState, action) {
 				deleteError: true
 			});
 		case Constants.LOCK_EXPENSES_LIST_SUCCESS:
-			getListForId(action.lockedId).editable = false;
+			let lockedList = getListForId(action.lockedId, state.expensesLists);
+			lockedList.editable = false;
+			let listsWithoutLocked = state.expensesLists.filter(list => {return list.id != action.lockedId});
+			listsWithoutLocked.push(lockedList);
 			return Object.assign({}, state, {
-				expensesLists: expensesLists,
+				expensesLists: listsWithoutLocked,
 				lockError: false
 			});
 		case Constants.LOCK_EXPENSES_LIST_ERROR:
@@ -65,7 +70,7 @@ export default function expensesLists(state = initialState, action) {
 			});
 		case Constants.SET_DISPENSES_SUCCESS:
 			activeList.dispenses = action.dispenseAmount;
-	        getListForId(activeList.id).dispenses = action.dispenseAmount;
+	        getListForId(activeList.id, state.expensesLists).dispenses = action.dispenseAmount;
 			return Object.assign({}, state, {
 				expensesLists: expensesLists,
 				activeList: activeList,
@@ -81,7 +86,7 @@ export default function expensesLists(state = initialState, action) {
 			});
 		case Constants.ACTIVE_LIST_NAME:
 			return Object.assign({}, state, {
-				activeList: getListForName(action.listName)
+				activeList: getListForName(action.listName, state.expensesLists)
 			});
 		default:
 			return state

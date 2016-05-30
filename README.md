@@ -62,7 +62,7 @@ Or start everything inside a container. Install docker-compose and start everyth
 	[x] db: store dispenses
 	[x] calculator: concept of dispense + calc
 	[x] fe: intuitive concept!
-	[] fe: styling
+	[x] fe: styling
 
 ### Group notes:
 	[] have some note panel
@@ -79,6 +79,15 @@ Or start everything inside a container. Install docker-compose and start everyth
 	[] graph granularity
 	[] list clipping interval (requires list clipping in general)
 	[] colortheme?
+
+### flux -> redux 
+	[x] refactor 'old' concepts to match top level state-tree idea of redux 
+	[] actionCreators
+	[] reducers
+	[] distinguish dev + prod
+	[] remove old flux code, deps, everything
+	[] switch to redux
+	[] redux + react-router
 
 ### General behavior:
 	[x] Confirm delete of items

@@ -22,21 +22,40 @@ export default class App extends Component {
 
 	componentDidMount() {
 		// init the app by fetching all relevant stuff
-		const {activeList, fetchExpensesLists, fetchDepts, fetchExpenses} = this.props
-		let successCallback = (fetchedEpensesLists) => {
-			if(activeList && activeList.id) {
-				console.log('activeList')
-				fetchDepts(activeList.id);
-				fetchExpenses(activeList.id);
-			}
-			else {
-				console.log('using first list', fetchedEpensesLists);
-				fetchDepts(fetchedEpensesLists[0].id);
-				fetchExpenses(fetchedEpensesLists[0].id);
-			}
-		}
-		fetchExpensesLists(successCallback);
+		const { fetchExpensesLists } = this.props;
+		fetchExpensesLists();
 	}
+
+	componentWillReceiveProps(nextProps) {
+		this.guaranteeActiveList(nextProps);
+		this.reactOnActiveListChange(nextProps);
+		this.reactOnExpensePostsChange(nextProps);
+	}
+
+	guaranteeActiveList(nextProps) {
+		const { activeList, expensesLists, setActiveList } = nextProps
+		if ((!activeList || !activeList.id) && expensesLists[0]) {
+			setActiveList(expensesLists[0].id);
+		}
+	}
+
+	reactOnActiveListChange(nextProps) {
+		const newActiveList = nextProps.activeList
+		if (this.props.activeList != newActiveList && newActiveList.id) {
+			// new active list - refetch everything
+			const { fetchDepts, fetchExpenses } = this.props
+			fetchExpenses(newActiveList.id);
+		}
+	}
+
+	reactOnExpensePostsChange(nextProps) {
+		const { expensePosts, fetchDepts } = this.props;
+		const newExpensePosts = nextProps.expensePosts;
+		if (expensePosts.length != newExpensePosts.length) {
+			fetchDepts(nextProps.activeList.id);
+		}
+	}
+
 
 
 	render() {

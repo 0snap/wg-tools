@@ -80,8 +80,7 @@ export function lockList(listId) {
 }
 
 
-function fetchExpensesListsSuccess(expensesLists, callback) {
-	callback(expensesLists);
+function fetchExpensesListsSuccess(expensesLists) {
 	return { 
 		type: Constants.FETCH_EXPENSES_LISTS_SUCCESS, 
 		expensesLists: expensesLists
@@ -92,12 +91,12 @@ function fetchExpensesListsError(err) {
 	return { type: Constants.FETCH_EXPENSES_LISTS_ERROR, error: err }
 }
 
-export function fetchExpensesLists(callback) {
+export function fetchExpensesLists() {
 	return function(dispatch) {
 		apiService.call(
             'GET', 'expensesLists', undefined,
 			function(respText) {
-				return dispatch(fetchExpensesListsSuccess(JSON.parse(respText), callback));
+				return dispatch(fetchExpensesListsSuccess(JSON.parse(respText)));
 			},
 			function(err) {
 				return dispatch(fetchExpensesListsError(err));

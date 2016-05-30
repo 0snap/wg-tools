@@ -10,9 +10,9 @@ const initialState = {
 export default function expensePosts(state = initialState, action) {
 	switch(action.type) {
 		case Constants.ADD_EXPENSE_POST_SUCCESS:
-			expensePosts[action.expensePost.id] = action.expensePost
+			state.expensePosts[action.expensePost.id] = action.expensePost
 			return Object.assign({}, state, {
-				expensePosts: expensePosts,
+				expensePosts: state.expensePosts,
 				storeError: false
 			});
 		case Constants.ADD_EXPENSE_POST_ERROR:
