@@ -7,7 +7,7 @@ import rootReducer from '../reducers';
 
 export default function configureStore(preloadedState) {
 	const loggerMiddleware = createLogger();
-	const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk));
+	const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk, loggerMiddleware));
 
 	if (module.hot) {
 		module.hot.accept('../reducers', () => {

@@ -19,7 +19,7 @@ export function login(wgName, password) {
 			{ username: wgName, password: password },
 			function(textResp) {
 				let jsonWebToken = JSON.parse(textResp);
-				cookie.save(Constants.WG_TOOLS_AUTH, jsonWebToken, {'path': '/', 'maxAge': 30*24*3600});
+				cookie.save(Constants.WG_TOOLS_AUTH, jsonWebToken.access_token, {'path': '/', 'maxAge': 30*24*3600});
 				browserHistory.push('/app');
 				location.reload();
 				return dispatch(loginSuccess(jsonWebToken));

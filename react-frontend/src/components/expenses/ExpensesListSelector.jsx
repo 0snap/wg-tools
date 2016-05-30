@@ -4,8 +4,6 @@ import ConfirmBox from './ConfirmBox.jsx';
 
 import './ExpensesHeaderEntry.scss'
 
-var expensesActions = require('../../actions/ExpensesActions.jsx');
-
 
 export default class ExpensesListSelector extends Component {
 
@@ -15,18 +13,18 @@ export default class ExpensesListSelector extends Component {
     }
 
     handleSelect(event) {
-        // console.log('select ', event.target.value);
-        expensesActions.setActiveList(event.target.value);
+        console.log('select ', event.target.value);
+        this.props.setActiveList(event.target.value);
     }
 
     doDeleteList() {
         // console.log('perform delete');
-        expensesActions.deleteList(this.props.selected.id);
+        this.props.deleteList(this.props.selected.id);
     }
 
     doLockList() {
         //console.log('perform lock');
-        expensesActions.lockList(this.props.selected.id);
+        this.props.lockList(this.props.selected.id);
     }
 
     render() {
@@ -65,5 +63,8 @@ export default class ExpensesListSelector extends Component {
 
 ExpensesListSelector.propTypes = {
     expensesLists: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.object
+    selected: React.PropTypes.object,
+    setActiveList: React.PropTypes.func.isRequired,
+    deleteList: React.PropTypes.func.isRequired,
+    lockList: React.PropTypes.func.isRequired
 }

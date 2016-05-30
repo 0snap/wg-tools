@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import './ExpensesHeaderEntry.scss'
 
-var expensesActions = require('../../actions/ExpensesActions.jsx');
-
 const MOBILE_NOT_VISIBLE = 'mobile-not-visible';
 export default class ExpensesListCreateForm extends Component {
 
@@ -18,7 +16,7 @@ export default class ExpensesListCreateForm extends Component {
 
     addList(event) {
         event.preventDefault();
-        expensesActions.storeList(this.state.name.trim()); // gracefully
+        this.props.storeList(this.state.name.trim()); // gracefully
         this.setState({name: ''});
     }
 
@@ -55,4 +53,8 @@ export default class ExpensesListCreateForm extends Component {
         );
     }
 
+}
+
+ExpensesListCreateForm.propTypes = {
+    storeList: React.PropTypes.func.isRequired
 }

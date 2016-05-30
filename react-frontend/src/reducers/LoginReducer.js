@@ -6,7 +6,7 @@ const initialState = {
 	registerError: false
 }
 
-export default function reduceLogin(state = initialState, action) {
+export default function session(state = initialState, action) {
 	switch(action.type) {
 		case Constants.LOGIN_SUCCESS:
 			return Object.assign({}, state, {

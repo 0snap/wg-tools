@@ -1,80 +1,102 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
 import AppHeader from '../components/header/AppHeader.jsx';
 import ExpensesContainer from '../components/expenses/ExpensesContainer.jsx';
 import DeptContainer from '../components/depts/DeptContainer.jsx';
 
 import Constants from '../constants/ExpenseConstants.jsx';
 
-import './App.scss';
+import { fetchDepts } from '../actions/DeptsActionCreators.jsx';
+import { setActiveList, storeList, deleteList, lockList, fetchExpensesLists } from '../actions/ExpensesListActionCreators.jsx';
+import { storeExpense, deleteExpense, fetchExpenses } from '../actions/ExpensePostActionCreators.jsx';
 
-var expensesStore = require('../stores/ExpensesStore.jsx');
-var loginStore = require('../stores/LoginStore.jsx');
-var expensesActions = require('../actions/ExpensesActions.jsx');
+
+import './App.scss';
 
 export default class App extends Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {
-			expenses: expensesStore.getAllExpenses(),
-			expensesLists: expensesStore.getExpensesLists(),
-			deptList: expensesStore.getDepts(),
-			activeList: expensesStore.getActiveList()
-		}
-		this.handleDeptsChange = this.handleDeptsChange.bind(this);
-		this.handleActiveListChange = this.handleActiveListChange.bind(this);
-		this.handleExpensesListsChange = this.handleExpensesListsChange.bind(this);
-		this.handleExpensesChange = this.handleExpensesChange.bind(this);
-		this.handleActiveListChange = this.handleActiveListChange.bind(this);
 	}
 
 	componentDidMount() {
-		expensesStore.addEventListener(Constants.FETCH_DEPTS, this.handleDeptsChange);
-		expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
-		expensesStore.addEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange);
-		expensesStore.addEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange);
-
-		// init store by calling actions:
-		expensesActions.fetchExpensesLists( () => 
-			expensesActions.setActiveListByName(this.props.params.activeListName)
-		);
-	}
-
-	componentWillUnmount() {
-		expensesStore.removeEventListener(Constants.FETCH_DEPTS, this.handleDeptsChange);
-		expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
-		expensesStore.removeEventListener(Constants.EXPENSE_POSTS_CHANGED, this.handleExpensesChange);
-		expensesStore.removeEventListener(Constants.EXPENSES_LISTS_CHANGED, this.handleExpensesListsChange);
-	}
-
-	handleDeptsChange() {
-		this.setState({ deptList: expensesStore.getDepts() });
-	}
-
-	handleExpensesChange() {
-		this.setState({ expenses: expensesStore.getAllExpenses() });
-	}
-
-	handleExpensesListsChange() {
-		this.setState({ expensesLists: expensesStore.getExpensesLists() });
-	}
-
-	handleActiveListChange() {
-		let activeList = expensesStore.getActiveList();
-		let listId = activeList? activeList.id : undefined;
-		expensesActions.fetchDepts(listId);
-		expensesActions.fetchExpenses(listId);
-		this.setState({ activeList: activeList });
+		// init the app by fetching all relevant stuff
+		const {activeList, fetchExpensesLists, fetchDepts, fetchExpenses} = this.props
+		let successCallback = (fetchedEpensesLists) => {
+			if(activeList && activeList.id) {
+				console.log('activeList')
+				fetchDepts(activeList.id);
+				fetchExpenses(activeList.id);
+			}
+			else {
+				console.log('using first list', fetchedEpensesLists);
+				fetchDepts(fetchedEpensesLists[0].id);
+				fetchExpenses(fetchedEpensesLists[0].id);
+			}
+		}
+		fetchExpensesLists(successCallback);
 	}
 
 
 	render() {
 		return (
 			<div className='app'>
-				<AppHeader activeList={this.state.activeList} isLoggedIn={loginStore.isLoggedIn()} />
-				<ExpensesContainer expenses={this.state.expenses} expensesLists={this.state.expensesLists} activeList={this.state.activeList} />
-				<DeptContainer deptList={this.state.deptList} activeList={this.state.activeList} />
+				<AppHeader activeList={this.props.activeList} isLoggedIn={true} />
+				<ExpensesContainer 
+					expenses={this.props.expensePosts} 
+					expensesLists={this.props.expensesLists} 
+					activeList={this.props.activeList}
+					setActiveList={this.props.setActiveList}
+					storeExpense={this.props.storeExpense}
+					deleteExpense={this.props.deleteExpense}
+					storeList={this.props.storeList}
+					lockList={this.props.lockList}
+					deleteList={this.props.deleteList} />
+				<DeptContainer deptList={this.props.depts} activeList={this.props.activeList} />
 			</div>
 		);
 	}
 }
+
+
+App.propTypes = {
+	expensePosts: React.PropTypes.array.isRequired,
+	expensesLists: React.PropTypes.array.isRequired,
+	activeList: React.PropTypes.object,
+	depts: React.PropTypes.array.isRequired,
+	fetchExpensesLists: React.PropTypes.func.isRequired,
+	fetchExpenses: React.PropTypes.func.isRequired,
+	fetchDepts: React.PropTypes.func.isRequired,
+	storeExpense: React.PropTypes.func.isRequired,
+	deleteExpense: React.PropTypes.func.isRequired,
+	setActiveList: React.PropTypes.func.isRequired,
+	storeList: React.PropTypes.func.isRequired,
+	deleteList: React.PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+	let expensePosts = []
+	for (var key in state.expensePosts.expensePosts) {
+		expensePosts.push(state.expensePosts.expensePosts[key]);
+	}
+	return { 
+		expensePosts: expensePosts,
+		expensesLists: state.expensesLists.expensesLists,
+		activeList: state.expensesLists.activeList,
+		depts: state.depts.depts,
+	};
+}
+
+
+export default connect(mapStateToProps, {
+	fetchExpensesLists,
+	fetchDepts,
+	fetchExpenses,
+	storeList,
+	setActiveList,
+	deleteList,
+	lockList,
+	storeExpense,
+	deleteExpense,
+})(App)

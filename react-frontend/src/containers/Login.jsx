@@ -40,7 +40,7 @@ Login.propTypes = {
 
 function mapStateToProps(state) {
 	return { 
-		loginError: state.loginError
+		loginError: state.session.loginError
 	};
 }
 
