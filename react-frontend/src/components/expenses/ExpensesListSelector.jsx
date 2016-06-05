@@ -37,14 +37,14 @@ export default class ExpensesListSelector extends Component {
                 </div>
             );
         }
-        let selectedId = selected ? selected.id : '';
+        let selectedName = selected ? selected.name : '';
         let editable = selected ? selected.editable : false;
         return(
             <div className="expensesListSelector"> 
                 <h3>Liste auswählen</h3>
-                <select className="form__select" onChange={this.handleSelect.bind(this)} value={selectedId} >
+                <select className="form__select" onChange={this.handleSelect.bind(this)} value={selectedName} >
                     {expensesLists.map((list) => {
-                        return <option key={list.id} value={list.id}>{list.name}</option>
+                        return <option key={list.name} value={list.name}>{list.name}</option>
                     })}
                 </select>
                 <div>

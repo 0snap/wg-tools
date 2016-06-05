@@ -21,7 +21,7 @@ export function login(wgName, password) {
 				let jsonWebToken = JSON.parse(textResp);
 				storeTokenToCookie(jsonWebToken.access_token);
 				browserHistory.push('/app');
-				location.reload();
+				//location.reload();
 				return dispatch(loginSuccess());
 			},
 			function(err) { return dispatch(loginError()) }

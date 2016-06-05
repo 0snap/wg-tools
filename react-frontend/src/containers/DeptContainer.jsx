@@ -20,7 +20,10 @@ export default class DeptContainer extends Component {
 		const newActiveList = nextProps.activeList
 		const newExpensePosts = nextProps.expensePosts;
 		const { activeList, expensePosts, fetchDepts } = this.props;
-		if (activeList != newActiveList || expensePosts.length != newExpensePosts.length ) {
+		console.log(activeList != newActiveList)
+		console.log(expensePosts.length != newExpensePosts.length)
+		if ((activeList != newActiveList || expensePosts.length != newExpensePosts.length)
+			&& newActiveList.id ) {
 				
 			fetchDepts(newActiveList.id);
 		}

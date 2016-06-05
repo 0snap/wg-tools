@@ -28,22 +28,21 @@ export default class App extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.guaranteeActiveList(nextProps);
-		this.handleExpensesListsChange(nextProps);
-	}
+		const { activeList, activeListName, expensesLists, setActiveList, setActiveListError } = nextProps;
+		const oldActiveList = this.props.activeList;
+		const oldExpensesLists = this.props.expensesLists;
 
-	guaranteeActiveList(nextProps) {
-		const { activeList, expensesLists, setActiveList } = nextProps
-		if ((!activeList || !activeList.id) && expensesLists[0] && expensesLists[0].id) {
-			setActiveList(expensesLists[0].id);
+		if (activeListName && activeList.name != activeListName && !setActiveListError) {
+			// listname by url
+			setActiveList(activeListName, true);
 		}
-	}
-
-	handleExpensesListsChange(nextProps) {
-		const { expensesLists, setActiveList } = this.props;
-		const newExpLists = nextProps.expensesLists;
-		if(expensesLists.length != newExpLists.length && newExpLists[0]) {
-			setActiveList(newExpLists[0].id);
+		else if((expensesLists.length != oldExpensesLists.length || setActiveListError) && expensesLists[0]) {
+			// delete / add exp list or initial load without name
+			setActiveList(expensesLists[0].name);
+		}
+		else if(setActiveListError) {
+			// invalid entry in url
+			setActiveList('');
 		}
 	}
 
@@ -68,7 +67,7 @@ App.propTypes = {
 	logout: React.PropTypes.func.isRequired
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	let expensePosts = []
 	for (var key in state.expensePosts.expensePosts) {
 		expensePosts.push(state.expensePosts.expensePosts[key]);
@@ -76,6 +75,8 @@ function mapStateToProps(state) {
 	return { 
 		expensesLists: state.expensesLists.expensesLists,
 		activeList: state.expensesLists.activeList,
+		activeListName: ownProps.params.activeListName,
+		setActiveListError: state.expensesLists.setActiveListError
 	};
 }
 

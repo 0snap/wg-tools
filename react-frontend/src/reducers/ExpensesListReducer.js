@@ -13,17 +13,17 @@ const initialState = {
 }
 
 function getListForName(listName, expensesLists) {
-	let listsClone = expensesLists.copyWithin();
-    return listsClone.filter(list => {
+	let listReference = expensesLists.filter(list => {
         return list.name == listName
     })[0];
+	return Object.assign({}, listReference) || {};
 }
 
 function getListForId(listId, expensesLists) {
 	let listReference = expensesLists.filter(list => {
         return list.id == listId
     })[0];
-	return Object.assign({}, listReference);
+	return Object.assign({}, listReference) || {};
 }
 
 function removeFrom(expensesLists, toRemoveId) {
@@ -46,7 +46,7 @@ export default function expensesLists(state = initialState, action) {
 			let removed = removeFrom(state.expensesLists, action.deletedId);
 			return Object.assign({}, state, {
 				expensesLists: removed,
-				activeList: removed[0],
+				activeList: removed[0] || {},
 				deleteError: false
 			});
 		case Constants.DELETE_EXPENSES_LIST_ERROR:
@@ -88,14 +88,22 @@ export default function expensesLists(state = initialState, action) {
 			return Object.assign({}, state, {
 				setDispensesError: true
 			});
-		case Constants.ACTIVE_LIST_ID:
-			return Object.assign({}, state, {
-				activeList: getListForId(action.listId, state.expensesLists)
-			});
 		case Constants.ACTIVE_LIST_NAME:
-			return Object.assign({}, state, {
-				activeList: getListForName(action.listName, state.expensesLists)
-			});
+			if (action.listName != '') {
+				// if not explicitly wanted to unset..
+				let newActiveList = getListForName(action.listName, state.expensesLists);
+				let setActiveError = newActiveList.name? false : true;
+				return Object.assign({}, state, {
+					activeList: newActiveList,
+					setActiveListError: setActiveError
+				});
+			}
+			else {
+				return Object.assign({}, state, {
+					activeList: {},
+					setActiveListError: false
+				});
+			}
 		default:
 			return state
 	}

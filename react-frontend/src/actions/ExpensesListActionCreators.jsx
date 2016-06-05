@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 import Constants from '../constants/ExpenseConstants.jsx';
 var apiService = require('../services/ApiService.jsx');
 
@@ -132,12 +134,12 @@ export function setDispenses(listId, dispenseAmount) {
 }
 
 
-export function setActiveList(listId) {
-	return { type: Constants.ACTIVE_LIST_ID, listId: listId };
-}
-
-
-export function setActiveListByName(listName) {
-	return { type: Constants.ACTIVE_LIST_NAME, listName: listName };
+export function setActiveList(listName, suppressUrlUpdate) {
+	return function (dispatch) {
+		if (!suppressUrlUpdate) {
+			browserHistory.push('/app/' + listName);
+		}
+		return dispatch({ type: Constants.ACTIVE_LIST_NAME, listName: listName });
+	}
 }
 
