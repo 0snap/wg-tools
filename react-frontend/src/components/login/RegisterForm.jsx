@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import './LoginRegisterForm.scss';
 
-var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
-
-
 const errMsgs = [];
 errMsgs['conflict'] = <span className="loginRegisterForm__error">Dieser WG-Name existiert bereits</span>;
 errMsgs['password'] = <span className="loginRegisterForm__error">Passwörter sind nicht identisch</span>;

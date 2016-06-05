@@ -15,7 +15,7 @@ export default class DeptContainer extends Component {
             <div className="container-fluid">
                 <div className="container__header">
                     <h1>Schulden</h1>
-                    <DispensesForm activeList={this.props.activeList} />
+                    <DispensesForm activeList={this.props.activeList} setDispenses={this.props.setDispenses} />
 
                 </div>
                 <DeptList deptList={this.props.deptList}/>
@@ -26,5 +26,6 @@ export default class DeptContainer extends Component {
 
 DeptContainer.propTypes = {
     deptList: React.PropTypes.array.isRequired,
-    activeList: React.PropTypes.object
+    activeList: React.PropTypes.object,
+    setDispenses: React.PropTypes.func.isRequired
 }

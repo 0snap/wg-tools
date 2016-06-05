@@ -25,7 +25,11 @@ export default class ExpensesContainer extends Component {
 					deleteList={this.props.deleteList}
 					lockList={this.props.lockList}
 					storeExpense={this.props.storeExpense} />
-				<ExpensesList expenses={this.props.expenses} activeList={this.props.activeList} />
+				<ExpensesList 
+					expenses={this.props.expenses} 
+					activeList={this.props.activeList}
+					deleteExpense={this.props.deleteExpense}
+					/>
 				<ExpensesGraph expenses={this.props.expenses} />
 			</div>
 		);

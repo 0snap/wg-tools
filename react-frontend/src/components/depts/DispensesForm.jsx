@@ -4,8 +4,6 @@ import Constants from '../../constants/ExpenseConstants.jsx';
 
 import './DispensesForm.scss';
 
-var expensesActions = require('../../actions/ExpensesActions.jsx');
-
 const DISPENSES_INFO = 'Hier kannst du eintragen, ob irgendjemand zu den laufenden Ausgaben etwas dazugegeben hat. Zum Beispiel tut ein Kumpel zu den alltäglichen Einkäufen 5€ in eure WG-Kasse. Dies wird dann mit den Schulden verrechnet.';
 const LIST_UNEDITABLE = '(Liste gesperrt)';
 
@@ -27,7 +25,7 @@ export default class DispensesForm extends Component {
         event.preventDefault();
         let amount = parseFloat(this.state.amount);
         if (amount >= 0) {
-            expensesActions.setDispenses(this.props.activeList.id, amount);
+            this.props.setDispenses(this.props.activeList.id, amount);
         }
     }
 
@@ -84,5 +82,6 @@ export default class DispensesForm extends Component {
 }
 
 DispensesForm.propTypes = {
-    activeList: React.PropTypes.object
+    activeList: React.PropTypes.object,
+    setDispenses: React.PropTypes.func.isRequired
 }

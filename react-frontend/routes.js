@@ -8,24 +8,11 @@ import About from './src/containers/About.jsx';
 import FAQ from './src/containers/FAQ.jsx';
 import Constants from './src/constants/LoginConstants.jsx';
 
-
-let loginRegisterActions = require('./src/actions/LoginRegisterActions.jsx');
-let loginStore = require('./src/stores/LoginStore.jsx');
-
-
-function getLoginStatus() {
-	return loginStore.isLoggedIn();
-}
-
-function tryLoginByCookie(nextState, replace) {
-
-	loginRegisterActions.tryLoginByCookie();
-}
+import { isLoggedIn } from './src/services/LoginService.jsx';
 
 function redirectToLoginWhenNotLoggedIn(nextState, replace) {
 
-	tryLoginByCookie();
-	if (!getLoginStatus()) {
+	if (!isLoggedIn()) {
 		replace( {
 			pathname:'/login',
 			state: { nextPathname: '/app' } 
@@ -36,9 +23,7 @@ function redirectToLoginWhenNotLoggedIn(nextState, replace) {
 
 function redirectToAppWhenLoggedIn(nextState, replace) {
 
-	tryLoginByCookie();
-
-	if (getLoginStatus()) {
+	if (isLoggedIn()) {
 		replace( {   
 			pathname:'/app',
 			state: { nextPathname: '/login' }
@@ -53,7 +38,7 @@ export default (
 		<Route path="/app(/)(:activeListName)" component={App} onEnter={redirectToLoginWhenNotLoggedIn} />
 		<Route path="/login(/)" component={Login} onEnter={redirectToAppWhenLoggedIn} />
 		<Route path='/register(/)' component={Register} onEnter={redirectToAppWhenLoggedIn} />
-		<Route path="/about(/)" component={About} onEnter={tryLoginByCookie} />
-		<Route path="/faq(/)" component={FAQ} onEnter={tryLoginByCookie} />
+		<Route path="/about(/)" component={About} />
+		<Route path="/faq(/)" component={FAQ} />
 	</Route>
 );

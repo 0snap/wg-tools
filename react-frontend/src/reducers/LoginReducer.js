@@ -1,7 +1,6 @@
 import Constants from '../constants/LoginConstants.jsx';
 
 const initialState = {
-	jwt: undefined,
 	loginError: false,
 	registerError: false
 }
@@ -10,12 +9,10 @@ export default function session(state = initialState, action) {
 	switch(action.type) {
 		case Constants.LOGIN_SUCCESS:
 			return Object.assign({}, state, {
-				jwt: action.jwt,
 				loginError: false
 			});
 		case Constants.LOGIN_ERROR:
 			return Object.assign({}, state, {
-				jwt: undefined,
 				loginError: true
 			})
 		case Constants.REGISTER_SUCCESS:

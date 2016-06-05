@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-var expensesActions = require('../../actions/ExpensesActions.jsx');
 
 import './ExpensesItem.scss';
 
@@ -20,7 +19,8 @@ export default class ExpensesItem extends Component {
 
     doDelete() {
         this.setState({alive: true});
-        expensesActions.deleteExpense(this.props.item.id, this.props.activeList.id);
+        const { item, activeList, deleteExpense } = this.props;
+        deleteExpense(item.id, activeList.id);
     }
 
     render() {
@@ -47,5 +47,7 @@ export default class ExpensesItem extends Component {
 
 ExpensesItem.propTypes = {
     item: React.PropTypes.object.isRequired,
-    activeList: React.PropTypes.object.isRequired
+    activeList: React.PropTypes.object.isRequired,
+    deleteExpense: React.PropTypes.func.isRequired
+
 }

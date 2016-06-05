@@ -24,6 +24,10 @@ function getListForId(listId, expensesLists) {
     })[0];
 }
 
+function removeFrom(expensesLists, toRemoveId) {
+	return expensesLists.filter(list => { return list.id != toRemoveId });
+}
+
 export default function expensesLists(state = initialState, action) {
 	switch(action.type) {
 		case Constants.ADD_EXPENSES_LIST_SUCCESS:
@@ -36,7 +40,7 @@ export default function expensesLists(state = initialState, action) {
 				storeError: true
 			});
 		case Constants.DELETE_EXPENSES_LIST_SUCCESS:
-			let removed = state.expensesLists.filter(list => {return list.id != action.deletedId})
+			let removed = removeFrom(state.expensesLists, action.deletedId);
 			return Object.assign({}, state, {
 				expensesLists: removed,
 				activeList: removed[0],
@@ -48,11 +52,11 @@ export default function expensesLists(state = initialState, action) {
 			});
 		case Constants.LOCK_EXPENSES_LIST_SUCCESS:
 			let lockedList = getListForId(action.lockedId, state.expensesLists);
+			let listsWithoutLocked = removeFrom(state.expensesLists, action.lockedId);
 			lockedList.editable = false;
-			let listsWithoutLocked = state.expensesLists.filter(list => {return list.id != action.lockedId});
-			listsWithoutLocked.push(lockedList);
 			return Object.assign({}, state, {
-				expensesLists: listsWithoutLocked,
+				expensesLists: concat(listsWithoutLocked, lockedList),
+				activeList: lockedList,
 				lockError: false
 			});
 		case Constants.LOCK_EXPENSES_LIST_ERROR:
@@ -69,11 +73,13 @@ export default function expensesLists(state = initialState, action) {
 				fetchError: true
 			});
 		case Constants.SET_DISPENSES_SUCCESS:
-			activeList.dispenses = action.dispenseAmount;
-	        getListForId(activeList.id, state.expensesLists).dispenses = action.dispenseAmount;
+			let editedList = getListForId(state.activeList.id, state.expensesLists);
+			let listsWithoutEdited = removeFrom(state.expensesLists, state.activeList.id);
+			editedList.dispenses = action.dispenseAmount;
+	        listsWithoutEdited.push(editedList);
 			return Object.assign({}, state, {
-				expensesLists: expensesLists,
-				activeList: activeList,
+				expensesLists: listsWithoutEdited,
+				activeList: editedList,
 				setDispensesError: false
 			});
 		case Constants.SET_DISPENSES_ERROR:

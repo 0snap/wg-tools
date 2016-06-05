@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import AppHeader from '../components/header/AppHeader.jsx';
 import AboutPage from '../components/staticPages/AboutPage.jsx';
 import Constants from '../constants/ExpenseConstants.jsx';
 
 var expensesStore = require('../stores/ExpensesStore.jsx');
-var loginStore = require('../stores/LoginStore.jsx');
-var expensesActions = require('../actions/ExpensesActions.jsx');
+
+import { logout } from '../actions/LoginRegisterActionCreators.jsx';
 
 export default class About extends Component {
 
@@ -33,9 +35,17 @@ export default class About extends Component {
 	render() {
 		return (
 			<div className='staticPage'>
-				<AppHeader activeList={this.state.activeList} isLoggedIn={loginStore.isLoggedIn()}/>
+				<AppHeader activeList={this.state.activeList} logoutCallback={this.props.logout} />
 				<AboutPage />
 			</div>
 		);
 	}
 }
+
+
+About.propTypes = {
+	logout: React.PropTypes.func.isRequired
+}
+
+
+export default connect(() => { return {} }, { logout } )(About)

@@ -9,11 +9,9 @@ export default class ExpensesListSelector extends Component {
 
     constructor(props) {
         super(props);
-        //console.log('selected list ', this.props.selected);
     }
 
     handleSelect(event) {
-        console.log('select ', event.target.value);
         this.props.setActiveList(event.target.value);
     }
 

@@ -1,15 +1,10 @@
 import request from 'superagent';
-import cookie from 'react-cookie';
 import Constants from '../constants/LoginConstants.jsx';
 
+import { getTokenFromCookie } from './LoginService.jsx';
 
 const endpoint = '/api/';
 
-
-function getToken() {
-	return cookie.load(Constants.WG_TOOLS_AUTH);
-
-}
 
 let ApiService = {
 
@@ -17,7 +12,7 @@ let ApiService = {
 		request(method, endpoint + path)
 	        .send(payload)
 	        .set('Content-Type', 'application/json; charset=UTF-8')
-	        .set('Authorization', 'JWT ' + getToken())
+	        .set('Authorization', 'JWT ' + getTokenFromCookie())
 	        .set('Access-Control-Allow-Origin', '*')
 	        .end(function(err, res) {
 	            if(err) {

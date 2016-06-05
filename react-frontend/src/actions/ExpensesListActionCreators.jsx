@@ -133,7 +133,6 @@ export function setDispenses(listId, dispenseAmount) {
 
 
 export function setActiveList(listId) {
-	console.log(listId)
 	return { type: Constants.ACTIVE_LIST_ID, listId: listId };
 }
 

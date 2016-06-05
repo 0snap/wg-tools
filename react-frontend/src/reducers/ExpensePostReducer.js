@@ -20,9 +20,9 @@ export default function expensePosts(state = initialState, action) {
 				storeError: true
 			});
 		case Constants.DELETE_EXPENSE_POST_SUCCESS:
-			delete expensePosts[action.postId]
+			delete state.expensePosts[action.postId]
 			return Object.assign({}, state, {
-				expensePosts: expensePosts,
+				expensePosts: state.expensePosts,
 				deleteError: false
 			});
 		case Constants.DELETE_EXPENSE_POST_ERROR:

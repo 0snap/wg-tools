@@ -3,9 +3,9 @@ import Constants from '../../constants/ExpenseConstants.jsx';
 import { Link } from 'react-router'
 import classNames from 'classnames';
 
-import './AppHeader.scss';
+import { isLoggedIn } from '../../services/LoginService.jsx';
 
-var loginRegisterActions = require('../../actions/LoginRegisterActions.jsx');
+import './AppHeader.scss';
 
 export default class AppHeader extends Component {
     
@@ -18,13 +18,9 @@ export default class AppHeader extends Component {
     }
 
 
-    logout() {
-        loginRegisterActions.logout();
-    }
-
     getLoginLink() {
-        if(this.props.isLoggedIn) {
-            return <Link className={this.getLinkClassnames(true)} to='/login' onClick={this.logout.bind(this)}>
+        if(isLoggedIn()) {
+            return <Link className={this.getLinkClassnames(true)} to='/login' onClick={this.props.logoutCallback}>
                     abmelden
                 </Link>
         }
@@ -48,12 +44,12 @@ export default class AppHeader extends Component {
     }
 
     getActiveListLink() {
-        if (this.props.activeList && this.props.isLoggedIn) {
+        if (this.props.activeList && isLoggedIn()) {
             return <Link className={this.getLinkClassnames()} to={'/app/' + this.props.activeList.name} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
         }
-        else if (this.props.isLoggedIn) {
+        else if (isLoggedIn()) {
             return <Link className={this.getLinkClassnames()} to={'/app'} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
@@ -92,5 +88,5 @@ export default class AppHeader extends Component {
 
 AppHeader.propTypes = {
     activeList: React.PropTypes.object,
-    isLoggedIn: React.PropTypes.bool.isRequired
+    logoutCallback: React.PropTypes.func.isRequired
 }
