@@ -13,26 +13,29 @@ const initialState = {
 }
 
 function getListForName(listName, expensesLists) {
-    return expensesLists.filter(list => {
+	let listsClone = expensesLists.copyWithin();
+    return listsClone.filter(list => {
         return list.name == listName
     })[0];
 }
 
 function getListForId(listId, expensesLists) {
-    return expensesLists.filter(list => {
+	let listReference = expensesLists.filter(list => {
         return list.id == listId
     })[0];
+	return Object.assign({}, listReference);
 }
 
 function removeFrom(expensesLists, toRemoveId) {
-	return expensesLists.filter(list => { return list.id != toRemoveId });
+	let listsClone = expensesLists.copyWithin();
+	return listsClone.filter(list => { return list.id != toRemoveId });
 }
 
 export default function expensesLists(state = initialState, action) {
 	switch(action.type) {
 		case Constants.ADD_EXPENSES_LIST_SUCCESS:
 			return Object.assign({}, state, {
-				expensesLists: concat(state.expensesLists, action.storedList),
+				expensesLists: concat(action.storedList, state.expensesLists.slice(0)),
 				storeError: false
 			});
 		case Constants.ADD_EXPENSES_LIST_ERROR:
@@ -65,7 +68,7 @@ export default function expensesLists(state = initialState, action) {
 			});
 		case Constants.FETCH_EXPENSES_LISTS_SUCCESS:
 			return Object.assign({}, state, {
-				expensesLists: action.expensesLists,
+				expensesLists: action.expensesLists.reverse(),
 				fetchError: false
 			});
 		case Constants.FETCH_EXPENSES_LISTS_ERROR:
@@ -76,9 +79,8 @@ export default function expensesLists(state = initialState, action) {
 			let editedList = getListForId(state.activeList.id, state.expensesLists);
 			let listsWithoutEdited = removeFrom(state.expensesLists, state.activeList.id);
 			editedList.dispenses = action.dispenseAmount;
-	        listsWithoutEdited.push(editedList);
 			return Object.assign({}, state, {
-				expensesLists: listsWithoutEdited,
+				expensesLists: concat(editedList, listsWithoutEdited),
 				activeList: editedList,
 				setDispensesError: false
 			});

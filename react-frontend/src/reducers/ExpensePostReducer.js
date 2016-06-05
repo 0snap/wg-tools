@@ -10,9 +10,10 @@ const initialState = {
 export default function expensePosts(state = initialState, action) {
 	switch(action.type) {
 		case Constants.ADD_EXPENSE_POST_SUCCESS:
-			state.expensePosts[action.expensePost.id] = action.expensePost
+			let addedExpensePosts = Object.assign({}, state.expensePosts)
+			addedExpensePosts[action.expensePost.id] = action.expensePost
 			return Object.assign({}, state, {
-				expensePosts: state.expensePosts,
+				expensePosts: addedExpensePosts,
 				storeError: false
 			});
 		case Constants.ADD_EXPENSE_POST_ERROR:
@@ -20,9 +21,10 @@ export default function expensePosts(state = initialState, action) {
 				storeError: true
 			});
 		case Constants.DELETE_EXPENSE_POST_SUCCESS:
-			delete state.expensePosts[action.postId]
+			let reducedExpensePosts = Object.assign({}, state.expensePosts)
+			delete reducedExpensePosts[action.postId]
 			return Object.assign({}, state, {
-				expensePosts: state.expensePosts,
+				expensePosts: reducedExpensePosts,
 				deleteError: false
 			});
 		case Constants.DELETE_EXPENSE_POST_ERROR:
