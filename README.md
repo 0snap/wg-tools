@@ -82,12 +82,14 @@ Or start everything inside a container. Install docker-compose and start everyth
 
 ### flux -> redux 
 	[x] refactor 'old' concepts to match top level state-tree idea of redux 
-	[] actionCreators
-	[] reducers
+	[x] adjust test
+	[x] actionCreators
+	[x] reducers
+	[x] remove old flux code, deps, everything
+	[x] switch to redux
 	[] distinguish dev + prod
-	[] remove old flux code, deps, everything
-	[] switch to redux
 	[] redux + react-router
+	[] redux call opt
 
 ### General behavior:
 	[x] Confirm delete of items
