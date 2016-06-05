@@ -7,6 +7,9 @@ export default class ExpensesItem extends Component {
     constructor(props) {
         super(props);
         this.state = { alive: true }
+        this.onDelete = this.onDelete.bind(this);
+        this.doDelete = this.doDelete.bind(this);
+        this.onAbort = this.onAbort.bind(this);
     }
 
     onDelete() {
@@ -24,22 +27,23 @@ export default class ExpensesItem extends Component {
     }
 
     render() {
+        const { item, activeList } = this.props;
         let nameStyle = {
-            color: this.props.item.color
+            color: item.color
         }
         if(this.state.alive) {
             return (
-                <li className='expensesItem moneyItem' title={this.props.item.comment}>
-                    <span className='expensesItem__title' style={nameStyle}>{this.props.item.name} {this.props.item.amount}€</span>
-                    { this.props.activeList.editable ? <button className='expensesItem__deleteButton' onClick={this.onDelete.bind(this)}>&#10006;</button> : ''}
+                <li className='expensesItem moneyItem' title={item.comment}>
+                    <span className='expensesItem__title' style={nameStyle}>{item.name} {item.amount}€</span>
+                    { activeList.editable ? <button className='expensesItem__deleteButton' onClick={this.onDelete}>&#10006;</button> : ''}
                 </li>
             );
         }
         return (
             <li className='expensesItem moneyItem'>
                 <span className='expensesItem__title'>Löschen?</span>
-                <button className='expensesItem__actionButton' onClick={this.onAbort.bind(this)}>Nein</button>
-                <button className='expensesItem__actionButton' onClick={this.doDelete.bind(this)}>Ja</button>
+                <button className='expensesItem__actionButton' onClick={this.onAbort}>Nein</button>
+                <button className='expensesItem__actionButton' onClick={this.doDelete}>Ja</button>
             </li>
         );
     }

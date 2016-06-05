@@ -6,9 +6,6 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import ExpensesListSelector from '../../../src/components/expenses/ExpensesListSelector.jsx';
 
-let expensesActions = require('../../../src/actions/ExpensesActions.jsx')
-
-
 describe('ExpensesListSelector', () => {
 
     const headlineText = 'Liste auswählen';
@@ -22,16 +19,24 @@ describe('ExpensesListSelector', () => {
 
     let listSelector;
 
-    beforeEach(function() {
-        listSelector = TestUtils.renderIntoDocument( <ExpensesListSelector expensesLists={expensesLists} selected={selected} /> );
-    });
+    const setActiveList = jest.genMockFunction();
+    const deleteList = jest.genMockFunction();
+    const lockList = jest.genMockFunction();
 
-    expensesActions.setActiveList = jest.genMockFunction();
+    beforeEach(function() {
+        listSelector = TestUtils.renderIntoDocument(
+            <ExpensesListSelector expensesLists={expensesLists} selected={selected} setActiveList={setActiveList}
+                deleteList={deleteList} lockList={lockList} />
+        );
+    });
 
 
     it('should render headline and noContent with empty expenses lists', () => {
         
-        listSelector = TestUtils.renderIntoDocument( <ExpensesListSelector expensesLists={[]} selected={undefined} /> );
+        listSelector = TestUtils.renderIntoDocument( 
+            <ExpensesListSelector expensesLists={[]} selected={undefined} setActiveList={setActiveList}
+                deleteList={deleteList} lockList={lockList} />
+        );
         
         let headline = TestUtils.findRenderedDOMComponentWithTag(listSelector, 'h3');
         expect(headline.textContent).toEqual(headlineText);
@@ -54,7 +59,7 @@ describe('ExpensesListSelector', () => {
 
         TestUtils.Simulate.change( select, {target: {value: '2' }} );
 
-        expect(expensesActions.setActiveList).toBeCalledWith('2');
+        expect(setActiveList).toBeCalledWith('2');
     });
 
     it('should render confirm boxes for "delete" and "lock" ', () => {
@@ -63,7 +68,10 @@ describe('ExpensesListSelector', () => {
     });
 
     it('should only render only confirm box for delete, if list is locked', () => {
-        listSelector = TestUtils.renderIntoDocument( <ExpensesListSelector expensesLists={expensesLists} selected={uneditable} /> );
+        listSelector = TestUtils.renderIntoDocument(
+            <ExpensesListSelector expensesLists={expensesLists} selected={uneditable}
+                setActiveList={setActiveList} deleteList={deleteList} lockList={lockList} />
+        );
         
         let deleteConfirm = TestUtils.findRenderedDOMComponentWithClass(listSelector, 'confirmBox');
         expect(deleteConfirm).toBeDefined();

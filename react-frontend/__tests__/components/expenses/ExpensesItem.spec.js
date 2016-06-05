@@ -15,11 +15,13 @@ describe('ExpensesItem', () => {
     let expItem;
     let itemNode;
 
+    const deleteExpense = jest.genMockFunction();
+
     const activeList = { id: 'LIST ID', name: 'LIST NAME', editable: true };
 
     beforeEach(function() {
         expItem = TestUtils.renderIntoDocument(
-            <ExpensesItem item={expItemData} activeList={activeList} />
+            <ExpensesItem item={expItemData} activeList={activeList} deleteExpense={deleteExpense} />
         );
         itemNode = ReactDOM.findDOMNode(expItem);
         expect(itemNode).toBeDefined();
@@ -71,16 +73,15 @@ describe('ExpensesItem', () => {
             yesNoButtons[1]
         );
         
-        ExpensesItem.prototype.doDelete = jest.genMockFunction();
-
         expect(itemNode.textContent).toEqual(defaultText);
         expect(expItem.state.alive).toEqual(true);
+        expect(deleteExpense).toBeCalled();
     });
 
     it('does not render delete-button if list not editable', () => {
         let inactiveList = { id: 'LIST ID', name: 'LIST NAME', editable: false };
         expItem = TestUtils.renderIntoDocument(
-            <ExpensesItem item={expItemData} activeList={inactiveList} />
+            <ExpensesItem item={expItemData} activeList={inactiveList} deleteExpense={deleteExpense}/>
         );
         itemNode = ReactDOM.findDOMNode(expItem);
 

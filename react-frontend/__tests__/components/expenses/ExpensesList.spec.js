@@ -16,11 +16,12 @@ describe('ExpensesList', () => {
         {id: '2', name: 'n2'}
     ];
     const activeList = { id: 'LIST ID', name: 'LIST NAME', editable: true };
+    const deleteExpense = jest.genMockFunction();
 
 
     it('should render noContentText if expenses are empty', () => {
         let expList = TestUtils.renderIntoDocument(
-            <ExpensesList activeList={activeList} expenses={[]} />
+            <ExpensesList activeList={activeList} expenses={[]} deleteExpense={deleteExpense} />
         );
         let expListNode = ReactDOM.findDOMNode(expList);
         expect(expListNode).toBeDefined();
@@ -29,9 +30,9 @@ describe('ExpensesList', () => {
         expect(headline.textContent).toEqual(noContentText);
     });
 
-    it('should render expenses when if expenses are not empty', () => {
+    it('should render expenses if expenses are not empty', () => {
         let expList = TestUtils.renderIntoDocument(
-            <ExpensesList activeList={activeList} expenses={expenses} />
+            <ExpensesList activeList={activeList} expenses={expenses} deleteExpense={deleteExpense}/>
         );
         let expListNode = ReactDOM.findDOMNode(expList);
         expect(expListNode).toBeDefined();

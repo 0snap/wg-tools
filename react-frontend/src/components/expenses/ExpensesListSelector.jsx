@@ -26,8 +26,8 @@ export default class ExpensesListSelector extends Component {
     }
 
     render() {
-        let _this = this;
-        if(this.props.expensesLists.length === 0) {
+        const { expensesLists, selected } = this.props;
+        if(expensesLists.length === 0) {
             return (
                 <div className="expensesListSelector"> 
                 <h3>Liste auswählen</h3>
@@ -37,13 +37,13 @@ export default class ExpensesListSelector extends Component {
                 </div>
             );
         }
-        let selected = this.props.selected ? this.props.selected.id : '';
-        let editable = this.props.selected ? this.props.selected.editable : false;
+        let selectedId = selected ? selected.id : '';
+        let editable = selected ? selected.editable : false;
         return(
             <div className="expensesListSelector"> 
                 <h3>Liste auswählen</h3>
-                <select className="form__select" onChange={this.handleSelect.bind(this)} value={selected} >
-                    {this.props.expensesLists.map((list) => {
+                <select className="form__select" onChange={this.handleSelect.bind(this)} value={selectedId} >
+                    {expensesLists.map((list) => {
                         return <option key={list.id} value={list.id}>{list.name}</option>
                     })}
                 </select>

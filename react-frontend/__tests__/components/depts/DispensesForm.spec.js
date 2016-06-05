@@ -6,30 +6,27 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import DispensesForm from '../../../src/components/depts/DispensesForm.jsx';
 
-let expensesActions = require('../../../src/actions/ExpensesActions.jsx');
-
-
 describe('DispensesForm', () => {
 
     const activeList = { id: 'LIST ID', name: 'LIST NAME', editable: true, dispenses: 5 };
     const uneditableContent = '(Liste gesperrt)';
     let dispensesForm;
-    expensesActions.setDispenses = jest.genMockFunction();
+    const setDispenses = jest.genMockFunction();
 
     beforeEach(function() {
-        dispensesForm = TestUtils.renderIntoDocument( <DispensesForm activeList={activeList}/> );
+        dispensesForm = TestUtils.renderIntoDocument( <DispensesForm activeList={activeList} setDispenses={setDispenses} /> );
     });
 
 
     it('should not render if no active list is defined', () => {
-        dispensesForm = TestUtils.renderIntoDocument( <DispensesForm activeList={undefined} /> );
+        dispensesForm = TestUtils.renderIntoDocument( <DispensesForm activeList={undefined} setDispenses={setDispenses} /> );
         let formDiv = TestUtils.scryRenderedDOMComponentsWithClass(dispensesForm, 'dispensesForm');
         expect(formDiv.length).toEqual(0);
     });
 
     it('should render text content if list is not editable', () => {
         let activeList = { id: 'LIST ID', name: 'LIST NAME', editable: false };
-        dispensesForm = TestUtils.renderIntoDocument( <DispensesForm activeList={activeList} /> );
+        dispensesForm = TestUtils.renderIntoDocument( <DispensesForm activeList={activeList} setDispenses={setDispenses} /> );
         let infoFields = TestUtils.scryRenderedDOMComponentsWithClass(dispensesForm, 'dispensesForm__info');
         expect(infoFields[1].textContent).toEqual(uneditableContent);
     });
@@ -58,6 +55,6 @@ describe('DispensesForm', () => {
         let form = TestUtils.findRenderedDOMComponentWithTag(dispensesForm, 'form');
         TestUtils.Simulate.submit( form );
 
-        expect(expensesActions.setDispenses).toBeCalledWith('LIST ID', 5);
+        expect(setDispenses).toBeCalledWith('LIST ID', 5);
     });
 });

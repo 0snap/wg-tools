@@ -6,16 +6,14 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import RegisterForm from '../../../src/components/login/RegisterForm.jsx';
 
-let actions = require('../../../src/actions/LoginRegisterActions.jsx')
-
 
 describe('RegisterForm', () => {
 
     let loginForm;
-    actions.register = jest.genMockFunction();
+    const register = jest.genMockFunction();
     
     beforeEach(function() {
-        loginForm = TestUtils.renderIntoDocument( <RegisterForm /> );
+        loginForm = TestUtils.renderIntoDocument( <RegisterForm registerCallback={register}/> );
     });
 
     it('should render', () => {
@@ -47,7 +45,7 @@ describe('RegisterForm', () => {
         let form = TestUtils.findRenderedDOMComponentWithTag(loginForm, 'form');
         TestUtils.Simulate.submit( form );
 
-        expect(actions.register).not.toBeCalled();
+        expect(register).not.toBeCalled();
         expect(loginForm.state.wgName).toEqual('USER');
         expect(loginForm.state.password).toEqual('SECRET');
         expect(loginForm.state.passwordConfirm).toEqual('OTHER SECRET');
@@ -79,7 +77,7 @@ describe('RegisterForm', () => {
         let form = TestUtils.findRenderedDOMComponentWithTag(loginForm, 'form');
         TestUtils.Simulate.submit( form );
 
-        expect(actions.register).toBeCalledWith('USER', 'SAME SECRET');
+        expect(register).toBeCalledWith('USER', 'SAME SECRET');
         expect(loginForm.state.wgName).toEqual('');
         expect(loginForm.state.password).toEqual('');
         expect(loginForm.state.passwordConfirm).toEqual('');

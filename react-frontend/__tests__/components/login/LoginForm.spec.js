@@ -6,14 +6,12 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import LoginForm from '../../../src/components/login/LoginForm.jsx';
 
-let actions = require('../../../src/actions/LoginRegisterActions.jsx')
-
 
 describe('LoginForm', () => {
 
-    const loginForm = TestUtils.renderIntoDocument( <LoginForm /> );
+    const login = jest.genMockFunction();
     
-    actions.login = jest.genMockFunction();
+    const loginForm = TestUtils.renderIntoDocument( <LoginForm loginCallback={login}/> );
 
 
     it('should render', () => {
@@ -45,7 +43,7 @@ describe('LoginForm', () => {
         let form = TestUtils.findRenderedDOMComponentWithTag(loginForm, 'form');
         TestUtils.Simulate.submit( form );
 
-        expect(actions.login).toBeCalledWith('USER', 'SECRET');
+        expect(login).toBeCalledWith('USER', 'SECRET');
         expect(loginForm.state.wgName).toEqual('');
         expect(loginForm.state.password).toEqual('');
     });
