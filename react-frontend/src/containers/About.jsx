@@ -5,37 +5,18 @@ import AppHeader from '../components/header/AppHeader.jsx';
 import AboutPage from '../components/staticPages/AboutPage.jsx';
 import Constants from '../constants/ExpenseConstants.jsx';
 
-var expensesStore = require('../stores/ExpensesStore.jsx');
-
 import { logout } from '../actions/LoginRegisterActionCreators.jsx';
 
 export default class About extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			activeList: expensesStore.getActiveList()
-		}
-		this.handleActiveListChange = this.handleActiveListChange.bind(this);
 	}
-
-	componentDidMount() {
-		expensesStore.addEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
-	}
-
-	componentWillUnmount() {
-		expensesStore.removeEventListener(Constants.ACTIVE_LIST_CHANGED, this.handleActiveListChange);
-	}
-
-	handleActiveListChange() {
-		this.setState({ activeList: expensesStore.getActiveList() });
-	}
-
 
 	render() {
 		return (
 			<div className='staticPage'>
-				<AppHeader activeList={this.state.activeList} logoutCallback={this.props.logout} />
+				<AppHeader activeList={this.props.activeList} logoutCallback={this.props.logout} />
 				<AboutPage />
 			</div>
 		);
@@ -44,8 +25,15 @@ export default class About extends Component {
 
 
 About.propTypes = {
-	logout: React.PropTypes.func.isRequired
+	logout: React.PropTypes.func.isRequired,
+	activeList: React.PropTypes.object
+}
+
+function mapStateToProps(state) {
+	return {
+		activeList: state.expensesLists.activeList,
+	}
 }
 
 
-export default connect(() => { return {} }, { logout } )(About)
+export default connect(mapStateToProps, { logout } )(About)
