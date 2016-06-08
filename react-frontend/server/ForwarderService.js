@@ -9,12 +9,13 @@ module.exports = function(endpoint) {
 			.send(req.body)
 			.end( function(err, resBackend) {
 				if(err) {
-					console.log('Error forwarding request', endpoint, err);
 					if(err.status > 100 && err.status < 999) {
-						res.status(err.status).send(err);
+						console.log('Error forwarding request', err);
+						res.status(err.status);
 					}
 					else {
-						res.status(500).send('Undefined status code returned from Backend');
+						console.log('Encountered weird response code', err);
+						res.status(500);
 					}
 				}
 				else {
