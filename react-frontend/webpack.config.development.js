@@ -8,7 +8,13 @@ module.exports = {
         './client.js'
     ],
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            //client side browser js process.env definitions:
+            "process.env": {
+                NODE_ENV: JSON.stringify("development")
+            }
+        }),
     ],
     output: {
         filename: 'bundle.js',

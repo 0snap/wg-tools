@@ -19,6 +19,7 @@ module.exports = function(endpoint) {
 					}
 				}
 				else {
+					//console.log(res);
 					res.send(resBackend);
 				}
 			});

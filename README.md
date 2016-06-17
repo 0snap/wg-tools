@@ -88,7 +88,7 @@ Or start everything inside a container. Install docker-compose and start everyth
 	[x] remove old flux code, deps, everything
 	[x] switch to redux
 	[] distinguish dev + prod
-	[] redux + react-router
+	[x] redux + react-router
 	[] redux call opt
 
 ### General behavior:

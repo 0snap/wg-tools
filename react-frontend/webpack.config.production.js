@@ -11,7 +11,13 @@ module.exports = {
         publicPath: '/'
     },
     plugins: [
-        new ExtractTextPlugin('bundle.css')
+        new ExtractTextPlugin('bundle.css'),
+        new webpack.DefinePlugin({
+            //client side browser js process.env definitions:
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }),
     ],
     module: {
         loaders: [{
