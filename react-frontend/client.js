@@ -6,14 +6,11 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 import routes from './routes.js';
 import configureStore from './src/stores/configureStore.js';
+import Root from './src/containers/Root.jsx';
 
 import './src/global.scss';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
-render((
-	<Provider store={store}>
-		<Router history={history} routes={routes} />
-	</Provider>
-), document.getElementById('content'));
+render(<Root store={store} history={history}/>, document.getElementById('content'));
