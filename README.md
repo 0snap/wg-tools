@@ -1,5 +1,7 @@
 # WG-Tools
 
+A hosted version can be found at: [wg-tools.de](https://wg-tools.de).
+
 You can get the whole application containerized for self hosting at dockerhub!
 
 ### Build
@@ -17,22 +19,31 @@ Mongo-Container:
 
 ## Purpose
 
-
 If you are living in a flat share and have to manage expenses or other stuff and you want some just-working tool for that purpose, then you are at the right place here. This applicaiton is meant for diy hosting and development. Feel free to contribute!
 
-A hosted version can be found at: [wg-tools.de](https://wg-tools.de). 
 
 
 ### Behavior
 
-You can create a WG (flat share) with a login, then actually login with that. The app stores expenses and calculates the mean among all participants. It offers a human-usable interface for non-tech people. Currently under development, so basically anything may change from now to then!!! Nexts steps are security tests for the login. Then come all the things that are not already checkmarked below in this readme.
+You can create a 'WG' (flat share) with a login, then actually login with that. The app stores expenses and calculates the mean among all participants. It offers a human-usable interface for non-tech people. Currently under development, so basically anything may change from now to then!!! Nexts steps are security tests for the login. Then come all the things that are not already checkmarked below in this readme.
 
 
 ## Usage
 
+You may simply use the app for free or self host everything, compile sources or just run containers.
+
+### Plain Usage
+
+Simply use the hosted application here (registration does not require anything except a flatshare-name): [wg-tools.de](https://wg-tools.de)
+
+### DIY Hosting
+
 You need a mongodb, python and nodejs.
-Everything is setup for development; start the frontend with "npm run dev" and the python server with "script/devServer.sh". Your mongodb should be running on localhost.
-Or start everything inside a container. Install docker-compose and start everything via 'up'.
+Everything is setup for development; start the frontend with ```npm run dev``` and the python server with ```script/devServer.sh```. Your mongodb should be running on localhost.
+
+The python API expects a folder named ```secrets``` in the python-backend directory, containing two files: ```salt``` and ```secret```. These files should each contain a long random string sequence, used as basis for salting user entered passwords and JWT secret key. The app will not start without those files.
+
+To start everything inside a container install docker-compose and start everything via 'up'.
 
 
 ## Todos
@@ -71,7 +82,7 @@ Or start everything inside a container. Install docker-compose and start everyth
 ### Header & Static Pages:
 	[x] static pages (faq, about, etc)
 	[x] navigation in header
-	[] "custom space with settings"-button
+	[] 'custom space with settings'-button
 	[x] mobile header ==> hamburger
 
 ### Custom space for configuring WG settings
@@ -112,7 +123,7 @@ Or start everything inside a container. Install docker-compose and start everyth
 	[x] ssl on server (caddy)
 	[x] navigation, faq/about pages & link to github & homepage
 	[x] dont submit empty forms
-	[] general "backend (un)reachable" error for frontend 
+	[] general 'backend (un)reachable' error for frontend 
 	[] dont leak DB ids to FE (still relevant?)
 	[] server side rendering
 
