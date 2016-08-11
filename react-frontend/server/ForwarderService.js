@@ -11,11 +11,11 @@ module.exports = function(endpoint) {
 				if(err) {
 					if(err.status > 100 && err.status < 999) {
 						console.log('Error forwarding request', err);
-						res.status(err.status);
+						res.status(err.status).send();
 					}
 					else {
 						console.log('Encountered weird response code', err);
-						res.status(500);
+						res.status(500).send();
 					}
 				}
 				else {
