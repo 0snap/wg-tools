@@ -127,6 +127,10 @@ To start everything inside a container install docker-compose and start everythi
 	[] dont leak DB ids to FE (still relevant?)
 	[] server side rendering
 
+### Security:
+
+	[x] CSRF protection
+	[] API Keys
 
 ### Tests:
 

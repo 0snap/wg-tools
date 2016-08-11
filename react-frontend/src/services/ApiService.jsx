@@ -1,7 +1,7 @@
 import request from 'superagent';
 import Constants from '../constants/LoginConstants.jsx';
 
-import { getTokenFromCookie } from './LoginService.jsx';
+import { getTokenFromBrowser } from './LoginService.jsx';
 
 const endpoint = '/api/';
 
@@ -12,7 +12,7 @@ let ApiService = {
 		request(method, endpoint + path)
 	        .send(payload)
 	        .set('Content-Type', 'application/json; charset=UTF-8')
-	        .set('Authorization', 'JWT ' + getTokenFromCookie())
+	        .set('Authorization', 'JWT ' + getTokenFromBrowser())
 	        .set('Access-Control-Allow-Origin', '*')
 	        .end(function(err, res) {
 	            if(err) {

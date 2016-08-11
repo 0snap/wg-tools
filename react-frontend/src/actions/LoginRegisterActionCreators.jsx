@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import Constants from '../constants/LoginConstants.jsx';
 var apiService = require('../services/ApiService.jsx');
 
-import { storeTokenToCookie, removeCookie } from '../services/LoginService.jsx';
+import { storeTokenToBrowser, removeTokenFromBrowser } from '../services/LoginService.jsx';
 
 function loginSuccess(jsonWebToken) {
 	return { type: Constants.LOGIN_SUCCESS }
@@ -19,7 +19,7 @@ export function login(wgName, password) {
 			{ username: wgName, password: password },
 			function(textResp) {
 				let jsonWebToken = JSON.parse(textResp);
-				storeTokenToCookie(jsonWebToken.access_token);
+				storeTokenToBrowser(jsonWebToken.access_token);
 				browserHistory.push('/app');
 				//location.reload();
 				return dispatch(loginSuccess());
@@ -55,7 +55,7 @@ function logoutSuccess() {
 
 export function logout() {
 	return function(dispatch) {
-		removeCookie();
+		removeTokenFromBrowser();
 		browserHistory.push('/login');
 		dispatch(logoutSuccess());
 	}
