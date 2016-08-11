@@ -23,7 +23,7 @@ export default class AboutPage extends Component {
 					<h3 className='staticPage__content__headline'>Registrierung und Sicherheit</h3>
 					<p className='staticPage__content__text'>
 						Man kann sich kostenlos registrieren solange der Name noch nicht vergeben ist. Es werden keine privaten Informationen abgefragt.
-						Die Verbindung ist mit SSL gesichert, das Zertifikat stammt von den freundlichen <a target='_blank' href='https://letsencrypt.org/'>letsencrypt</a> Leuten. Das Passwort liegt natürlich in unleserlicher Form in der Datenbank, es ist nicht für niemanden sichtbar. 
+						Die Verbindung ist mit SSL gesichert, das Zertifikat stammt von den freundlichen <a target='_blank' href='https://letsencrypt.org/'>letsencrypt</a> Leuten. Das Passwort liegt natürlich in unleserlicher Form in der Datenbank, es ist für niemanden sichtbar. 
 						Der Login ist mit <a href='https://jwt.io/' target='_blank'>json Web Tokens</a> umgesetzt.
 						Wenn du dich dafür interessierst, wie die App gebaut ist, schau gern auf meinen <a href='https://github.com/0ortmann/wg-tools' target='_blank'>github</a> Account.
 					</p>
@@ -41,7 +41,7 @@ export default class AboutPage extends Component {
 						Weil ich Bock drauf hab.
 					</p>
 					<p className='staticPage__content__text'>
-						In meiner WG hab ich schon länger darüber nachgedacht, dass ich ein einfaches Web Tools haben will, um auf einen Blick und unkompliziert den Finanzkram zu machen. Es gibt viele tolle Dinge da draussen, aber ich hab mehr Lust auf Basteln als auf Benutzen.
+						In meiner WG hab ich schon länger darüber nachgedacht, dass ich ein einfaches Web Tool haben will, um auf einen Blick und unkompliziert den Finanzkram zu machen. Es gibt viele tolle Dinge da draussen, aber ich hab mehr Lust auf Basteln als auf Benutzen.
 						Geplant sind noch viele weitere Features! Schau mal auf meinen <a href='https://github.com/0ortmann/wg-tools' target='_blank'>github</a> Account, dort liegt der Quellcode und vieles andere. Im Readme findest du auch meine weiteren Pläne für diese App &mdash; sie wächst noch! ;)
 					</p>
 					<h3 className='staticPage__content__headline'>Über mich</h3>
