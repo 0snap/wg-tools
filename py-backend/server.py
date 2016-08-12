@@ -190,13 +190,6 @@ def registerNewWg():
     return Response('Cannot create wg, need name and password.', 400)
 
 
-@app.route('/wgs')
-@jwt_required()
-def getWGs():
-    ''' Returns a json list of all wgs '''
-    return Response(json.dumps(storage.getWGs()))
-
-
 ########## dev server start ##########
 
 if __name__ == '__main__':
