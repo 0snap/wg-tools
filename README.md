@@ -74,6 +74,7 @@ To start everything inside a container install docker-compose and start everythi
 	[x] calculator: concept of dispense + calc
 	[x] fe: intuitive concept!
 	[x] fe: styling
+	[] UX: change element positioning
 
 ### Group notes:
 	[] have some note panel
@@ -126,11 +127,15 @@ To start everything inside a container install docker-compose and start everythi
 	[] general 'backend (un)reachable' error for frontend 
 	[] dont leak DB ids to FE (still relevant?)
 	[] server side rendering
+	[] field length restrictions everywhere
+	[] always two digits for amounts
+	[] routing: 404 page
 
 ### Security:
 
 	[x] CSRF protection
 	[] API Keys
+	[] clear react component states after logout (logout -- login -- old state visible)
 
 ### Tests:
 
