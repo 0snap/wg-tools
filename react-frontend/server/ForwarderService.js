@@ -20,7 +20,7 @@ module.exports = function(endpoint) {
 				}
 				else {
 					//console.log(res);
-					res.send(resBackend);
+					res.send(resBackend.text);
 				}
 			});
 	}
