@@ -134,7 +134,11 @@ To start everything inside a container install docker-compose and start everythi
 ### Security:
 
 	[x] CSRF protection
+	[x] dont leak headers + hostname from FE-BE communication
+	[x] remove user enumeration endpoint
+	[] generate random salt / user
 	[] API Keys
+	[] IDOR vulnerable, dont leak mongo IDs
 	[] clear react component states after logout (logout -- login -- old state visible)
 
 ### Tests:
