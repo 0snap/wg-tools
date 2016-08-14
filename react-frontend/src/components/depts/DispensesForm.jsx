@@ -25,7 +25,7 @@ export default class DispensesForm extends Component {
         event.preventDefault();
         let amount = parseFloat(this.state.amount);
         if (amount >= 0) {
-            this.props.setDispenses(this.props.activeList.id, amount);
+            this.props.setDispenses(this.props.activeList.name, amount);
         }
     }
 

@@ -13,13 +13,13 @@ function fetchDeptsError(err) {
 	return { type: Constants.FETCH_DEPTS_ERROR, error: err }
 }
 
-export function fetchDepts(listId) {
+export function fetchDepts(listName) {
 	return function(dispatch) {
-		if (!listId) {
+		if (!listName) {
 			return dispatch(fetchDeptsSuccess([]));
 		}
 		apiService.call(
-            'POST', 'meanDepts', {listId: listId}, 
+            'POST', 'meanDepts', {listName: listName}, 
 			function(respText) {
 				return dispatch(fetchDeptsSuccess(JSON.parse(respText)));
 			},

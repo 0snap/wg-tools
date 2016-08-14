@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 import random 
 import bson
+import uuid
 
 
 
@@ -38,6 +39,7 @@ class Post(EmbeddedDocument):
 
 class ExpensePost(Post):
     id = ObjectIdField(default=lambda: bson.ObjectId(), primary_key=True)
+    uuid = StringField(default=lambda: str(uuid.uuid4()))
     name = StringField()
     amount = IntField(min_value=0)
     color = StringField()
@@ -60,12 +62,20 @@ class ExpensesList(Document):
 ###############################
 
 
-def __getExpensePosts(listId, wgId, includeDeleted = False):
+def __getExpensePosts(listName, wgId, includeDeleted = False):
     ''' Returns all expensepost-objects in a json list '''
-    posts = ExpensesList.objects.get(id=listId, wg=__getWgById(wgId)).expensePosts
+    posts = ExpensesList.objects.get(name=listName, wg=__getWgById(wgId), tsDeleted=None).expensePosts
     if not includeDeleted:
         posts = list(filter(lambda entry: entry.tsDeleted == None, posts))
     return posts
+
+
+def __getExpensesList(listName, wgId):
+    ''' Returns the expense list with the given name, correlated with wgId '''
+    activeLists = ExpensesList.objects(name=listName, wg=__getWgById(wgId), tsDeleted=None)
+    if activeLists and len(activeLists) == 1:
+        return activeLists[0]
+    return None
 
 
 
@@ -81,8 +91,8 @@ def __normalizeExpensePost(post):
     normalized['amount'] = round(float(post.amount/100), 2)
     normalized['comment'] = post.comment
     normalized['date'] = post.date_modified
-    normalized['id'] = str(post.id)
     normalized['color'] = post.color
+    normalized['id'] = post.uuid
     #normalized['deleted'] = post.tsDeleted
     #print(normalized)
     return normalized
@@ -94,7 +104,6 @@ def __normalizeExpenseList(expList):
     normalized['tsDeleted'] = expList.tsDeleted
     normalized['editable'] = expList.editable
     normalized['dispenses'] = round(float(expList.dispenses/100), 2)
-    normalized['id'] = str(expList.id)
     #print(normalized)
     return normalized
 
@@ -112,8 +121,8 @@ def __getRandomColor():
     #print(randomHex)
     return randomHex
 
-def getColorForName(listId, name):
-    connectedPosts = ExpensesList.objects(id=listId, expensePosts__name=name)
+def getColorForName(listName, wgId, name):
+    connectedPosts = ExpensesList.objects(name=listName, wg=__getWgById(wgId), expensePosts__name=name)
     if len(connectedPosts) > 0:
         return list(filter(lambda post: post.name == name, connectedPosts[0].expensePosts))[0].color
     return __getRandomColor()
@@ -128,94 +137,83 @@ def getColorForName(listId, name):
 ## expense post operations
 
 
-def getNormalizedExpensePosts(listId, wgId, includeDeleted = False):
+def getNormalizedExpensePosts(listName, wgId, includeDeleted = False):
     ''' Returns all expensepost-objects in a json list '''
-    return [__normalizeExpensePost(post) for post in __getExpensePosts(listId, wgId)]
+    return [__normalizeExpensePost(post) for post in __getExpensePosts(listName, wgId)]
 
 
-def store(listId, wgId, name, amount, comment):
-    # print("storing ", listId, name, amount)
-    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
-    if lists[0] and lists[0].editable:
-        color = getColorForName(listId, name)
+def store(listName, wgId, name, amount, comment):
+    # print("storing ", listName, name, amount)
+    expList = __getExpensesList(listName, wgId)
+    if expList and expList.editable:
+        color = getColorForName(listName, wgId, name)
         expensePost = ExpensePost(name=name, amount=amount, color=color, comment=comment)
-        stored = ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(push__expensePosts=expensePost)
+        stored = ExpensesList.objects.get(name=listName, wg=__getWgById(wgId), tsDeleted=None).update(push__expensePosts=expensePost)
         if not stored:
             return None
         return __normalizeExpensePost(expensePost)
     return None
 
 
-def delete(listId, wgId, postId):
-    #print("shall delete ", listId, postId)
-    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
-    if lists[0] and lists[0].editable:
-        ExpensesList.objects(id=listId, wg=__getWgById(wgId), expensePosts__id=postId).update(set__expensePosts__S__tsDeleted=datetime.now)
+def delete(listName, wgId, postId):
+    #print("shall delete ", listName, postId)
+    expList = __getExpensesList(listName, wgId)
+    if expList and expList.editable:
+        ExpensesList.objects(name=listName, wg=__getWgById(wgId), expensePosts__uuid=postId).update(set__expensePosts__S__tsDeleted=datetime.now)
         return True
     return False
 
 
 ## expenses list operations
 
-def getExpensesLists(wgId, name=None, includeDeleted=False):
-    wg = __getWgById(wgId)
-    allLists = ExpensesList.objects(wg=wg) if name == None else ExpensesList.objects(wg=wg, name=name)
-    lists = [ __normalizeExpenseList(expensesList) for expensesList in allLists ]
+def getExpensesLists(wgId, includeDeleted=False):
+    allLists = ExpensesList.objects(wg=__getWgById(wgId))
+    normalizedLists = [ __normalizeExpenseList(expensesList) for expensesList in allLists ]
     if not includeDeleted:
-        lists = list(filter(lambda entry: entry['tsDeleted'] == None, lists))
-    return lists
+        normalizedLists = list(filter(lambda entry: entry['tsDeleted'] == None, normalizedLists))
+    return normalizedLists
 
 
-def createExpensesList(name, wgId):
+def createExpensesList(listName, wgId):
     ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
-    #print('create explist ', name, wgId)
-    lists = getExpensesLists(wgId, name)
-    if len(lists) == 0:
-        expensesList = ExpensesList(name=name, wg=__getWgById(wgId), editable=True)
+    #print('create explist ', listName, wgId)
+    exstingList = __getExpensesList(listName, wgId)
+    if not exstingList:
+        expensesList = ExpensesList(name=listName, wg=__getWgById(wgId), editable=True)
         expensesList.save()
         return __normalizeExpenseList(expensesList)
-    elif len(lists) == 1: return lists[0]
-    return None
+    else: return __normalizeExpenseList(exstingList)
 
 
-def getExpensesList(listId, wgId):
-    ''' Creates and stores new ExpensesList object with the given name. Returns its id. '''
-    #print('create explist ', name, wgId)
-    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
-    if len(lists) == 1: 
-        return __normalizeExpenseList(lists[0])
-    return None
-
-
-def deleteExpensesList(listId, wgId):
+def deleteExpensesList(listName, wgId):
     ''' Deletes expenses list object with the given id. '''
-    ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(tsDeleted=datetime.now)
+    ExpensesList.objects(name=listName, wg=__getWgById(wgId), tsDeleted=None).update(tsDeleted=datetime.now)
     return True
 
 
-def lockExpensesList(listId, wgId):
+def lockExpensesList(listName, wgId):
     ''' Locks expenses list object with the given id. '''
-    #print('locked list', listId)
-    ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(editable=False)
+    #print('locked list', listName)
+    ExpensesList.objects(name=listName, wg=__getWgById(wgId), tsDeleted=None).update(editable=False)
     return True
 
 
-def setDispenses(listId, wgId, dispenses):
-    ExpensesList.objects(id=listId, wg=__getWgById(wgId)).update(dispenses=dispenses)
+def setDispenses(listName, wgId, dispenses):
+    ExpensesList.objects(name=listName, wg=__getWgById(wgId), tsDeleted=None).update(dispenses=dispenses)
     return True
 
 
-def getDispenses(listId, wgId):
-    lists = ExpensesList.objects(id=listId, wg=__getWgById(wgId))
-    if len(lists) == 1: 
-        return lists[0].dispenses
+def getDispenses(listName, wgId):
+    activeList = __getExpensesList(listName, wgId)
+    if activeList:
+        return activeList.dispenses
     return None
 
-def getExpensesPerPerson(listId, wgId):
+def getExpensesPerPerson(listName, wgId):
     ''' Returns a list in the form [{name: 'foo' amount: 'sum-amounts-for-foo', color: '#fff'}] 
-        of all unsettled expenses inside the ExpensesList with the given listId '''
+        of all unsettled expenses inside the ExpensesList with the given listName '''
     people = list() 
-    posts = __getExpensePosts(listId, wgId)
+    posts = __getExpensePosts(listName, wgId)
     names = set([entry.name for entry in posts])
     #print(names)
     for name in names:
@@ -228,12 +226,6 @@ def getExpensesPerPerson(listId, wgId):
         people.append(person)
     # print(people)
     return people
-
-
-## WG operations
-
-def getWGs():
-    return [{'id': str(wg.id), 'name': wg.name } for wg in WG.objects]
 
 
 ## wrapper around a wg document 

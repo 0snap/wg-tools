@@ -30,10 +30,10 @@ export function storeList(name) {
 	}
 }
 
-function deleteListSuccess(listId) {
+function deleteListSuccess(listName) {
 	return { 
 		type: Constants.DELETE_EXPENSES_LIST_SUCCESS, 
-		deletedId: listId
+		deletedName: listName
 	}
 }
 
@@ -41,12 +41,12 @@ function deleteListError(err) {
 	return { type: Constants.DELETE_EXPENSES_LIST_ERROR, error: err }
 }
 
-export function deleteList(listId) {
+export function deleteList(listName) {
 	return function(dispatch) {
 		apiService.call(
-            'DELETE', 'deleteExpensesList', {listId: listId}, 
+            'DELETE', 'deleteExpensesList', {listName: listName}, 
 			function(respText) {
-				return dispatch(deleteListSuccess(listId));
+				return dispatch(deleteListSuccess(listName));
 				//TODO: setactivelist
 			},
 			function(err) {
@@ -56,10 +56,10 @@ export function deleteList(listId) {
 	}
 }
 
-function lockListSuccess(listId) {
+function lockListSuccess(listName) {
 	return { 
 		type: Constants.LOCK_EXPENSES_LIST_SUCCESS, 
-		lockedId: listId
+		lockedName: listName
 	}
 }
 
@@ -67,12 +67,12 @@ function lockListError(err) {
 	return { type: Constants.LOCK_EXPENSES_LIST_ERROR, error: err }
 }
 
-export function lockList(listId) {
+export function lockList(listName) {
 	return function(dispatch) {
 		apiService.call(
-            'POST', 'lockExpensesList', {listId: listId},
+            'POST', 'lockExpensesList', {listName: listName},
 			function(respText) {
-				return dispatch(lockListSuccess(listId));
+				return dispatch(lockListSuccess(listName));
 			},
 			function(err) {
 				return dispatch(lockListError(err));
@@ -119,10 +119,10 @@ function setDispensesError(err) {
 	return { type: Constants.SET_DISPENSES_ERROR, error: err }
 }
 
-export function setDispenses(listId, dispenseAmount) {
+export function setDispenses(listName, dispenseAmount) {
 	return function(dispatch) {
 		apiService.call(
-			'POST', 'setDispenses', {listId: listId, dispenses: dispenseAmount},
+			'POST', 'setDispenses', {listName: listName, dispenses: dispenseAmount},
 			function(respText) {
 				return dispatch(setDispensesSuccess(dispenseAmount));
 			},

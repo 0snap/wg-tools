@@ -22,7 +22,7 @@ export default function expensePosts(state = initialState, action) {
 			});
 		case Constants.DELETE_EXPENSE_POST_SUCCESS:
 			let reducedExpensePosts = Object.assign({}, state.expensePosts)
-			delete reducedExpensePosts[action.postId]
+			delete reducedExpensePosts[action.id]
 			return Object.assign({}, state, {
 				expensePosts: reducedExpensePosts,
 				deleteError: false

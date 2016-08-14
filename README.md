@@ -125,7 +125,6 @@ To start everything inside a container install docker-compose and start everythi
 	[x] navigation, faq/about pages & link to github & homepage
 	[x] dont submit empty forms
 	[] general 'backend (un)reachable' error for frontend 
-	[] dont leak DB ids to FE (still relevant?)
 	[] server side rendering
 	[] field length restrictions everywhere
 	[] always two digits for amounts

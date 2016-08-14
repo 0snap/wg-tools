@@ -63,10 +63,10 @@ def getDictFromPost(request):
 @jwt_required()
 def depts():
     ''' Calculates the "mean" of all depts inside the database'''
-    listId = getDictFromPost(request).get('listId')
-    if listId != None and listId != 'undefined':
-        persons = storage.getExpensesPerPerson(listId, current_identity)
-        dispenses = storage.getDispenses(listId, current_identity)
+    listName = getDictFromPost(request).get('listName')
+    if listName != None and listName != 'undefined':
+        persons = storage.getExpensesPerPerson(listName, current_identity)
+        dispenses = storage.getDispenses(listName, current_identity)
         if len(persons) > 0:
             meanDepts = deptCalculator.calcDepts(persons, dispenses)
             return json.dumps(meanDepts)
@@ -82,14 +82,14 @@ def depts():
 def store():
     ''' Stores the posted data to the mongo '''
     jsonAsDict = getDictFromPost(request)
-    listId = jsonAsDict.get('listId')
+    listName = jsonAsDict.get('listName')
     name = jsonAsDict.get('name')
     amount = Decimal(jsonAsDict.get('amount')) * Decimal('100')
     comment = jsonAsDict.get('comment')
-    if listId != None and listId != '' and listId != 'undefined' and name != None and name != '' and name != 'undefined' and amount != None and amount >= 0:
-        storedObjectDict = storage.store(listId, current_identity, name, int(amount), comment)
+    if listName != None and listName != '' and listName != 'undefined' and name != None and name != '' and name != 'undefined' and amount != None and amount >= 0:
+        storedObjectDict = storage.store(listName, current_identity, name, int(amount), comment)
         if storedObjectDict:
-            storedObjectDict['listId'] = listId
+            storedObjectDict['listName'] = listName
             return json.dumps(storedObjectDict)
         return Response('List is locked, cannot store', 409)
     return Response('Wrong format, will not store.', 400)
@@ -99,10 +99,11 @@ def store():
 def delete():
     ''' Deletes the posted data by looking up the posted timestamp '''
     jsonAsDict = getDictFromPost(request)
-    listId = jsonAsDict.get('listId')
-    oid = jsonAsDict.get('id')
-    if listId != None and listId != '' and listId != 'undefined' and oid != None and oid != '' and oid != 'undefined':
-        if storage.delete(listId, current_identity, oid):
+    listName = jsonAsDict.get('listName')
+    postId = jsonAsDict.get('id')
+    print(postId, listName)
+    if listName != None and listName != '' and listName != 'undefined' and postId != None and postId != '' and postId != 'undefined':
+        if storage.delete(listName, current_identity, postId):
             return Response('OK', 200)
         return Response('List is locked, cannot delete', 409)
     return Response('Not found', 404)
@@ -125,10 +126,10 @@ def createExpensesList():
 @app.route('/deleteExpensesList', methods=['DELETE'])
 @jwt_required()
 def deleteExpensesList():
-    ''' Deletes the posted listId from DB '''
-    listId = getDictFromPost(request).get('listId')
-    if listId != None and listId != '' and listId != 'undefined':
-        storage.deleteExpensesList(listId, current_identity)
+    ''' Deletes the posted listName from DB '''
+    listName = getDictFromPost(request).get('listName')
+    if listName != None and listName != '' and listName != 'undefined':
+        storage.deleteExpensesList(listName, current_identity)
         return Response('OK', 200)
     return Response('Wrong format, cannot delete list.', 400)
 
@@ -136,10 +137,10 @@ def deleteExpensesList():
 @app.route('/lockExpensesList', methods=['POST'])
 @jwt_required()
 def lockExpensesList():
-    ''' Locks the posted listId from DB '''
-    listId = getDictFromPost(request).get('listId')
-    if listId != None and listId != '' and listId != 'undefined':
-        storage.lockExpensesList(listId, current_identity)
+    ''' Locks the posted listName from DB '''
+    listName = getDictFromPost(request).get('listName')
+    if listName != None and listName != '' and listName != 'undefined':
+        storage.lockExpensesList(listName, current_identity)
         return Response('OK', 200)
     return Response('Wrong format, cannot lock list.', 400)
 
@@ -147,10 +148,10 @@ def lockExpensesList():
 @app.route('/expensesList', methods=['POST'])
 @jwt_required()
 def getExpensesList():
-    ''' Returns a json list of depts for a given listId'''
-    listId = getDictFromPost(request).get('listId')
-    if listId != None and listId != '' and listId != 'undefined':
-        return Response(json.dumps(storage.getNormalizedExpensePosts(listId, current_identity)))
+    ''' Returns a json list of depts for a given listName'''
+    listName = getDictFromPost(request).get('listName')
+    if listName != None and listName != '' and listName != 'undefined':
+        return Response(json.dumps(storage.getNormalizedExpensePosts(listName, current_identity)))
     return Response('List not found', 404)
 
 
@@ -158,12 +159,12 @@ def getExpensesList():
 @app.route('/setDispenses', methods=['POST'])
 @jwt_required()
 def setDispenses():
-    ''' Returns a json list of depts for a given listId'''
+    ''' Returns a json list of depts for a given listName'''
     postedJson = getDictFromPost(request)
-    listId = postedJson.get('listId')
+    listName = postedJson.get('listName')
     dispenses = Decimal(postedJson.get('dispenses')) * Decimal('100')
-    if listId != None and listId != '' and listId != 'undefined' and dispenses != None and dispenses >= 0:
-        return Response(json.dumps(storage.setDispenses(listId, current_identity, dispenses)))
+    if listName != None and listName != '' and listName != 'undefined' and dispenses != None and dispenses >= 0:
+        return Response(json.dumps(storage.setDispenses(listName, current_identity, dispenses)))
     return Response('List not found', 404)
 
 

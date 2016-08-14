@@ -37,7 +37,7 @@ export default class ExpensesHeader extends Component {
     }
 
     addExpense(name, amount, comment) {
-        this.props.storeExpense(name, amount, comment, this.props.selected.id);
+        this.props.storeExpense(name, amount, comment, this.props.selected.name);
     }
 
     isVisibleCss(id) {
@@ -98,7 +98,6 @@ export default class ExpensesHeader extends Component {
 ExpensesHeader.propTypes = {
     expensesLists: React.PropTypes.array.isRequired,
     selected: React.PropTypes.object,
-    activeList: React.PropTypes.object,
     storeList: React.PropTypes.func.isRequired,
     setActiveList: React.PropTypes.func.isRequired,
     deleteList: React.PropTypes.func.isRequired,

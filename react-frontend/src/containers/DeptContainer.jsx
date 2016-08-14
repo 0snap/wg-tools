@@ -23,9 +23,9 @@ export default class DeptContainer extends Component {
 		//console.log(activeList != newActiveList)
 		//console.log(expensePosts.length != newExpensePosts.length)
 		if ((activeList != newActiveList || expensePosts.length != newExpensePosts.length)
-			&& newActiveList.id ) {
+			&& newActiveList.name ) {
 				
-			fetchDepts(newActiveList.id);
+			fetchDepts(newActiveList.name);
 		}
 	}
 

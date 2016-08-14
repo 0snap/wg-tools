@@ -17,12 +17,12 @@ export default class ExpensesListSelector extends Component {
 
     doDeleteList() {
         // console.log('perform delete');
-        this.props.deleteList(this.props.selected.id);
+        this.props.deleteList(this.props.selected.name);
     }
 
     doLockList() {
         //console.log('perform lock');
-        this.props.lockList(this.props.selected.id);
+        this.props.lockList(this.props.selected.name);
     }
 
     render() {

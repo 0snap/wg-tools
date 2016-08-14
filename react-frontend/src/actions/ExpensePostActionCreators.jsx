@@ -13,15 +13,15 @@ function storeExpenseError(err) {
 	return { type: Constants.ADD_EXPENSE_POST_ERROR, error: err }
 }
 
-export function storeExpense(name, amount, comment, listId) {
+export function storeExpense(name, amount, comment, listName) {
 	return function(dispatch) {
-		let payload = {name: name, amount: amount, comment: comment, listId: listId};
+		let payload = {name: name, amount: amount, comment: comment, listName: listName};
 		apiService.call(
 			'POST', 'storeExpense', payload,
 			function(respText) {
 				let storedExpenseJson = JSON.parse(respText);
 				return dispatch(storeExpenseSuccess(storedExpenseJson));
-				// TODO: _this.fetchDepts(listId);
+				// TODO: _this.fetchDepts(listName);
 			},
 			function(err) {
 				return dispatch(storeExpenseError(err));
@@ -33,7 +33,7 @@ export function storeExpense(name, amount, comment, listId) {
 function deleteExpenseSuccess(postId) {
 	return { 
 		type: Constants.DELETE_EXPENSE_POST_SUCCESS, 
-		postId: postId,
+		id: postId,
 	}
 }
 
@@ -41,14 +41,14 @@ function deleteExpenseError(err) {
 	return { type: Constants.DELETE_EXPENSE_POST_ERROR, error: err }
 }
 
-export function deleteExpense(postId, listId) {
+export function deleteExpense(postId, listName) {
 	return function(dispatch) {
-		let payload = { id: postId, listId: listId };
+		let payload = { id: postId, listName: listName };
 		apiService.call(
             'DELETE', 'deleteExpense', payload,
 			function(respText) {
 				return dispatch(deleteExpenseSuccess(postId));
-				// TODO: _this.fetchDepts(listId);
+				// TODO: _this.fetchDepts(listName);
 			},
 			function(err) {
 				return dispatch(deleteExpenseError(err));
@@ -68,13 +68,13 @@ function fetchExpensesError(err) {
 	return { type: Constants.FETCH_EXPENSE_POSTS_ERROR, error: err }
 }
 
-export function fetchExpenses(listId) {
+export function fetchExpenses(listName) {
 	return function(dispatch) {
-		if (!listId) {
+		if (!listName) {
 			return dispatch(fetchExpensesSuccess(undefined));
 		}
 		apiService.call(
-            'POST', 'expensesList', {listId: listId},
+            'POST', 'expensesList', {listName: listName},
 			function(respText) {
 				return dispatch(fetchExpensesSuccess(JSON.parse(respText)));
 			},

@@ -19,16 +19,9 @@ function getListForName(listName, expensesLists) {
 	return Object.assign({}, listReference) || {};
 }
 
-function getListForId(listId, expensesLists) {
-	let listReference = expensesLists.filter(list => {
-        return list.id == listId
-    })[0];
-	return Object.assign({}, listReference) || {};
-}
-
-function removeFrom(expensesLists, toRemoveId) {
+function removeFrom(expensesLists, toRemoveName) {
 	let listsClone = expensesLists.copyWithin();
-	return listsClone.filter(list => { return list.id != toRemoveId });
+	return listsClone.filter(list => { return list.name != toRemoveName });
 }
 
 export default function expensesLists(state = initialState, action) {
@@ -43,7 +36,7 @@ export default function expensesLists(state = initialState, action) {
 				storeError: true
 			});
 		case Constants.DELETE_EXPENSES_LIST_SUCCESS:
-			let removed = removeFrom(state.expensesLists, action.deletedId);
+			let removed = removeFrom(state.expensesLists, action.deletedName);
 			return Object.assign({}, state, {
 				expensesLists: removed,
 				activeList: removed[0] || {},
@@ -54,8 +47,8 @@ export default function expensesLists(state = initialState, action) {
 				deleteError: true
 			});
 		case Constants.LOCK_EXPENSES_LIST_SUCCESS:
-			let lockedList = getListForId(action.lockedId, state.expensesLists);
-			let listsWithoutLocked = removeFrom(state.expensesLists, action.lockedId);
+			let lockedList = getListForName(action.lockedName, state.expensesLists);
+			let listsWithoutLocked = removeFrom(state.expensesLists, action.lockedName);
 			lockedList.editable = false;
 			return Object.assign({}, state, {
 				expensesLists: concat(listsWithoutLocked, lockedList),
@@ -76,8 +69,8 @@ export default function expensesLists(state = initialState, action) {
 				fetchError: true
 			});
 		case Constants.SET_DISPENSES_SUCCESS:
-			let editedList = getListForId(state.activeList.id, state.expensesLists);
-			let listsWithoutEdited = removeFrom(state.expensesLists, state.activeList.id);
+			let editedList = getListForName(state.activeList.name, state.expensesLists);
+			let listsWithoutEdited = removeFrom(state.expensesLists, state.activeList.name);
 			editedList.dispenses = action.dispenseAmount;
 			return Object.assign({}, state, {
 				expensesLists: concat(editedList, listsWithoutEdited),

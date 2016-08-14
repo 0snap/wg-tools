@@ -55,6 +55,6 @@ describe('DispensesForm', () => {
         let form = TestUtils.findRenderedDOMComponentWithTag(dispensesForm, 'form');
         TestUtils.Simulate.submit( form );
 
-        expect(setDispenses).toBeCalledWith('LIST ID', 5);
+        expect(setDispenses).toBeCalledWith('LIST NAME', 5);
     });
 });
