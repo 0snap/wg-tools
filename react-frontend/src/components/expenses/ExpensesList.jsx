@@ -22,7 +22,7 @@ export default class ExpensesList extends Component {
 			<div className='expensesList'>
 				<ul className='expensesItemList'>
 				{expenses.map((item, idx) => {
-					return <ExpensesItem key={item.date} item={item} activeList={this.props.activeList}
+					return <ExpensesItem key={item.id} item={item} activeList={this.props.activeList}
 								deleteExpense={this.props.deleteExpense}/>
 				})}
 				</ul>

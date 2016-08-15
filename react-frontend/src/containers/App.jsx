@@ -41,7 +41,7 @@ export default class App extends Component {
 			setActiveList(expensesLists[0].name);
 		}
 		else if(setActiveListError) {
-			// invalid entry in url
+			// invalid entry in url or all lists deleted
 			setActiveList('');
 		}
 	}

@@ -33,9 +33,11 @@ export default function expensePosts(state = initialState, action) {
 			});
 		case Constants.FETCH_EXPENSE_POSTS_SUCCESS:
 			let posts = {};
-			action.expensePosts.forEach(exp => {
-				posts[exp.id] = exp;
-			});
+			if ( action.expensePosts ) {
+				action.expensePosts.forEach(exp => {
+					posts[exp.id] = exp;
+				});
+			}
 			return Object.assign({}, state, {
 				expensePosts: posts,
 				fetchError: false

@@ -23,8 +23,8 @@ export default class ExpensesContainer extends Component {
 	componentWillReceiveProps(nextProps) {
 		const newActiveList = nextProps.activeList;
 		const { activeList, fetchExpenses } = this.props;
-		if (activeList != newActiveList && newActiveList.name ) {
-			fetchExpenses(newActiveList.name);
+		if ( activeList != newActiveList ) {
+			fetchExpenses(newActiveList.name || '');
 		}
 	}
 

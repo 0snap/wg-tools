@@ -21,7 +21,6 @@ export function storeList(name) {
             'POST', 'createExpensesList', {name: name},
 			function(respText) {
 				return dispatch(storeListSuccess(JSON.parse(respText)));
-				//TODO: setactivelist
 			},
 			function(err) {
 				return dispatch(storeListError(err));
@@ -47,7 +46,6 @@ export function deleteList(listName) {
             'DELETE', 'deleteExpensesList', {listName: listName}, 
 			function(respText) {
 				return dispatch(deleteListSuccess(listName));
-				//TODO: setactivelist
 			},
 			function(err) {
 				return dispatch(deleteListError(err));
