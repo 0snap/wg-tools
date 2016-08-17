@@ -25,7 +25,10 @@ If you are living in a flat share and have to manage expenses or other stuff and
 
 ### Behavior
 
-You can create a 'WG' (flat share) with a login, then actually login with that. The app stores expenses and calculates the mean among all participants. It offers a human-usable interface for non-tech people. Currently under development, so basically anything may change from now to then!!! Nexts steps are security tests for the login. Then come all the things that are not already checkmarked below in this readme.
+You can create a 'WG' (flat share) with a login, then actually login with that. The app stores expenses and calculates the mean among all participants. It offers a human-usable interface for non-tech people. Currently under development, so basically anything may change from now to then!
+
+### Planning
+The next most necessary step is exhaustive testing for frontend-side reducer and action creator logic. Then comes a user feature for custom settings and I want to work out some concept for automated security testing. Then all the things that are not already checkmarked below in this readme.
 
 
 ## Usage
@@ -99,9 +102,9 @@ To start everything inside a container install docker-compose and start everythi
 	[x] reducers
 	[x] remove old flux code, deps, everything
 	[x] switch to redux
-	[] distinguish dev + prod
+	[x] distinguish dev + prod
 	[x] redux + react-router
-	[] redux call opt
+	[x] redux call opt
 
 ### General behavior:
 	[x] Confirm delete of items
@@ -135,24 +138,22 @@ To start everything inside a container install docker-compose and start everythi
 	[x] CSRF protection
 	[x] dont leak headers + hostname from FE-BE communication
 	[x] remove user enumeration endpoint
-	[] generate random salt / user
 	[] API Keys
-	[] IDOR vulnerable, dont leak mongo IDs
 	[] clear react component states after logout (logout -- login -- old state visible)
+	[x] IDOR vulnerable, dont leak mongo IDs
+	[] generate random salt / user
 
 ### Tests:
 
 	[x] Test setup BE
 	[x] Test setup FE
-
-    [x] FE - render
-    [] FE - state -> login / app
-    [] FE - routes
-
+    [x] FE - render 
     [x] BE - calculator
-    [] BE - login
-    [] BE - security
-
+    [] BE - API
+    [] storage
+    [] FE reducer + action creator (finally decide for an architecture...)
+    [] automated security tests (XSS, CSRF, IDOR etc) --> concept!
+    
 
 ### Cool third party stuff
 
