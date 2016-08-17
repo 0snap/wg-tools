@@ -19,8 +19,8 @@ let Constants = keyMirror({
 	FETCH_EXPENSES_LISTS_ERROR: null,
 	SET_DISPENSES_SUCCESS: null,
 	SET_DISPENSES_ERROR: null,
-	ACTIVE_LIST_ID: null,
-	ACTIVE_LIST_NAME: null,
+	ACTIVE_LIST_SUCCESS: null,
+	ACTIVE_LIST_ERROR: null
 });
 
 module.exports = Constants;

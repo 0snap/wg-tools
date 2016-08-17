@@ -74,7 +74,7 @@ export function fetchExpenses(listName) {
 			return dispatch(fetchExpensesSuccess(undefined));
 		}
 		apiService.call(
-            'POST', 'expensesList', {listName: listName},
+            'GET', 'expensePosts?listName=' + listName, undefined,
 			function(respText) {
 				return dispatch(fetchExpensesSuccess(JSON.parse(respText)));
 			},

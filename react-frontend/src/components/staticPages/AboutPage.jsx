@@ -10,7 +10,7 @@ export default class AboutPage extends Component {
 
 	render() {
 		return (
-			<div className='container-fluid'>
+			<div className='staticPage container-fluid'>
 				<div className='container__header'>
 					<h1>WG-Tools</h1>
 				</div>

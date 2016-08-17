@@ -145,11 +145,11 @@ def lockExpensesList():
     return Response('Wrong format, cannot lock list.', 400)
 
 
-@app.route('/expensesList', methods=['POST'])
+@app.route('/expensePosts', methods=['GET'])
 @jwt_required()
-def getExpensesList():
+def getExpensePosts():
     ''' Returns a json list of depts for a given listName'''
-    listName = getDictFromPost(request).get('listName')
+    listName = request.args.get('listName')
     if listName != None and listName != '' and listName != 'undefined':
         return Response(json.dumps(storage.getNormalizedExpensePosts(listName, current_identity)))
     return Response('List not found', 404)
@@ -171,11 +171,20 @@ def setDispenses():
 ########## wg operations ##########
 
 
-@app.route('/expensesLists', methods=['GET'])
+@app.route('/expensesList', methods=['GET'])
 @jwt_required()
-def getExpensesLists():
+def getExpensesList():
     ''' Returns a json list of all expensesLists for a given wg'''
-    return Response(json.dumps(storage.getExpensesLists(current_identity)))
+    result = storage.getExpensesList(request.args.get('listName'), current_identity)
+    if not result:
+        return Response('List not found', 404)
+    return Response(json.dumps(result))
+
+@app.route('/expensesListNames', methods=['GET'])
+@jwt_required()
+def getExpensesListNames():
+    ''' Returns a json list of all expensesLists for a given wg'''
+    return Response(json.dumps(storage.getExpensesListNames(current_identity)))
 
 @app.route('/register', methods=['POST'])
 def registerNewWg():

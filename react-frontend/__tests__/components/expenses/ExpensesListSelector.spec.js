@@ -10,12 +10,9 @@ describe('ExpensesListSelector', () => {
 
     const headlineText = 'Liste auswählen';
     const noContent = 'Bitte neue Liste anlegen';
-    const expensesLists = [
-        { id: '1', name: 'L 1', editable: true },
-        { id: '2', name: 'L 2', editable: true }
-    ];
-    const selected = { id: '1', name: 'L 1', editable: true };
-    const uneditable = { id: '1', name: 'L 1', editable: false };
+    const expensesLists = [ 'List 1', 'List 2' ];
+    const selected = { id: '1', name: 'List 1', editable: true };
+    const uneditable = { id: '1', name: 'List 1', editable: false };
 
     let listSelector;
 
@@ -49,17 +46,17 @@ describe('ExpensesListSelector', () => {
         
         let selectOptions = TestUtils.scryRenderedDOMComponentsWithTag(listSelector, 'option');
         expect(selectOptions.length).toEqual(2);
-        expect(selectOptions[0].textContent).toEqual('L 1');
-        expect(selectOptions[1].textContent).toEqual('L 2');
+        expect(selectOptions[0].textContent).toEqual('List 1');
+        expect(selectOptions[1].textContent).toEqual('List 2');
     });
 
     it('should call select-action on select', () => {
         
         let select = TestUtils.findRenderedDOMComponentWithTag(listSelector, 'select');
 
-        TestUtils.Simulate.change( select, {target: {value: '2' }} );
+        TestUtils.Simulate.change( select, {target: {value: 'List 2' }} );
 
-        expect(setActiveList).toBeCalledWith('2');
+        expect(setActiveList).toBeCalledWith('List 2');
     });
 
     it('should render confirm boxes for "delete" and "lock" ', () => {

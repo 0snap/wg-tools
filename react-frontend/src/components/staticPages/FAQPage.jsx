@@ -11,7 +11,7 @@ export default class FAQPage extends Component {
 
 	render() {
 		return (
-			<div className='container-fluid'>
+			<div className='staticPage container-fluid'>
 				<div className='container__header'>
 					<h1>FAQ</h1>
 				</div>

@@ -1,10 +1,14 @@
 var request = require('superagent');
 
+// for query string retrieval
+var nodeUrl = require('url');
 
 module.exports = function(endpoint) {
 	return function(req, res, next) {
-		console.log('Forwarding request', req.params, req.body, req.headers);
-		request(req.method, endpoint + req.params.path)
+		console.log('Forwarding request', req.params, nodeUrl.parse(req.url).query, req.body, req.headers);
+		const queryString = nodeUrl.parse(req.url).query;
+		const backendURL = queryString == null? endpoint + req.params.path : endpoint + req.params.path + '?' + queryString;
+		request(req.method, backendURL)
 			.set(req.headers)
 			.send(req.body)
 			.end( function(err, resBackend) {

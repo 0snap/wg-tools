@@ -94,7 +94,7 @@ function fetchExpensesListsError(err) {
 export function fetchExpensesLists() {
 	return function(dispatch) {
 		apiService.call(
-            'GET', 'expensesLists', undefined,
+            'GET', 'expensesListNames', undefined,
 			function(respText) {
 				return dispatch(fetchExpensesListsSuccess(JSON.parse(respText)));
 			},
@@ -132,12 +132,29 @@ export function setDispenses(listName, dispenseAmount) {
 }
 
 
-export function setActiveList(listName, suppressUrlUpdate) {
-	return function (dispatch) {
-		if (!suppressUrlUpdate) {
-			browserHistory.push('/app/' + listName);
-		}
-		return dispatch({ type: Constants.ACTIVE_LIST_NAME, listName: listName });
+function setActiveListSuccess(activeList) {
+	return {
+		type: Constants.ACTIVE_LIST_SUCCESS,
+		activeList: activeList 
 	}
+}
+
+function setActiveListError(listName) {
+	return { type: Constants.ACTIVE_LIST_ERROR, listName: listName }
+}
+
+export function setActiveList(listName) {
+	return function(dispatch) {
+		apiService.call(
+			'GET', 'expensesList?listName=' + listName, undefined,
+			function(respText) {
+				return dispatch(setActiveListSuccess(JSON.parse(respText)));
+			},
+			function(err) {
+				return dispatch(setActiveListError(listName));
+			}
+		)
+	}
+
 }
 

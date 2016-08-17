@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { isEqual } from 'lodash';
 
-import DeptList from '../components/depts/DeptList.jsx'
-import DispensesForm from '../components/depts/DispensesForm.jsx'
+import DeptList from './DeptList.jsx'
+import DispensesForm from './DispensesForm.jsx'
 
-import Constants from '../constants/ExpenseConstants.jsx';
+import Constants from '../../constants/ExpenseConstants.jsx';
 
-import { fetchDepts } from '../actions/DeptsActionCreators.jsx';
-import { setDispenses } from '../actions/ExpensesListActionCreators.jsx';
+import { fetchDepts } from '../../actions/DeptsActionCreators.jsx';
+import { setDispenses } from '../../actions/ExpensesListActionCreators.jsx';
 
 
 export default class DeptContainer extends Component {
@@ -20,12 +21,12 @@ export default class DeptContainer extends Component {
 		const newActiveList = nextProps.activeList
 		const newExpensePosts = nextProps.expensePosts;
 		const { activeList, expensePosts, fetchDepts } = this.props;
-		//console.log(activeList != newActiveList)
-		//console.log(expensePosts.length != newExpensePosts.length)
-		if ((activeList != newActiveList || expensePosts.length != newExpensePosts.length)
-			&& newActiveList.name ) {
-				
-			fetchDepts(newActiveList.name);
+		
+		if ( !isEqual(expensePosts, newExpensePosts) || 
+			activeList && newActiveList && activeList.dispenses != newActiveList.dispenses ) {
+			
+			const newListName = newActiveList? newActiveList.name : undefined;
+			fetchDepts(newListName);
 		}
 	}
 

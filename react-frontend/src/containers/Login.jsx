@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import LoginForm from '../components/login/LoginForm.jsx';
-import Constants from '../constants/LoginConstants.jsx';
-import AppHeader from '../components/header/AppHeader.jsx';
 
 import './LoginRegister.scss';
 
-import { login, logout } from '../actions/LoginRegisterActionCreators.jsx';
+import { login } from '../actions/LoginRegisterActionCreators.jsx';
 
 
 class Login extends Component {
@@ -20,11 +18,10 @@ class Login extends Component {
 	}
 
 	render() {
-		const { login, logout, loginError, isLoggedIn } = this.props;
+		const { login, loginError } = this.props;
 
 		return (
 			<div className='login'>
-				<AppHeader logoutCallback={logout}/>
 				<LoginForm error={loginError} loginCallback={login}/>
 			</div>);
 	}
@@ -32,8 +29,7 @@ class Login extends Component {
 
 Login.propTypes = {
 	loginError: React.PropTypes.bool.isRequired,
-	login: React.PropTypes.func.isRequired,
-	logout: React.PropTypes.func.isRequired
+	login: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -43,4 +39,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { login, logout } )(Login)
+export default connect(mapStateToProps, { login } )(Login)

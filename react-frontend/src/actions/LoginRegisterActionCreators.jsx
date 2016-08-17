@@ -20,7 +20,7 @@ export function login(wgName, password) {
 			function(textResp) {
 				let jsonWebToken = JSON.parse(textResp);
 				storeTokenToBrowser(jsonWebToken.access_token);
-				browserHistory.push('/app');
+				browserHistory.push('/home');
 				//location.reload();
 				return dispatch(loginSuccess());
 			},

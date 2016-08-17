@@ -45,12 +45,12 @@ export default class AppHeader extends Component {
 
     getActiveListLink() {
         if (this.props.activeList && isLoggedIn()) {
-            return <Link className={this.getLinkClassnames()} to={'/app/' + this.props.activeList.name} onClick={this.toggleHamburger.bind(this)}>
+            return <Link className={this.getLinkClassnames()} to={'/home/' + this.props.activeList.name} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
         }
         else if (isLoggedIn()) {
-            return <Link className={this.getLinkClassnames()} to={'/app'} onClick={this.toggleHamburger.bind(this)}>
+            return <Link className={this.getLinkClassnames()} to={'/home'} onClick={this.toggleHamburger.bind(this)}>
                     home
                 </Link>
         }

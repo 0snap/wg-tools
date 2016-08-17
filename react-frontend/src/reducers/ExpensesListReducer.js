@@ -3,7 +3,7 @@ import concat from 'lodash/concat';
 
 const initialState = {
 	expensesLists: [],
-	activeList: {},
+	activeList: undefined,
 	storeError: false,
 	deleteError: false,
 	lockError: false,
@@ -12,23 +12,20 @@ const initialState = {
 	setActiveListError: false
 }
 
-function getListForName(listName, expensesLists) {
-	let listReference = expensesLists.filter(list => {
-        return list.name == listName
-    })[0];
-	return Object.assign({}, listReference) || {};
-}
-
 function removeFrom(expensesLists, toRemoveName) {
 	let listsClone = expensesLists.copyWithin();
-	return listsClone.filter(list => { return list.name != toRemoveName });
+	return listsClone.filter(list => { return list != toRemoveName });
 }
 
 export default function expensesLists(state = initialState, action) {
 	switch(action.type) {
 		case Constants.ADD_EXPENSES_LIST_SUCCESS:
+			let expLists = concat(action.storedList.name, state.expensesLists.slice(0));
+			// remove duplicate entries
+			expLists = expLists.filter((name, idx) => { return expLists.indexOf(name) == idx });
 			return Object.assign({}, state, {
-				expensesLists: concat(action.storedList, state.expensesLists.slice(0)),
+				expensesLists: expLists,
+				activeList: action.storedList,
 				storeError: false
 			});
 		case Constants.ADD_EXPENSES_LIST_ERROR:
@@ -36,10 +33,9 @@ export default function expensesLists(state = initialState, action) {
 				storeError: true
 			});
 		case Constants.DELETE_EXPENSES_LIST_SUCCESS:
-			let removed = removeFrom(state.expensesLists, action.deletedName);
 			return Object.assign({}, state, {
-				expensesLists: removed,
-				activeList: removed[0] || {},
+				expensesLists: removeFrom(state.expensesLists, action.deletedName),
+				activeList: initialState.activeList,
 				deleteError: false
 			});
 		case Constants.DELETE_EXPENSES_LIST_ERROR:
@@ -47,11 +43,9 @@ export default function expensesLists(state = initialState, action) {
 				deleteError: true
 			});
 		case Constants.LOCK_EXPENSES_LIST_SUCCESS:
-			let lockedList = getListForName(action.lockedName, state.expensesLists);
-			let listsWithoutLocked = removeFrom(state.expensesLists, action.lockedName);
+			let lockedList = Object.assign({}, state.activeList);
 			lockedList.editable = false;
 			return Object.assign({}, state, {
-				expensesLists: concat(listsWithoutLocked, lockedList),
 				activeList: lockedList,
 				lockError: false
 			});
@@ -69,11 +63,9 @@ export default function expensesLists(state = initialState, action) {
 				fetchError: true
 			});
 		case Constants.SET_DISPENSES_SUCCESS:
-			let editedList = getListForName(state.activeList.name, state.expensesLists);
-			let listsWithoutEdited = removeFrom(state.expensesLists, state.activeList.name);
+			let editedList = Object.assign({}, state.activeList);
 			editedList.dispenses = action.dispenseAmount;
 			return Object.assign({}, state, {
-				expensesLists: concat(editedList, listsWithoutEdited),
 				activeList: editedList,
 				setDispensesError: false
 			});
@@ -81,22 +73,16 @@ export default function expensesLists(state = initialState, action) {
 			return Object.assign({}, state, {
 				setDispensesError: true
 			});
-		case Constants.ACTIVE_LIST_NAME:
-			if (action.listName != '') {
-				// if not explicitly wanted to unset..
-				let newActiveList = getListForName(action.listName, state.expensesLists);
-				let setActiveError = newActiveList.name? false : true;
-				return Object.assign({}, state, {
-					activeList: newActiveList,
-					setActiveListError: setActiveError
-				});
-			}
-			else {
-				return Object.assign({}, state, {
-					activeList: {},
-					setActiveListError: false
-				});
-			}
+		case Constants.ACTIVE_LIST_SUCCESS:
+			return Object.assign({}, state, {
+				activeList: action.activeList,
+				setActiveListError: false
+			});
+		case Constants.ACTIVE_LIST_ERROR:
+			return Object.assign({}, state, {
+				activeList: initialState.activeList,
+				setActiveListError: true
+			});
 		default:
 			return state
 	}

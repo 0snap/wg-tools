@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import RegisterForm from '../components/login/RegisterForm.jsx';
-import Constants from '../constants/LoginConstants.jsx';
-import AppHeader from '../components/header/AppHeader.jsx';
 
 import './LoginRegister.scss';
 
-import { register, logout } from '../actions/LoginRegisterActionCreators.jsx';
+import { register } from '../actions/LoginRegisterActionCreators.jsx';
 
 
 export default class Register extends Component {
@@ -18,12 +16,11 @@ export default class Register extends Component {
 
 
 	render() {
-		const { register, logout, registerError, isLoggedIn } = this.props;
+		const { register, registerError } = this.props;
 
 		let error = registerError? 'conflict' : undefined;
 		return (
 			<div className='register'>
-				<AppHeader logoutCallback={logout}/>
 				<RegisterForm error={error} registerCallback={register} />
 			</div>
 		);
@@ -32,8 +29,7 @@ export default class Register extends Component {
 
 Register.propTypes = {
 	registerError: React.PropTypes.bool.isRequired,
-	register: React.PropTypes.func.isRequired,
-	logout: React.PropTypes.func.isRequired
+	register: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -43,4 +39,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { register, logout } )(Register)
+export default connect(mapStateToProps, { register } )(Register)

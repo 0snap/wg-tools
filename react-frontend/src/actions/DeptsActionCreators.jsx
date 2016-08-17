@@ -15,7 +15,7 @@ function fetchDeptsError(err) {
 
 export function fetchDepts(listName) {
 	return function(dispatch) {
-		if (!listName) {
+		if ( !listName ) {
 			return dispatch(fetchDeptsSuccess([]));
 		}
 		apiService.call(

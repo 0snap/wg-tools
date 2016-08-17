@@ -166,12 +166,14 @@ def delete(listName, wgId, postId):
 
 ## expenses list operations
 
-def getExpensesLists(wgId, includeDeleted=False):
-    allLists = ExpensesList.objects(wg=__getWgById(wgId))
-    normalizedLists = [ __normalizeExpenseList(expensesList) for expensesList in allLists ]
-    if not includeDeleted:
-        normalizedLists = list(filter(lambda entry: entry['tsDeleted'] == None, normalizedLists))
-    return normalizedLists
+def getExpensesListNames(wgId, includeDeleted=False):
+    allLists = ExpensesList.objects(wg=__getWgById(wgId), tsDeleted=None) if not includeDeleted else ExpensesList.objects(wg=__getWgById(wgId))
+    names = [ x.name for x in allLists ]
+    return names
+
+def getExpensesList(listName, wgId):
+    expList = __getExpensesList(listName, wgId)
+    return __normalizeExpenseList(expList) if expList != None else None
 
 
 def createExpensesList(listName, wgId):
