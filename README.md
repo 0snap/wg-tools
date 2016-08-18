@@ -105,6 +105,7 @@ To start everything inside a container install docker-compose and start everythi
 	[x] distinguish dev + prod
 	[x] redux + react-router
 	[x] redux call opt
+	[] use middleware (avoid double requests due to inaccurate state-change evaluation inside the components!)
 
 ### General behavior:
 	[x] Confirm delete of items
