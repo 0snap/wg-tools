@@ -4,7 +4,6 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-import routes from './routes.js';
 import configureStore from './src/stores/configureStore.js';
 import Root from './src/containers/Root.jsx';
 

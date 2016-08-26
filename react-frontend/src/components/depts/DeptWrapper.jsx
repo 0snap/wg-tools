@@ -11,7 +11,7 @@ import { fetchDepts } from '../../actions/DeptsActionCreators.jsx';
 import { setDispenses } from '../../actions/ExpensesListActionCreators.jsx';
 
 
-export default class DeptContainer extends Component {
+export class DeptWrapper extends Component {
 
 	constructor(props) {
 		super(props);
@@ -46,7 +46,7 @@ export default class DeptContainer extends Component {
 	}
 }
 
-DeptContainer.propTypes = {
+DeptWrapper.propTypes = {
 	expensePosts: React.PropTypes.array.isRequired,
 	deptList: React.PropTypes.array.isRequired,
 	activeList: React.PropTypes.object,
@@ -69,4 +69,4 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
 	fetchDepts,
 	setDispenses
-})(DeptContainer)
+})(DeptWrapper)

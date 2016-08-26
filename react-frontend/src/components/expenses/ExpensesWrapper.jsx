@@ -9,7 +9,7 @@ import ExpensesGraph from './ExpensesGraph.jsx';
 import { deleteExpense, fetchExpenses } from '../../actions/ExpensePostActionCreators.jsx';
 
 
-export default class ExpensesContainer extends Component {
+export class ExpensesWrapper extends Component {
 
 	constructor(props) {
 		super(props);
@@ -40,7 +40,7 @@ export default class ExpensesContainer extends Component {
 
 }
 
-ExpensesContainer.propTypes = {
+ExpensesWrapper.propTypes = {
 	expensePosts: React.PropTypes.array.isRequired,
 	activeList: React.PropTypes.object,
 	deleteExpense: React.PropTypes.func.isRequired,
@@ -61,4 +61,4 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
 	deleteExpense,
 	fetchExpenses
-})(ExpensesContainer)
+})(ExpensesWrapper)

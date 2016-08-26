@@ -101,7 +101,6 @@ def delete():
     jsonAsDict = getDictFromPost(request)
     listName = jsonAsDict.get('listName')
     postId = jsonAsDict.get('id')
-    print(postId, listName)
     if listName != None and listName != '' and listName != 'undefined' and postId != None and postId != '' and postId != 'undefined':
         if storage.delete(listName, current_identity, postId):
             return Response('OK', 200)

@@ -1,8 +1,8 @@
 import React, { Component } from  'react'
 import { Route, Redirect } from 'react-router';
 
-import App from './src/containers/App.jsx';
 import HomePage from './src/containers/HomePage.jsx';
+import App from './src/containers/App.jsx';
 import ExpensesContainer from './src/containers/ExpensesContainer.jsx';
 import Login from './src/containers/Login.jsx';
 import Register from './src/containers/Register.jsx';

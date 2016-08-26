@@ -7,7 +7,7 @@ import { logout } from '../actions/LoginRegisterActionCreators.jsx';
 
 import './App.scss';
 
-export default class App extends Component {
+export class App extends Component {
 	
 	constructor(props) {
 		super(props);

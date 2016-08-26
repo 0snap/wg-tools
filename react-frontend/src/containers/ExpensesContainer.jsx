@@ -6,7 +6,7 @@ import { setActiveList } from '../actions/ExpensesListActionCreators.jsx';
 import ExpensesWrapper from '../components/expenses/ExpensesWrapper.jsx';
 import DeptWrapper from '../components/depts/DeptWrapper.jsx';
 
-export default class ExpensesContainer extends Component {
+export class ExpensesContainer extends Component {
 
 
 	componentDidMount() {

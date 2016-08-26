@@ -7,7 +7,7 @@ import { storeExpense } from '../actions/ExpensePostActionCreators.jsx';
 
 import ExpensesHeader from '../components/expenses/ExpensesHeader.jsx';
 
-export default class HomePage extends Component {
+export class HomePage extends Component {
 
 	/**
 		HomePage container: all money related things are rooted here

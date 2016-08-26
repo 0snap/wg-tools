@@ -8,7 +8,7 @@ import './LoginRegister.scss';
 import { register } from '../actions/LoginRegisterActionCreators.jsx';
 
 
-export default class Register extends Component {
+export class Register extends Component {
 
 	constructor(props) {
 		super(props);
