@@ -14,7 +14,7 @@ export default class ExpensesHeader extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { flyoutContent: -1 };
+        this.state = { flyoutContent: 2 }; // initially expand add-menu
     }
 
     refreshMenu() {
