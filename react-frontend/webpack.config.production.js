@@ -12,6 +12,8 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin('bundle.css'),
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({
             //client side browser js process.env definitions:
             "process.env": {
