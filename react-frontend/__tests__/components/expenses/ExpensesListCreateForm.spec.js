@@ -1,5 +1,3 @@
-jest.unmock('../../../src/components/expenses/ExpensesListCreateForm.jsx');
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';

@@ -1,6 +1,3 @@
-jest.unmock('../../../src/components/login/LoginForm.jsx');
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';

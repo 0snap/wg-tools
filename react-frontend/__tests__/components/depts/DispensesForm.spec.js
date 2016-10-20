@@ -1,6 +1,3 @@
-jest.unmock('../../../src/components/depts/DispensesForm.jsx');
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';

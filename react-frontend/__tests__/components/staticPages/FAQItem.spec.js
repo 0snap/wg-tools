@@ -1,6 +1,3 @@
-jest.unmock('../../../src/components/staticPages/FAQItem.jsx');
-jest.unmock('classnames');
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';

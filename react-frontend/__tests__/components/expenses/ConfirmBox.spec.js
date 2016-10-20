@@ -1,6 +1,3 @@
-jest.unmock('../../../src/components/expenses/ConfirmBox.jsx');
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';

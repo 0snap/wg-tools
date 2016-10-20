@@ -1,0 +1,42 @@
+env:
+  browser: true
+  es6: true
+  node: true
+extends: 
+  - 'eslint:recommended'
+  - 'plugin:react/recommended'
+parserOptions:
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+    modules: true
+  sourceType: module
+plugins:
+  - react
+rules:
+  no-undef:
+    - warn
+  no-unused-vars:
+    - warn
+  no-console:
+    - warn
+  indent:
+    - warn
+    - tab
+  linebreak-style:
+    - warn
+    - unix
+  quotes:
+    - warn
+    - single
+  semi:
+    - warn
+    - always
+  react/no-find-dom-node: 
+    - off 
+globals:
+  describe: true
+  it: true
+  expect: true
+  jest: true
+  beforeEach: true
