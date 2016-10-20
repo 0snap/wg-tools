@@ -13,31 +13,31 @@ var appConfig = require(path.resolve(__dirname, 'config/config.' + process.env.N
 var app = express();
 
 if(process.env.NODE_ENV == 'development') {
-    app.use(require('webpack-dev-middleware')(compiler, {
-        publicPath: wpConfig.output.publicPath,
-        noInfo: true // dont get the noisy "built" infos
-    }));
+	app.use(require('webpack-dev-middleware')(compiler, {
+		publicPath: wpConfig.output.publicPath,
+		noInfo: true // dont get the noisy "built" infos
+	}));
 
     // hot middleware instead of webpack-dev-server
-    app.use(require('webpack-hot-middleware')(compiler));
+	app.use(require('webpack-hot-middleware')(compiler));
 }
 else {
-    app.use(express.static('public'));
+	app.use(express.static('public'));
 }
 
 // forward all requests to api
 app.all('/api/:path', jsonParser, forwarder(appConfig.deptsEndpoint));
 app.get('/robots.txt', function(req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'robots.txt'))
+	res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
 });
 
 app.all('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+	res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 var server = app.listen(3000, function() {
-    var host = server.address().address;
-    var port = server.address().port;
+	var host = server.address().address;
+	var port = server.address().port;
 
-    console.log('App listening at http://%s:%s', host, port);
+	console.log('App listening at http://%s:%s', host, port);
 });

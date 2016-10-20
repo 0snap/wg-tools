@@ -20,8 +20,8 @@ export default function configureDevStore(preloadedState) {
 
 	if (module.hot) {
 		module.hot.accept('../reducers', () => {
-			const nextReducer = require('../reducers')
-			store.replaceReducer(nextReducer)
+			const nextReducer = require('../reducers');
+			store.replaceReducer(nextReducer);
 		});
 	}
 

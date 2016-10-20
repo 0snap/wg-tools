@@ -9,7 +9,7 @@
     "build": "NODE_ENV=production webpack --config webpack.config.production.js",
     "clean": "rm -rf public/assets",
     "test": "jest --config=jest.conf.json",
-    "lint": "eslint ."
+    "lint": "eslint . --fix"
   },
   "author": "flx",
   "license": "MIT",

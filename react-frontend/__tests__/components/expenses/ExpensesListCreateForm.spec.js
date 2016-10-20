@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 import ExpensesListCreateForm from '../../../src/components/expenses/ExpensesListCreateForm.jsx';

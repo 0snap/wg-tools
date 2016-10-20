@@ -1,4 +1,4 @@
-import React, { Component } from  'react'
+import React from  'react';
 import { Route, Redirect } from 'react-router';
 
 import HomePage from './src/containers/HomePage.jsx';
@@ -8,7 +8,6 @@ import Login from './src/containers/Login.jsx';
 import Register from './src/containers/Register.jsx';
 import AboutPage from './src/components/staticPages/AboutPage.jsx';
 import FAQPage from './src/components/staticPages/FAQPage.jsx';
-import Constants from './src/constants/LoginConstants.jsx';
 
 import { isLoggedIn } from './src/services/LoginService.jsx';
 

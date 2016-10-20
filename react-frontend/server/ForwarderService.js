@@ -14,11 +14,11 @@ module.exports = function(endpoint) {
 			.end( function(err, resBackend) {
 				if(err) {
 					if(err.status > 100 && err.status < 999) {
-						console.log('Error forwarding request', err);
+						console.error('Error forwarding request', err);
 						res.status(err.status).send();
 					}
 					else {
-						console.log('Encountered weird response code', err);
+						console.error('Encountered weird response code', err);
 						res.status(500).send();
 					}
 				}
@@ -27,5 +27,5 @@ module.exports = function(endpoint) {
 					res.send(resBackend.text);
 				}
 			});
-	}
-}
+	};
+};
