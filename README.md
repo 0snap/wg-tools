@@ -1,8 +1,8 @@
 # WG-Tools
 
-A hosted version can be found at: [wg-tools.de](https://wg-tools.de).
+This project is currently on hold. I do not need the software any longer (at least for now). If you somehow stumbled upon this, please feel free to carry on and improve it!
 
-You can get the whole application containerized for self hosting at dockerhub!
+The hosted version is not longer available, but you can get the whole application containerized for self hosting at [dockerhub](https://hub.docker.com/r/fixel/wg-tools/).
 
 ### Build
 [![Build Status](https://travis-ci.org/0ortmann/wg-tools.svg?branch=master)](https://travis-ci.org/0ortmann/wg-tools)
@@ -20,7 +20,6 @@ Mongo-Container:
 ## Purpose
 
 If you are living in a flat share and have to manage expenses or other stuff and you want some just-working tool for that purpose, then you are at the right place here. This applicaiton is meant for diy hosting and development. Feel free to contribute!
-
 
 
 ### Behavior
